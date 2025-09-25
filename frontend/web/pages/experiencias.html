@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descubre las experiencias de nuestros residentes en Rentalia">
+  <title>Experiencias | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/experiencias.js?v=2" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="experiencias-main">
+    <!-- Hero section -->
+    <section class="experiencias-hero">
+      <div class="experiencias-hero-content">
+        <h1>Vive la Experiencia Rentalia</h1>
+        <p>Descubre lo que nuestros residentes tienen que decir sobre su vida en nuestras comunidades</p>
+      </div>
+    </section>
+
+    <!-- Filtro por categoría -->
+    <section class="filtro-experiencias">
+      <div class="filtro-container">
+        <button class="filtro-btn active" data-categoria="todas">Todas</button>
+        <button class="filtro-btn" data-categoria="comunidad">Comunidad</button>
+        <button class="filtro-btn" data-categoria="instalaciones">Instalaciones</button>
+        <button class="filtro-btn" data-categoria="eventos">Eventos</button>
+      </div>
+    </section>
+
+    <!-- Grid de experiencias -->
+    <section class="experiencias-grid">
+      <h2 class="experiencias-title">Historias Reales</h2>
+      <p class="experiencias-subtitle">Conoce las experiencias de quienes ya viven en Rentalia</p>
+      
+      <div class="experiencias-container" id="experiencias-container">
+        <!-- Las experiencias se cargarán dinámicamente desde JS -->
+      </div>
+    </section>
+
+    <!-- CTA para compartir experiencia -->
+    <section class="compartir-experiencia">
+      <div class="compartir-content">
+        <h2>¿Quieres compartir tu experiencia?</h2>
+        <p>Tu opinión ayuda a otros a encontrar su hogar ideal</p>
+        <a href="compartir-experiencia.html" class="btn">Compartir mi historia</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>

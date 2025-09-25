@@ -1,0 +1,7 @@
+# Directorio para pipelines de CI/CD
+
+Este directorio contendrá:
+- Configuración de GitHub Actions
+- Scripts de despliegue
+- Configuración de Jenkins
+- Pipelines de testing

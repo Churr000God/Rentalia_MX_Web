@@ -1,0 +1,112 @@
+/* ==============================================
+   RENTALIA.MX - Main Stylesheet
+   Archivo principal que importa todos los estilos
+   ============================================== */
+
+/* 1. Base styles - Reset y variables */
+@import url('./base.css');
+
+/* 2. Layout utilities - Grid, flexbox, spacing */
+@import url('./layout.css');
+
+/* 3. Components - Botones, cards, formularios */
+@import url('./components.css');
+
+/* 4. Page-specific styles - Estilos específicos de páginas */
+@import url('./pages.css');
+
+/* 5. Responsive styles - Media queries */
+@import url('./responsive.css');
+
+/* 6. Component-specific styles */
+@import url('../../components/header/header.css');
+@import url('../../components/footer/footer.css');
+
+/* ==============================================
+   Estilos globales adicionales
+   ============================================== */
+
+/* Smooth scrolling para toda la aplicación */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Mejoras de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Focus visible para mejor navegación por teclado */
+*:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Mejoras para impresión */
+@media print {
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+    
+    abbr[title]::after {
+        content: " (" attr(title) ")";
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+}
+
+/* Utilidades adicionales */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 1000;
+}
+
+.skip-link:focus {
+    top: 6px;
+}

@@ -1,0 +1,6 @@
+# Directorio para datos iniciales (seeds)
+
+Este directorio contendrá los archivos de datos iniciales cuando se implemente el backend.
+
+Estructura esperada:
+- YYYYMMDD_HHMMSS_nombre_seed.sql

@@ -1,0 +1,8 @@
+# Directorio para configuración de seguridad
+
+Este directorio contendrá:
+- Configuración de headers de seguridad
+- Políticas CSP (Content Security Policy)
+- Configuración de fail2ban
+- Certificados SSL/TLS
+- Scripts de hardening

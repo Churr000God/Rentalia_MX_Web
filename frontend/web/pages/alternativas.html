@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explora todas las alternativas de alojamiento disponibles en Rentalia">
+  <title>Alternativas | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/alternativas.js?v=2" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="alternativas-main">
+    <!-- Sección Hero -->
+    <section class="alternativas-hero">
+      <div class="alternativas-hero-content">
+        <h1>Nuestras Habitaciones Disponibles</h1>
+        <p>Encuentra el espacio perfecto que se adapte a tus necesidades</p>
+      </div>
+    </section>
+
+    <!-- Listado de alternativas -->
+    <section class="alternativas-section" id="alternativas-section">
+      <h2 class="featured-title">Habitaciones Disponibles</h2>
+
+      <div class="properties-scroll-container">
+        <div class="properties-wrapper" id="properties-wrapper">
+          <!-- Las tarjetas se cargarán dinámicamente desde JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sección de detalles de habitación (oculta inicialmente) -->
+  <section class="habitacion-detalle-section" id="habitacion-detalle" style="display: none;">
+    <div class="detalle-container">
+      <button class="btn atrasBtn" id="atras-btn">
+        <i class="fas fa-arrow-left"></i> Regresar a habitaciones
+      </button>
+
+      <div class="detalle-content">
+        <!-- Galería de fotos -->
+        <div class="detalle-gallery">
+          <div class="gallery-main">
+            <img id="main-image" src="" alt="Imagen principal de la habitación">
+          </div>
+          <div class="gallery-thumbs" id="gallery-thumbs">
+            <!-- Miniaturas se cargarán dinámicamente -->
+          </div>
+        </div>
+    
+        <!-- Información de la habitación -->
+        <div class="detalle-info">
+          <h2 id="detalle-nombre"></h2>
+          <div class="detalle-resumen-container">
+            <p class="detalle-resumen" id="detalle-resumen"></p>
+            <p class="detalle-precio" id="detalle-precio"></p>
+          </div>
+      
+          <div class="detalle-descripcion">
+            <h3>Descripción</h3>
+            <p id="detalle-descripcion"></p>
+          </div>
+      
+          <div class="detalle-amenities">
+            <h3>Servicios incluidos</h3>
+            <div class="amenities-grid" id="detalle-amenities">
+              <!-- Amenities se cargarán dinámicamente -->
+            </div>
+          </div>
+        
+          <div class="detalle-ubicacion">
+            <h3>Ubicación</h3>
+            <div class="mapa-container">
+              <iframe id="detalle-mapa" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <p class="direccion" id="detalle-direccion"></p>
+          </div>
+        
+          <button class="btn reservar-btn" id="reservar-btn">
+            <i class="fas fa-calendar-check"></i> Reservar ahora
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>

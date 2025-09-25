@@ -1,0 +1,136 @@
+version: '3.8'
+
+services:
+  # Servidor web frontend (ACTIVO)
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    container_name: rentalia_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/web:/usr/share/nginx/html:ro
+      - ./public:/usr/share/nginx/html:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - rentalia_network
+    restart: unless-stopped
+    environment:
+      - TZ=America/Mexico_City
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rentalia-web.rule=Host(`localhost`)"
+      - "traefik.http.services.rentalia-web.loadbalancer.server.port=80"
+
+  # Backend API (FUTURO)
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    container_name: rentalia_api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/api:/app:ro
+    networks:
+      - rentalia_network
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    profiles:
+      - backend  # Solo se ejecuta con: docker-compose --profile backend up
+
+  # Worker para tareas en background (FUTURO)
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker/Dockerfile
+    container_name: rentalia_worker
+    volumes:
+      - ./backend/worker:/app:ro
+    networks:
+      - rentalia_network
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    profiles:
+      - backend
+
+  # Base de datos PostgreSQL (FUTURO)
+  postgres:
+    image: postgres:15-alpine
+    container_name: rentalia_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - rentalia_network
+    environment:
+      - POSTGRES_DB=rentalia_db
+      - POSTGRES_USER=rentalia_user
+      - POSTGRES_PASSWORD=rentalia_password
+      - TZ=America/Mexico_City
+    restart: unless-stopped
+    profiles:
+      - backend
+
+  # Redis para cache y sesiones (FUTURO)
+  redis:
+    image: redis:7-alpine
+    container_name: rentalia_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - rentalia_network
+    command: redis-server --appendonly yes --requirepass rentalia_redis_password
+    restart: unless-stopped
+    profiles:
+      - backend
+
+  # Adminer para gestión de BD (FUTURO)
+  adminer:
+    image: adminer:latest
+    container_name: rentalia_adminer
+    ports:
+      - "8081:8080"
+    networks:
+      - rentalia_network
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    profiles:
+      - tools
+
+# Volúmenes persistentes
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# Red personalizada
+networks:
+  rentalia_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
