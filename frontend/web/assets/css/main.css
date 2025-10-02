@@ -49,7 +49,7 @@ html {
 
 /* Focus visible para mejor navegación por teclado */
 *:focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid #ff6b00; /* Naranja */
     outline-offset: 2px;
 }
 
@@ -99,7 +99,7 @@ html {
     position: absolute;
     top: -40px;
     left: 6px;
-    background: var(--primary-color);
+    background: #ff6b00; /* Naranja */
     color: white;
     padding: 8px;
     text-decoration: none;
@@ -109,4 +109,344 @@ html {
 
 .skip-link:focus {
     top: 6px;
+}
+
+/* Estilos responsive para galería de detalles - Versión Alargada */
+.detalle-gallery {
+  width: 100%;
+}
+
+.gallery-main {
+  width: 100%;
+  height: 250px; /* Más alargado para móvil */
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0;
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b00 #f1f1f1; /* Naranja */
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.gallery-thumbs::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.gallery-thumbs::-webkit-scrollbar-thumb {
+  background: #ff6b00; /* Naranja */
+  border-radius: 3px;
+}
+
+.gallery-thumbs img {
+  width: 80px;    /* Más ancho */
+  height: 50px;   /* Más bajo - formato alargado */
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.gallery-thumbs img.active {
+  border-color: #ff6b00; /* Naranja */
+  transform: scale(1.05);
+}
+
+.gallery-thumbs img:hover {
+  transform: scale(1.08);
+}
+
+/* Responsive para tablets */
+@media (min-width: 768px) {
+  .gallery-main {
+    height: 350px; /* Más alargado en tablet */
+  }
+  
+  .gallery-thumbs img {
+    width: 100px;   /* Más ancho */
+    height: 60px;   /* Más bajo - mantiene formato alargado */
+  }
+}
+
+/* Responsive para desktop */
+@media (min-width: 1024px) {
+  .gallery-main {
+    height: 450px; /* Más alargado en desktop */
+  }
+  
+  .gallery-thumbs img {
+    width: 120px;   /* Más ancho */
+    height: 70px;   /* Más bajo - formato alargado consistente */
+  }
+}
+
+/* Para pantallas muy grandes */
+@media (min-width: 1440px) {
+  .gallery-main {
+    height: 500px; /* Máximo alargado */
+  }
+  
+  .gallery-thumbs img {
+    width: 140px;
+    height: 80px;
+  }
+}
+
+/* Estilos para la sección de detalles en index.html */
+.detalle-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.atrasBtn {
+  margin-bottom: 30px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.atrasBtn:hover {
+  background: #e9ecef;
+}
+
+.detalle-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+/* Header del detalle */
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.detalle-titulo {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0;
+  flex: 1;
+}
+
+.detalle-precio {
+  text-align: right;
+}
+
+.precio {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #2c3e50; /* Naranja en lugar de verde */
+}
+
+.precio-periodo {
+  color: #7f8c8d;
+  font-size: 1rem;
+}
+
+/* Descripción */
+.detalle-descripcion {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Características */
+.detalle-caracteristicas {
+  margin-bottom: 30px;
+}
+
+.detalle-caracteristicas h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.detalle-caracteristicas ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.detalle-caracteristicas li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.detalle-caracteristicas li:hover {
+  background: #e9ecef;
+}
+
+.detalle-caracteristicas i {
+  color: #ff6b00; /* Naranja */
+  width: 20px;
+  text-align: center;
+}
+
+/* Ubicación */
+.detalle-ubicacion {
+  margin-bottom: 30px;
+}
+
+.detalle-ubicacion h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.detalle-ubicacion p {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #ff6b00; /* Naranja */
+}
+
+/* Botones de acción */
+.detalle-acciones {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #ff6b00; /* Naranja */
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #e55a00; /* Naranja oscuro */
+}
+
+.btn-outline {
+  background: transparent;
+  color: #f1f1f1; /* Blanco */
+  border: 2px solid #ff6b00; /* Naranja */
+  padding: 12px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background: #ff6b00; /* Naranja */
+  color: white;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .detalle-content {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .detalle-gallery {
+    order: 1;
+  }
+  
+  .detalle-info {
+    order: 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .detalle-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .detalle-precio {
+    text-align: left;
+  }
+  
+  .detalle-acciones {
+    flex-direction: column;
+  }
+  
+  .detalle-acciones .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Estilos adicionales para botones naranjas en toda la página */
+.btn {
+  background-color: #ff6b00; /* Naranja */
+  border-color: #ff6b00; /* Naranja */
+}
+
+.btn:hover {
+  background-color: #e55a00; /* Naranja oscuro */
+  border-color: #e55a00; /* Naranja oscuro */
+}
+
+.ver-detalle {
+  background-color: #ff6b00; /* Naranja */
+}
+
+.ver-detalle:hover {
+  background-color: #e55a00; /* Naranja oscuro */
+}
+
+/* Precios y elementos destacados */
+.price-tag {
+  color: #f1f1f1; /* Naranja */
+}
+
+/* Enlaces */
+a {
+  color: #ff6b00; /* Naranja */
+}
+
+a:hover {
+  color: #e55a00; /* Naranja oscuro */
+}
+
+/* Si tienes otros elementos azules en componentes importados, agrega estos overrides */
+.text-primary { color: #ff6b00 !important; }
+.bg-primary { background-color: #ff6b00 !important; }
+
+/* Para elementos de formulario */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #ff6b00 !important; /* Naranja */
+  box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25) !important; /* Naranja con transparencia */
 }
