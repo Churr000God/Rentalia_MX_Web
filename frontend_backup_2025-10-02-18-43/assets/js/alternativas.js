@@ -83,52 +83,113 @@ document.addEventListener("DOMContentLoaded", () => {
     "servicio habitación": { icon: "fas fa-concierge-bell", nombre: "Servicio a la habitación" }
   };
 
-  // Elementos del DOM
+  // Elementos del DOM - compatibles con ambas páginas
   const wrapper = document.getElementById("properties-wrapper");
   const detalleSection = document.getElementById("habitacion-detalle");
   const alternativasSection = document.getElementById("alternativas-section");
   const atrasBtn = document.getElementById("atras-btn");
 
-  // Función para mostrar la sección de detalles
+  // Verificar si los elementos existen antes de proceder
+  if (!wrapper) return;
+
+  // Función para mostrar la sección de detalles - COMPATIBLE CON AMBAS PÁGINAS
   function mostrarDetalles(habitacion) {
+    if (!detalleSection) return;
+    
     // Ocultar listado y mostrar detalles
-    alternativasSection.style.display = "none";
+    if (alternativasSection) {
+      alternativasSection.style.display = "none";
+    }
     detalleSection.style.display = "block";
     
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // DETECCIÓN AUTOMÁTICA DE ESTRUCTURA DE PÁGINA
+    const isIndexPage = document.getElementById("detalle-titulo") !== null;
     
-    // Llenar los datos de la habitación
-    document.getElementById("detalle-nombre").textContent = habitacion.nombre;
-    document.getElementById("detalle-precio").innerHTML = `$${habitacion.precio}<small>/noche</small>`;
-    document.getElementById("detalle-resumen").textContent = habitacion.detalles;
-    document.getElementById("detalle-descripcion").textContent = habitacion.descripcion;
-    document.getElementById("detalle-direccion").textContent = habitacion.direccion;
-    
-    // Configurar el mapa
-    const mapaIframe = document.getElementById("detalle-mapa");
-    if (habitacion.ubicacion) {
-      const [lat, lng] = habitacion.ubicacion.split(',');
-      mapaIframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.355742137737!2d-99.15445398846602!3d19.397029581799238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff04b2985217%3A0x36fadceb5f4333f6!2sC.%20Palenque%2035%2C%20Narvarte%20Poniente%2C%20Benito%20Ju%C3%A1rez%2C%2003023%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1755569447630!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
+    if (isIndexPage) {
+      // ESTRUCTURA DEL INDEX.HTML
+      const detalleTitulo = document.getElementById("detalle-titulo");
+      const detallePrecio = document.getElementById("detalle-precio");
+      const detalleDescripcion = document.getElementById("detalle-descripcion");
+      const detalleUbicacion = document.getElementById("detalle-ubicacion");
+      const detalleCaracteristicas = document.getElementById("detalle-caracteristicas-lista");
+      
+      if (detalleTitulo) detalleTitulo.textContent = habitacion.nombre;
+      if (detallePrecio) detallePrecio.textContent = `$${habitacion.precio}`;
+      if (detalleDescripcion) detalleDescripcion.textContent = habitacion.descripcion;
+      if (detalleUbicacion) detalleUbicacion.textContent = habitacion.direccion;
+      
+      // Cargar características (amenities)
+      if (detalleCaracteristicas) {
+        detalleCaracteristicas.innerHTML = habitacion.amenities.map(amenity => {
+          const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
+          return `
+            <li>
+              <i class="${amenityData.icon}"></i>
+              <span>${amenityData.nombre}</span>
+            </li>
+          `;
+        }).join("");
+      }
+      
+      // Configurar botones de acción del index.html
+      const agendarVisitaBtn = document.getElementById("agendar-visita-btn");
+      const contactarBtn = document.getElementById("contactar-btn");
+      
+      if (agendarVisitaBtn) {
+        agendarVisitaBtn.onclick = () => {
+          window.location.href = `pages/agendar_visita.html?habitacion=${habitacion.id}`;
+        };
+      }
+      
+      if (contactarBtn) {
+        contactarBtn.onclick = () => {
+          alert(`Contactando sobre: ${habitacion.nombre}\nTeléfono: +52 55 1234 5678`);
+        };
+      }
+    } else {
+      // ESTRUCTURA DEL ALTERNATIVAS.HTML (original)
+      document.getElementById("detalle-nombre").textContent = habitacion.nombre;
+      document.getElementById("detalle-precio").innerHTML = `$${habitacion.precio}<small>/noche</small>`;
+      document.getElementById("detalle-resumen").textContent = habitacion.detalles;
+      document.getElementById("detalle-descripcion").textContent = habitacion.descripcion;
+      document.getElementById("detalle-direccion").textContent = habitacion.direccion;
+      
+      // Configurar el mapa (solo para alternativas.html)
+      const mapaIframe = document.getElementById("detalle-mapa");
+      if (mapaIframe && habitacion.ubicacion) {
+        const [lat, lng] = habitacion.ubicacion.split(',');
+        mapaIframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.355742137737!2d-99.15445398846602!3d19.397029581799238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff04b2985217%3A0x36fadceb5f4333f6!2sC.%20Palenque%2035%2C%20Narvarte%20Poniente%2C%20Benito%20Ju%C3%A1rez%2C%2003023%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1755569447630!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
+      }
+      
+      // Cargar amenities (solo para alternativas.html)
+      const amenitiesContainer = document.getElementById("detalle-amenities");
+      if (amenitiesContainer) {
+        amenitiesContainer.innerHTML = habitacion.amenities.map(amenity => {
+          const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
+          return `
+            <div class="amenity-item">
+              <i class="${amenityData.icon}"></i>
+              <span>${amenityData.nombre}</span>
+            </div>
+          `;
+        }).join("");
+      }
+      
+      // Configurar el botón de reserva (solo para alternativas.html)
+      const reservarBtn = document.getElementById("reservar-btn");
+      if (reservarBtn) {
+        reservarBtn.onclick = () => {
+          alert(`Redirigiendo a reserva de: ${habitacion.nombre}`);
+          // window.location.href = `reservar.html?habitacion=${habitacion.id}`;
+        };
+      }
     }
     
-    // Cargar amenities
-    const amenitiesContainer = document.getElementById("detalle-amenities");
-    amenitiesContainer.innerHTML = habitacion.amenities.map(amenity => {
-      const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
-      return `
-        <div class="amenity-item">
-          <i class="${amenityData.icon}"></i>
-          <span>${amenityData.nombre}</span>
-        </div>
-      `;
-    }).join("");
-    
-    // Cargar imágenes
+    // Cargar imágenes (común para ambas páginas)
     const mainImage = document.getElementById("main-image");
     const thumbsContainer = document.getElementById("gallery-thumbs");
     
-    if (habitacion.imagenes && habitacion.imagenes.length > 0) {
+    if (mainImage && thumbsContainer && habitacion.imagenes && habitacion.imagenes.length > 0) {
       mainImage.src = habitacion.imagenes[0];
       mainImage.alt = `Imagen de ${habitacion.nombre}`;
       
@@ -138,30 +199,32 @@ document.addEventListener("DOMContentLoaded", () => {
              onclick="cambiarImagenPrincipal('${img}', this)">
       `).join("");
     }
-    
-    // Configurar el botón de reserva
-    const reservarBtn = document.getElementById("reservar-btn");
-    reservarBtn.onclick = () => {
-      alert(`Redirigiendo a reserva de: ${habitacion.nombre}`);
-      // window.location.href = `reservar.html?habitacion=${habitacion.id}`;
-    };
   }
 
   // Función global para cambiar imagen principal
   window.cambiarImagenPrincipal = function(src, thumb) {
-    document.getElementById("main-image").src = src;
-    document.querySelectorAll("#gallery-thumbs img").forEach(img => {
-      img.classList.remove("active");
-    });
-    thumb.classList.add("active");
+    const mainImage = document.getElementById("main-image");
+    if (mainImage) {
+      mainImage.src = src;
+    }
+    if (thumb) {
+      document.querySelectorAll("#gallery-thumbs img").forEach(img => {
+        img.classList.remove("active");
+      });
+      thumb.classList.add("active");
+    }
   };
 
-  // Función para volver al listado
-  atrasBtn.addEventListener("click", () => {
-    detalleSection.style.display = "none";
-    alternativasSection.style.display = "block";
-    alternativasSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  // Función para volver al listado - COMPATIBLE CON AMBAS PÁGINAS
+  if (atrasBtn) {
+    atrasBtn.addEventListener("click", () => {
+      if (detalleSection) detalleSection.style.display = "none";
+      if (alternativasSection) {
+        alternativasSection.style.display = "block";
+        alternativasSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
 
   // Función para crear tarjetas
   function crearTarjetaHabitacion(habitacion) {
@@ -203,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Evento para los botones "Ver detalles"
+  // Evento para los botones "Ver detalles" - FUNCIONAL PARA AMBAS PÁGINAS
   document.addEventListener('click', function(e) {
     const verDetalleBtn = e.target.closest('.ver-detalle');
     if (verDetalleBtn) {
