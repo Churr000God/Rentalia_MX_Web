@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+  <html lang="es">
+    <head>
+      <!--==========================================================================================
+      METADATA BÁSICA
+      ==============================================================================================-->
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Rentalia el lugar ideal para vivir en comunidad, seguro, moderno y completamente en línea">
+      <title>Rentalia | Encuentra tu espacio ideal</title>
+
+      <!--==========================================================================================
+      Estilos
+      ==============================================================================================-->
+      <link rel="stylesheet" href="./assets/css/main.css">
+      <link rel="stylesheet" href="./assets/css/habitaciones.css">
+      <link rel="icon" href="./assets/images/img/favicon.ico" type="image/x-icon">
+
+      <!-- Font Awesome-->
+      <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-papNMl+YJk..."
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer">
+      
+      <!-- Swiper-->
+      <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+      
+      <!--==========================================================================================
+      Scripts
+      ==============================================================================================-->
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script src="./assets/js/supabase.js?v=1" defer></script>
+      <script src="./assets/js/main.js?v=4" defer></script>
+      <script src="./assets/js/carusel.js?v=1" defer></script>
+      <script src="./assets/js/hero.js" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    </head>
+
+    <body>
+      <!--==========================================================================================
+      Header Dinamico
+      ==============================================================================================-->
+      
+      <header id="header-container"></header>
+
+      <main id="main-content">
+        <!-- =====================================================
+            HERO – Rentalia
+            ===================================================== -->
+        <section class="hero" aria-label="Sección principal Rentalia">
+
+          <!-- Fondos -->
+          <div class="hero-background bg1 active" aria-hidden="true"></div>
+          <div class="hero-background bg2" aria-hidden="true"></div>
+          <div class="hero-background bg3" aria-hidden="true"></div>
+
+          <!-- Contenido fijo -->
+          <div class="hero-content">
+            <h1 class="hero-title">Bienvenido a Rentalia</h1>
+            <p class="hero-subtitle">¡El lugar donde SÍ quieres vivir!</p>
+            
+            <p class="hero-support" style="margin-top: -1.5rem; margin-bottom: 2rem; font-size: 0.95rem; opacity: 0.9; letter-spacing: 1px; font-weight: 500;">
+                <i class="fa-solid fa-check" style="color: #ff6b00; margin-right: 5px;"></i> Renta flexible 
+                <span style="margin: 0 8px; opacity: 0.5;">•</span> 
+                <i class="fa-solid fa-users" style="color: #ff6b00; margin-right: 5px;"></i> Comunidad 
+                <span style="margin: 0 8px; opacity: 0.5;">•</span> 
+                <i class="fa-solid fa-laptop" style="color: #ff6b00; margin-right: 5px;"></i> Todo en línea
+            </p>
+
+            <div class="hero-buttons">
+              <a href="./pages/alternativas.html" class="btn btn-primary">
+                Ver Alternativas
+              </a>
+              <a href="./pages/agendar_visita.html" class="btn btn-secondary">
+                Agendar Visita
+              </a>
+            </div>
+          </div>
+
+          <!-- Indicadores -->
+          <div class="slide-indicators" aria-hidden="true">
+            <button class="indicator active" data-slide="0"></button>
+            <button class="indicator" data-slide="1"></button>
+            <button class="indicator" data-slide="2"></button>
+          </div>
+
+        </section>
+
+        <!-- =====================================================
+            CONCEPT SECTION
+            ===================================================== -->
+        <section class="concept-section">
+            <div class="concept-container">
+                 
+                <div class="main-statement">
+                    <div class="statement-badge">Más que un lugar para vivir</div>
+                    <h2 class="statement-title">
+                        Rentalia no es solo una comunidad.<br>
+                        Es un <strong>concepto</strong>.
+                    </h2>
+                    <p class="statement-text">
+                        Imagina rentar el lugar que <strong>siempre soñaste</strong>. 
+                        Un espacio totalmente <strong>flexible</strong> y pensado para ti.
+                    </p>
+                </div>
+         
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fa-solid fa-couch feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Trae Tus Muebles</h3>
+                        <p class="feature-description">
+                            ¿Tienes tus propios muebles? ¡Tráelos con nosotros! 
+                            Tu espacio, tus reglas, tu estilo. Sin restricciones absurdas.
+                        </p>
+                    </div>
+         
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fa-solid fa-palette feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Cambia de Estilo</h3>
+                        <p class="feature-description">
+                            ¿Quieres cambiar de estilo? Explora nuestras propuestas para cada espacio. 
+                            Minimalista, industrial, bohemio... tú eliges.
+                        </p>
+                    </div>
+         
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fa-solid fa-wand-magic-sparkles feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Crea tu Mix</h3>
+                        <p class="feature-description">
+                            ¿Quieres hacer un mix? ¡Solo tienes que imaginarlo! 
+                            Combina estilos, colores y texturas. La creatividad es el límite.
+                        </p>
+                    </div>
+                </div>
+         
+                <div class="possibilities-section">
+                    <h2 class="possibilities-title">Las Posibilidades Son Infinitas</h2>
+                    <p class="possibilities-subtitle">Descubre todo lo que puedes hacer en Rentalia</p>
+         
+                    <div class="possibilities-grid">
+                        <div class="possibility-item">
+                            <span class="possibility-emoji">🎨</span>
+                            <h4 class="possibility-title">Personaliza</h4>
+                            <p class="possibility-text">Pinta las paredes, cuelga tus cuadros, añade tus plantas. Este es tu lienzo.</p>
+                        </div>
+         
+                        <div class="possibility-item">
+                            <span class="possibility-emoji">🔄</span>
+                            <h4 class="possibility-title">Remodela</h4>
+                            <p class="possibility-text">Cambia la distribución, reorganiza los espacios. Hazlo a tu manera.</p>
+                        </div>
+         
+                        <div class="possibility-item">
+                            <span class="possibility-emoji">✨</span>
+                            <h4 class="possibility-title">Evoluciona</h4>
+                            <p class="possibility-text">Tu espacio crece contigo. Adapta tu habitación a cada nueva etapa.</p>
+                        </div>
+                    </div>
+                </div>
+         
+                <div class="cta-section" style="margin-top: 4rem; text-align: center;">
+                    <div class="cta-glow"></div>
+                    <a href="./pages/alternativas.html" style="color: #ff6b00; text-decoration: underline; font-weight: 600; font-size: 1.1rem;">
+                        Explora todas nuestras alternativas <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+         
+            </div>
+        </section>
+
+        <!-- =====================================================
+            HABITACIONES – Rentalia
+            ===================================================== -->
+        <section class="section habitaciones-section" aria-labelledby="habitaciones-title">
+            <div class="container">
+                <header class="section-header">
+                    <span class="badge">
+                        <i class="fa-solid fa-bed"></i> Encuentra tu lugar
+                    </span>
+                    <h2 id="habitaciones-title" class="section-title">
+                        Nuestras Habitaciones
+                    </h2>
+                    <p class="section-subtitle">
+                        Explora nuestras opciones de alojamiento diseñadas para cada estilo de vida.
+                    </p>
+                </header>
+                
+                <div id="habitaciones-grid" class="habitaciones-grid">
+                    <!-- Las tarjetas se renderizarán aquí dinámicamente -->
+                    <!-- Skeleton Loader 1 -->
+                    <div class="habitacion-card-skeleton" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <div class="skeleton" style="height: 220px; width: 100%;"></div>
+                        <div style="padding: 1.5rem;">
+                            <div class="skeleton" style="height: 28px; width: 70%; margin-bottom: 1rem; border-radius: 4px;"></div>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                            </div>
+                            <div class="skeleton" style="height: 40px; width: 100%; border-radius: 8px;"></div>
+                        </div>
+                    </div>
+                    <!-- Skeleton Loader 2 -->
+                    <div class="habitacion-card-skeleton" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <div class="skeleton" style="height: 220px; width: 100%;"></div>
+                        <div style="padding: 1.5rem;">
+                            <div class="skeleton" style="height: 28px; width: 70%; margin-bottom: 1rem; border-radius: 4px;"></div>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                            </div>
+                            <div class="skeleton" style="height: 40px; width: 100%; border-radius: 8px;"></div>
+                        </div>
+                    </div>
+                    <!-- Skeleton Loader 3 -->
+                    <div class="habitacion-card-skeleton" style="background: #fff; border-radius: 20px; overflow: hidden; border: 1px solid #f0f0f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                        <div class="skeleton" style="height: 220px; width: 100%;"></div>
+                        <div style="padding: 1.5rem;">
+                            <div class="skeleton" style="height: 28px; width: 70%; margin-bottom: 1rem; border-radius: 4px;"></div>
+                            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                                <div class="skeleton" style="height: 20px; width: 40px; border-radius: 4px;"></div>
+                            </div>
+                            <div class="skeleton" style="height: 40px; width: 100%; border-radius: 8px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+            AMENIDADES – Rentalia
+            ===================================================== -->
+        <section class="amenidades" aria-labelledby="amenidades-title">
+          <div class="amenidades-container">
+
+            <!-- Header -->
+            <header class="section-header">
+              <span class="badge">
+                <i class="fa-solid fa-star"></i> Descubre todo lo que ofrecemos
+              </span>
+              <h2 id="amenidades-title" class="section-title">
+                Amenidades Premium
+              </h2>
+              <p class="section-subtitle">
+                Espacios diseñados para tu comodidad y bienestar. Todo lo que necesitas en un solo lugar.
+              </p>
+            </header>
+
+            <!-- Controles -->
+            <div class="amenidades-controls">
+              <div class="view-toggle">
+                <button class="view-btn active" data-view="carousel" aria-label="Vista carrusel">
+                  <i class="fa-solid fa-grip-lines"></i> Carrusel
+                </button>
+                <button class="view-btn" data-view="grid" aria-label="Vista grilla">
+                  <i class="fa-solid fa-grid"></i> Grilla
+                </button>
+              </div>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper amenities-swiper">
+              <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="confort" href="./pages/experiencias.html#amenidad-bano-privado">
+                    <span class="amenity-badge">Popular</span>
+                    <div class="amenity-icon"><i class="fa-solid fa-bath"></i></div>
+                    <h3 class="amenity-name">Baño privado</h3>
+                    <p class="amenity-desc">Privacidad y confort en tu espacio.</p>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="confort" href="./pages/experiencias.html#amenidad-cocina">
+                    <div class="amenity-icon"><i class="fa-solid fa-utensils"></i></div>
+                    <h3 class="amenity-name">Cocina equipada</h3>
+                    <p class="amenity-desc">Todo lo necesario para tus comidas.</p>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="wellness" href="./pages/experiencias.html#amenidad-gimnasio">
+                    <span class="amenity-badge">Nuevo</span>
+                    <div class="amenity-icon"><i class="fa-solid fa-dumbbell"></i></div>
+                    <h3 class="amenity-name">Gimnasio</h3>
+                    <p class="amenity-desc">Entrena sin salir de casa.</p>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="outdoor" href="./pages/experiencias.html#amenidad-terraza">
+                    <div class="amenity-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+                    <h3 class="amenity-name">Terraza</h3>
+                    <p class="amenity-desc">Espacios al aire libre.</p>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="services" href="./pages/experiencias.html#amenidad-lavanderia">
+                    <div class="amenity-icon"><i class="fa-solid fa-soap"></i></div>
+                    <h3 class="amenity-name">Lavandería</h3>
+                    <p class="amenity-desc">Servicio disponible 24/7.</p>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a class="amenity-card" data-category="services" href="./pages/experiencias.html#amenidades-entorno">
+                    <span class="amenity-badge">Popular</span>
+                    <div class="amenity-icon"><i class="fa-solid fa-wifi"></i></div>
+                    <h3 class="amenity-name">WiFi Alta Velocidad</h3>
+                    <p class="amenity-desc">Conexión rápida y estable.</p>
+                  </a>
+                </div>
+
+              </div>
+
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+
+            <!-- Grid alternativo -->
+            <div class="amenities-grid" id="amenitiesGrid"></div>
+
+          </div>
+        </section>
+
+
+
+        <!-- =====================================================
+            RESEÑAS – Rentalia
+            ===================================================== -->
+        <section class="section reviews-section" aria-labelledby="reviews-title">
+            <div class="container">
+                <header class="section-header">
+                    <span class="badge">
+                        <i class="fa-solid fa-star"></i> Lo que nuestros huéspedes dicen
+                    </span>
+                    <h2 id="reviews-title" class="section-title">
+                        Reseñas
+                    </h2>
+                    
+                    <!-- Trust Indicator Row -->
+                    <div class="trust-row" style="margin: 1rem auto 0; width: fit-content;">
+                        <div class="avg-rating" style="font-weight: 800; color: var(--color-primario);">
+                            <span id="avgRating">0.0</span>
+                        </div>
+                        <div id="googleStars" class="trust-stars"></div>
+                        <p style="margin: 0; font-size: 0.9rem;">
+                            <span id="totalReviews">0</span> reseñas en 
+                            <a href="#" class="trust-link">Google</a>
+                        </p>
+                        <i class="fa-solid fa-circle-check" style="color: #22c55e;"></i>
+                    </div>
+                    
+                    <button id="btnOpenReviewModal" class="btn btn-primary" style="margin-top: 2rem;">
+                        <i class="fa-solid fa-pen"></i> Escribir una reseña
+                    </button>
+                </header>
+                <div id="reviewsContainer" class="reviews-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;"></div>
+            </div>
+        </section>
+
+        <!-- Modal de Reseña -->
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <button id="btnCloseReviewModal" class="modal-close" aria-label="Cerrar modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                
+                <h3 class="modal-title">Cuéntanos tu experiencia</h3>
+                
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label class="form-label" for="reviewAuthor">Tu nombre</label>
+                        <input type="text" id="reviewAuthor" class="form-input" required placeholder="Escribe tu nombre">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Calificación</label>
+                        <div class="star-rating-input">
+                            <i class="fa-solid fa-star" data-value="1"></i>
+                            <i class="fa-solid fa-star" data-value="2"></i>
+                            <i class="fa-solid fa-star" data-value="3"></i>
+                            <i class="fa-solid fa-star" data-value="4"></i>
+                            <i class="fa-solid fa-star" data-value="5"></i>
+                        </div>
+                        <input type="hidden" id="reviewRating" value="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="reviewComment">Tu comentario</label>
+                        <textarea id="reviewComment" class="form-textarea" required rows="4" placeholder="Comparte tu opinión con nosotros"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar Reseña</button>
+                </form>
+            </div>
+        </div>
+      </main>
+      <a href="./pages/agendar_visita.html" class="sticky-mobile-cta">
+        <i class="fa-regular fa-calendar-check"></i> Agendar Visita
+      </a>
+      <footer id="footer-container"></footer>
+    </body>
+  </html>

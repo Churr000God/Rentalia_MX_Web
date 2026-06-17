@@ -1,0 +1,392 @@
+/* EXPERIENCIAS */
+.experiencias-hero {
+  background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('../images/img/experiencias/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: var(--color-blanco);
+  padding: 6rem 1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  border-radius: 0 0 2rem 2rem;
+}
+.experiencias-hero-content h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.experiencias-hero-content p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+.experiencias-title {
+  font-size: 2rem;
+  color: var(--color-secundario);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.experiencias-subtitle {
+  color: var(--color-texto-secundario);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+.historias-section {
+  max-width: 1200px;
+  margin: 0 auto 4rem;
+  padding: 0 1rem;
+}
+.historias-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.filtro-experiencias {
+  margin-bottom: 2rem;
+}
+.filtro-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.filtro-btn {
+  background: transparent;
+  border: 1px solid var(--color-secundario);
+  color: var(--color-secundario);
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: var(--transicion);
+  font-weight: 500;
+}
+.filtro-btn:hover,
+.filtro-btn.active {
+  background: var(--color-primario);
+  border-color: var(--color-primario);
+  color: var(--color-blanco);
+}
+.experiencias-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+.experiencia-card {
+  background: var(--color-blanco);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: var(--transicion);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0,0,0,0.05);
+  position: relative;
+}
+.experiencia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+.experiencia-imagen {
+  display: none !important;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  background-color: #eee;
+}
+.experiencia-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.experiencia-texto {
+  font-style: italic;
+  color: var(--color-secundario);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+.experiencia-autor {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+.autor-foto {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+.autor-info p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+.autor-nombre {
+  font-weight: 700;
+  color: var(--color-secundario);
+}
+.autor-lugar {
+  color: var(--color-texto-secundario);
+  font-size: 0.8rem !important;
+}
+.experiencia-categoria {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-primario);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.experiencias-grid.entorno-titles {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+}
+.extras-experiencias {
+  background: #f8f9fa;
+  padding: 4rem 1rem;
+}
+.amenidades-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.amenidad-card {
+  background: var(--color-blanco);
+  border-radius: 2rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: var(--transicion);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+.amenidad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+.amenidad-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.amenidad-img {
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 1.5rem;
+  width: 100%;
+}
+.amenidad-content {
+  padding: 1.5rem 1rem 1rem;
+  text-align: center;
+}
+.amenidad-title {
+  font-size: 1.5rem;
+  color: var(--color-secundario);
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+.amenidad-desc {
+  color: var(--color-texto-secundario);
+  font-size: 1rem;
+  margin: 0;
+}
+.movilidad-section {
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  padding: 0 1rem;
+}
+.movilidad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.movilidad-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border: 1px solid #eee;
+  transition: var(--transicion);
+  position: relative;
+  overflow: visible;
+}
+.movilidad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.movilidad-img {
+  width: 100%;
+  height: 220px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.movilidad-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.movilidad-icon {
+  font-size: 5rem;
+  color: var(--color-primario);
+  margin-bottom: 1.5rem;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.5rem;
+  width: 100%;
+}
+.movilidad-card h3 {
+  font-size: 1.25rem;
+  color: var(--color-secundario);
+  margin-bottom: 0.5rem;
+}
+.movilidad-card p {
+  color: var(--color-texto-secundario);
+  font-size: 1rem;
+}
+.hover-info {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.98);
+  width: 480px;
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+  border: 1px solid #edf2f7;
+  opacity: 0;
+  transition: all 0.25s ease;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 20;
+}
+.hover-info img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.hover-info iframe {
+  width: 100%;
+  height: 220px;
+  border: 0;
+  display: block;
+}
+.map-link-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  z-index: 30;
+}
+.map-url-input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.hover-info-content {
+  padding: 1rem;
+  text-align: left;
+}
+.hover-info-content h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: var(--color-secundario);
+}
+.hover-info-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+}
+.movilidad-card:hover .hover-info {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.recreativas-section .amenidad-card {
+  position: relative;
+  overflow: visible;
+}
+.recreativas-section .amenidad-card:hover .hover-info {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+.movilidad-card:hover,
+.recreativas-section .amenidad-card:hover {
+  z-index: 100;
+}
+@media (max-width: 768px) {
+  .hover-info {
+    width: min(92vw, 480px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+}
+@media (max-width: 768px) {
+  .experiencias-hero {
+    padding: 4rem 1rem;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+  .experiencias-hero-content h1 {
+    font-size: 2.5rem;
+  }
+  .amenidades-grid,
+  .experiencias-container,
+  .movilidad-grid {
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+  .amenidad-img,
+  .experiencia-imagen {
+    height: 300px;
+  }
+  .movilidad-icon {
+    font-size: 5rem;
+  }
+}
+@media (min-width: 768px) {
+  .historias-layout {
+    flex-direction: row;
+  }
+  .historias-left {
+    flex: 1;
+    max-width: 300px;
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+  }
+  .historias-right {
+    flex: 3;
+  }
+  .filtro-container {
+    flex-direction: column;
+  }
+}

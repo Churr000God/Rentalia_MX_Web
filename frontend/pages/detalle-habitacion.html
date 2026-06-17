@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalles de la habitación - Rentalia">
+    <title>Detalle de Habitación | Rentalia</title>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/detalle.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/detalle.js" defer></script>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-section">
+        <nav class="breadcrumb">
+            <a href="../index.html"><i class="fa-solid fa-home"></i> Inicio</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <a href="./alternativas.html">Alternativas</a>
+            <i class="fa-solid fa-chevron-right"></i>
+            <span id="breadcrumb-room">Cargando...</span>
+        </nav>
+    </div>
+
+    <main class="detalle-container" id="detalle-container">
+        <!-- Loading State -->
+        <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Cargando detalles de la habitación...</p>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+</body>
+</html>

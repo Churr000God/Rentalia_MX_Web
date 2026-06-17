@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Descubre las experiencias de nuestros residentes en Rentalia">
+  <title>Experiencias | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/experiencias.css" />
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/experiencias.js?v=2" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="experiencias-main">
+    <!-- Hero section -->
+    <section class="experiencias-hero">
+      <div class="experiencias-hero-content">
+        <h1>Vive la Experiencia Rentalia</h1>
+        <p>Descubre lo que nuestros residentes tienen que decir sobre su vida en nuestras comunidades</p>
+      </div>
+    </section>
+
+    <!-- Historias en layout premium: título a la izquierda, tarjetas a la derecha -->
+    <section class="historias-section">
+      <div class="historias-layout">
+        <div class="historias-left">
+          <h2 class="experiencias-title">Historias Reales</h2>
+          <p class="experiencias-subtitle">Conoce las experiencias de quienes ya viven en Rentalia</p>
+          <div class="filtro-experiencias">
+            <div class="filtro-container">
+              <button class="filtro-btn active" data-categoria="todas">Todas</button>
+              <button class="filtro-btn" data-categoria="comunidad">Comunidad</button>
+              <button class="filtro-btn" data-categoria="instalaciones">Instalaciones</button>
+              <button class="filtro-btn" data-categoria="eventos">Eventos</button>
+            </div>
+          </div>
+        </div>
+        <div class="historias-right">
+          <div class="experiencias-container" id="experiencias-container">
+            <!-- Las experiencias se cargarán dinámicamente desde JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- La CTA se moverá al final de la página -->
+
+    <section class="experiencias-grid entorno-titles">
+      <h2 class="experiencias-title">Explora Tu Nuevo Entorno</h2>
+      <p class="experiencias-subtitle">Todo lo que hace especial vivir aquí, reunido en un solo lugar.</p>
+    </section>
+
+
+    <!-- Sección complementaria: Amenidades, Movilidad y Zonas Cercanas -->
+    <section class="extras-experiencias" aria-label="Amenidades y cercanías">
+      
+      <!-- Subsección A – Amenidades -->
+      <section class="amenidades-grid-section" id="amenidades-entorno" aria-label="Amenidades">
+        <h2 class="experiencias-title" style="text-align: center; margin-bottom: 3rem;">Amenidades</h2>
+        
+        <div class="amenidades-grid">
+          <!-- Card 1 -->
+          <a href="#amenidad-bano-privado" class="amenidad-card">
+            <div class="amenidad-img"><img src="../assets/images/img/experiencias/Fotos Mejoradas/Baño Privado.png" alt="Baño privado" loading="lazy"></div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Baño privado</h3>
+              <p class="amenidad-desc">Privacidad y confort en cada habitación.</p>
+            </div>
+          </a>
+
+          <!-- Card 2 -->
+          <a href="#amenidad-cocina" class="amenidad-card">
+            <div class="amenidad-img"><img src="../assets/images/img/experiencias/Fotos Mejoradas/Comedor Comun.jpg" alt="Cocina equipada" loading="lazy"></div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Cocina</h3>
+              <p class="amenidad-desc">Espacios equipados para tu día a día.</p>
+            </div>
+          </a>
+
+          <!-- Card 3 -->
+          <a href="#amenidad-gimnasio" class="amenidad-card">
+            <div class="amenidad-img"><img src="../assets/images/img/experiencias/Fotos Mejoradas/Gimnasio.jpg" alt="Gimnasio" loading="lazy"></div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Gimnasio</h3>
+              <p class="amenidad-desc">Entrena sin salir de casa.</p>
+            </div>
+          </a>
+
+          <!-- Card 4 -->
+          <a href="#amenidad-terraza" class="amenidad-card">
+            <div class="amenidad-img"><img src="../assets/images/img/experiencias/Fotos Mejoradas/Terraza.jpg" alt="Terraza" loading="lazy"></div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Terraza</h3>
+              <p class="amenidad-desc">Áreas abiertas para descansar o socializar.</p>
+            </div>
+          </a>
+
+          
+
+          <!-- Card 6 -->
+          <a href="#amenidad-cuartos-personalizables" class="amenidad-card">
+            <div class="amenidad-img"><img src="../assets/images/img/habitaciones/Op-1.png" alt="Cuartos personalizables" loading="lazy"></div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Cuartos personalizables</h3>
+              <p class="amenidad-desc">Amueblados y adaptables a tus preferencias.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Subsección B – Movilidad -->
+      <section class="movilidad-section" id="amenidad-movilidad" aria-label="Movilidad">
+        <h2 class="experiencias-title" style="text-align: center; margin-top: 4rem;">Movilidad y Cercanía</h2>
+        
+        <div class="movilidad-grid">
+          <div class="movilidad-card">
+            <div class="movilidad-img">
+              <img src="../assets/images/img/experiencias/metro.png" alt="Metro" loading="lazy">
+            </div>
+            <h3>Metro</h3>
+            <p>Estación Etiopía (Línea 3), ~8 min a pie. Conecta con Centro y Roma.</p>
+            <div class="hover-info">
+              <a class="map-link-overlay" href="https://www.google.com/maps/search/?api=1&query=Etiop%C3%ADa%20y%20Plaza%20de%20la%20Transparencia" target="_blank" rel="noopener noreferrer" title="Abrir en Google Maps"></a>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1881.6901231624165!2d-99.15734746123542!3d19.39596999546889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff055852d6dd%3A0xaeb19b4878e4503c!2sEtiop%C3%ADa%20y%20Plaza%20de%20la%20Transparencia!5e0!3m2!1ses-419!2smx!4v1768968531432!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Metro</h4>
+                <p>Estación Etiopía (L3): acceso rápido al Centro, Roma y zonas clave.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="movilidad-card">
+            <div class="movilidad-img">
+              <img src="../assets/images/img/experiencias/metrobus.png" alt="Metrobús" loading="lazy">
+            </div>
+            <h3>Metrobús</h3>
+            <p>Parada Dr. Vertiz, ~6 min a pie. Rutas hacia Centro y sur de la ciudad.</p>
+            <div class="hover-info">
+              <a class="map-link-overlay" href="https://www.google.com/maps/search/?api=1&query=Metrob%C3%BAs%20Dr.%20Vertiz" target="_blank" rel="noopener noreferrer" title="Abrir en Google Maps"></a>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.386027997196!2d-99.15372492413621!3d19.39571998187589!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff035ff8802d%3A0xa6e8848ec2be312e!2sMetrob%C3%BAs%20Dr.%20Vertiz!5e0!3m2!1ses-419!2smx!4v1768968699105!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Metrobús</h4>
+                <p>Parada Dr. Vertiz: conexión ágil hacia Centro, Roma y zonas del sur.</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Subsección C – Zonas Recreativas -->
+      <section class="recreativas-section" id="amenidad-plazas-parques">
+        <h2 class="experiencias-title" style="text-align: center; margin-top: 4rem; margin-bottom: 3rem;">Zonas Recreativas</h2>
+        
+        <div class="amenidades-grid">
+          <!-- Card 1 -->
+          <div class="amenidad-card">
+            <div class="amenidad-img">
+              <img src="../assets/images/img/experiencias/Parque.png" alt="Parque cercano" loading="lazy">
+            </div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Parque cercano</h3>
+              <p class="amenidad-desc">Parque Las Américas: áreas verdes, senderos y zonas para ejercicio.</p>
+            </div>
+            <div class="hover-info">
+              <a class="map-link-overlay" href="https://www.google.com/maps/search/?api=1&query=Parque%20Las%20Am%C3%A9ricas" target="_blank" rel="noopener noreferrer" title="Abrir en Google Maps"></a>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1881.6572189295148!2d-99.15184831119755!3d19.398815495468348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff8c6f5423ed%3A0x233933ec0323f56d!2sParque%20Las%20Am%C3%A9ricas!5e0!3m2!1ses-419!2smx!4v1768969225290!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Parque cercano</h4>
+                <p>Parque Las Américas: juegos infantiles, áreas arboladas y espacios de descanso.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="amenidad-card">
+            <div class="amenidad-img">
+              <img src="../assets/images/img/experiencias/Plaza Comercial.jpg" alt="Plaza comercial" loading="lazy">
+            </div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Plaza comercial</h3>
+              <p class="amenidad-desc">Parque Delta: tiendas, restaurantes, cine y servicios en un mismo lugar.</p>
+            </div>
+            <div class="hover-info">
+              <a class="map-link-overlay" href="https://www.google.com/maps/search/?api=1&query=Parque%20Delta" target="_blank" rel="noopener noreferrer" title="Abrir en Google Maps"></a>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.2222120741235!2d-99.15691562413605!3d19.402802581870183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff1a2816cd87%3A0x9d03a3d2ccf92f3b!2sParque%20Delta!5e0!3m2!1ses-419!2smx!4v1768969568519!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Plaza comercial</h4>
+                <p>Parque Delta: oferta de moda, gastronomía, cine y servicios esenciales.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="amenidad-card">
+            <div class="amenidad-img">
+              <img src="../assets/images/img/experiencias/cafe.png" alt="Café" loading="lazy">
+            </div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Café</h3>
+              <p class="amenidad-desc">Caravan 1689 Café: ambiente tranquilo para trabajar, reunirte o relajarte.</p>
+            </div>
+            <div class="hover-info">
+              <a class="map-link-overlay" href="https://www.google.com/maps/search/?api=1&query=Caravan%201689%20Caf%C3%A9" target="_blank" rel="noopener noreferrer" title="Abrir en Google Maps"></a>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.3224379505!2d-99.15411565541545!3d19.398469600000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff24c551ebd3%3A0x3dd8df0844bbd30d!2sCaravan%201689%20Caf%C3%A9!5e0!3m2!1ses-419!2smx!4v1768969723909!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Café</h4>
+                <p>Caravan 1689 Café: bebidas especiales y espacios cómodos para trabajar o convivir.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="amenidad-card">
+            <div class="amenidad-img">
+              <img src="../assets/images/img/experiencias/restaurante.jpg" alt="Restaurante" loading="lazy">
+            </div>
+            <div class="amenidad-content">
+              <h3 class="amenidad-title">Restaurante</h3>
+              <p class="amenidad-desc">El Mesón del Quijote: cocina española y platillos tradicionales.</p>
+            </div>
+            <div class="hover-info">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.358228257551!2d-99.15581765935704!3d19.396922081950382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff053116a4bd%3A0x7870cdf2ca84e3f1!2sEl%20Mes%C3%B3n%20del%20Quijote!5e0!3m2!1ses-419!2smx!4v1768969802798!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div class="hover-info-content">
+                <h4>Restaurante</h4>
+                <p>El Mesón del Quijote: platos tradicionales y ambiente acogedor cerca de casa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </section>
+
+    
+
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>

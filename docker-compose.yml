@@ -1,0 +1,63 @@
+networks:
+  proxy_net:
+    external: true
+  site_net:
+
+volumes:
+  mysqldata:
+
+services:
+  db:
+    image: mysql:8.0
+    env_file: .env
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks: [site_net]
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: .env
+    expose:
+      - "8000"
+    networks: [site_net]
+    restart: always
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+
+  frontend:
+    image: nginx:alpine
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      - VIRTUAL_HOST=rentalia.mx,www.rentalia.mx
+      - LETSENCRYPT_HOST=rentalia.mx,www.rentalia.mx
+      - VIRTUAL_PORT=80
+    networks: [proxy_net, site_net]
+    depends_on:
+      - backend
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    # YA NO depende del backend

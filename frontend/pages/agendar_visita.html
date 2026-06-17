@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar Visita | Rentalia</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Flatpickr -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/agendar-visita.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabase.js" defer></script>
+  <script src="../assets/js/main.js?v=3" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <!-- HERO -->
+  <section class="agendar-hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fa-solid fa-calendar-check"></i>
+        Agendamiento en línea
+      </div>
+      <h1 class="hero-title">Agenda tu Visita</h1>
+      <p class="hero-subtitle">
+        Ven y conoce personalmente nuestras propiedades.
+      </p>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="agendar-main">
+    <div class="booking-layout">
+
+      <!-- FORM -->
+      <div class="form-card">
+        <div class="form-header">
+          <div class="form-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+          </div>
+          <h2 class="form-title">Reserva tu Visita</h2>
+          <p class="form-subtitle">
+            Completa los pasos para agendar tu cita
+          </p>
+        </div>
+
+        <!-- STEPS -->
+        <div class="progress-steps">
+          <div class="progress-line" id="progressLine"></div>
+
+          <div class="step active"><div class="step-circle">1</div><span>Propiedad</span></div>
+          <div class="step"><div class="step-circle">2</div><span>Fecha</span></div>
+          <div class="step"><div class="step-circle">3</div><span>Datos</span></div>
+          <div class="step"><div class="step-circle">4</div><span>Confirmar</span></div>
+        </div>
+
+        <!-- FORM -->
+        <form id="visitaForm">
+
+          <!-- STEP 1 -->
+          <div class="form-step active" id="step1">
+            <h3 class="section-title"><i class="fa-solid fa-building"></i> Propiedad</h3>
+            <div id="propertySelector" class="property-selector">
+                <!-- Se llenará dinámicamente -->
+                <div class="loading-state">
+                    <i class="fa-solid fa-spinner fa-spin"></i> Cargando propiedades...
+                </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                Continuar
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="form-step" id="step2">
+            <h3 class="section-title"><i class="fa-solid fa-calendar"></i> Fecha y hora</h3>
+
+            <input id="fecha" class="form-input" placeholder="Selecciona fecha" readonly>
+
+            <div class="time-slots" id="timeSlots"></div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Atrás</button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(3)">Continuar</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="form-step" id="step3">
+            <h3 class="section-title"><i class="fa-solid fa-user"></i> Datos</h3>
+
+            <input id="nombre" class="form-input" placeholder="Nombre completo" required>
+            <input id="email" class="form-input" placeholder="Correo electrónico" type="email" required>
+            <input id="telefono" class="form-input" placeholder="Teléfono" type="tel" required>
+
+            <textarea id="comentarios" class="form-textarea" placeholder="Comentarios"></textarea>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Atrás</button>
+              <button type="button" class="btn btn-primary" onclick="nextStep(4)">Continuar</button>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="form-step" id="step4">
+            <h3 class="section-title"><i class="fa-solid fa-check"></i> Confirmar</h3>
+            <div id="confirmationSummary"></div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Atrás</button>
+              <button type="submit" class="btn btn-primary">Confirmar Visita</button>
+            </div>
+          </div>
+
+          <!-- SUCCESS -->
+          <div class="success-message" id="successMessage" style="display: none;">
+            <div style="text-align: center; padding: 2rem;">
+                <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 4rem; margin-bottom: 1rem;"></i>
+                <h3>¡Visita agendada!</h3>
+                <p>Recibirás un correo de confirmación.</p>
+                <button onclick="window.location.reload()" class="btn btn-primary" style="margin-top: 1rem;">Agendar otra</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="info-card summary-card">
+          <h3>Resumen</h3>
+          <p id="summaryProperty"><strong>Propiedad:</strong> <span>-</span></p>
+          <p id="summaryDate"><strong>Fecha:</strong> <span>-</span></p>
+          <p id="summaryTime"><strong>Hora:</strong> <span>-</span></p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+  <script src="../assets/js/agendar_visita.js"></script>
+
+</body>
+</html>

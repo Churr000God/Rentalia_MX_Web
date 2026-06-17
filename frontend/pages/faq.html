@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Preguntas frecuentes sobre Rentalia - Encuentra respuestas a tus dudas">
+  <title>Preguntas Frecuentes | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/faq.css" />
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/faq.js?v=5" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="faq-main">
+    <section class="faq-hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-circle-question"></i>
+                Centro de Ayuda
+            </div>
+            <h1 class="hero-title">¿Cómo podemos ayudarte?</h1>
+            <p class="hero-subtitle">
+                Encuentra respuestas rápidas a las preguntas más frecuentes sobre Rentalia
+            </p>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Buscar en preguntas frecuentes...">
+            <button class="search-btn" id="searchBtn">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                Buscar
+            </button>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="stat-value">45+</div>
+            <div class="stat-label">Preguntas Respondidas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+            <div class="stat-value">&lt;2min</div>
+            <div class="stat-label">Tiempo de Respuesta</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-value">98%</div>
+            <div class="stat-label">Satisfacción</div>
+        </div>
+    </section>
+
+    <section class="categories-section">
+        <div class="categories-grid" id="categoriesGrid">
+            <div class="category-card active" data-category="todas">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fa-solid fa-grip"></i></div>
+                    <div class="category-name">Todas</div>
+                    <div class="category-count">12</div>
+                </div>
+            </div>
+            <div class="category-card" data-category="reservas">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div class="category-name">Reservas</div>
+                    <div class="category-count">3</div>
+                </div>
+            </div>
+            <div class="category-card" data-category="pagos">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fa-solid fa-credit-card"></i></div>
+                    <div class="category-name">Pagos</div>
+                    <div class="category-count">3</div>
+                </div>
+            </div>
+            <div class="category-card" data-category="habitaciones">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fa-solid fa-bed"></i></div>
+                    <div class="category-name">Habitaciones</div>
+                    <div class="category-count">3</div>
+                </div>
+            </div>
+            <div class="category-card" data-category="servicios">
+                <div class="category-header">
+                    <div class="category-icon"><i class="fa-solid fa-concierge-bell"></i></div>
+                    <div class="category-name">Servicios</div>
+                    <div class="category-count">3</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="questions-section">
+        <div class="questions-header">
+            <h2 class="questions-title">Preguntas Frecuentes</h2>
+            <p class="questions-count" id="questionsCount">Cargando preguntas...</p>
+        </div>
+
+        <div class="faq-accordion" id="faqAccordion">
+            <!-- Questions loaded via JS -->
+        </div>
+
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+            <h3 class="no-results-title">No encontramos resultados</h3>
+            <p class="no-results-text">Intenta con otros términos de búsqueda o explora por categorías</p>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="cta-card">
+            <div class="cta-content">
+                <div class="cta-icon"><i class="fa-solid fa-headset"></i></div>
+                <h2 class="cta-title">¿Aún tienes dudas?</h2>
+                <p class="cta-text">Nuestro equipo de soporte está disponible para ayudarte.</p>
+                <div class="cta-buttons">
+                    <button id="btnOpenContact" class="btn btn-primary" style="border:none; cursor:pointer; font-size:1rem;"><i class="fa-solid fa-envelope"></i> Enviar Mensaje</button>
+                    <a href="https://wa.me/525523215421?text=Hola%20me%20gustaria%20recibir%20ayuda" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+  </main>
+
+  <!-- Modal de Contacto -->
+  <div id="contactModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="btnCloseModal">&times;</button>
+        <div class="modal-header">
+            <h3>Envíanos tu pregunta</h3>
+            <p>Te responderemos lo antes posible a tu correo electrónico.</p>
+        </div>
+        <form id="contactForm" class="modal-form">
+            <div class="form-group">
+                <label for="userName">Nombre Completo</label>
+                <input type="text" id="userName" required placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Correo Electrónico</label>
+                <input type="email" id="userEmail" required placeholder="tucorreo@ejemplo.com">
+            </div>
+            <div class="form-group">
+                <label for="userQuestion">Tu Pregunta</label>
+                <textarea id="userQuestion" required placeholder="¿En qué podemos ayudarte?" rows="4"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Enviar Pregunta</button>
+        </form>
+    </div>
+  </div>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>

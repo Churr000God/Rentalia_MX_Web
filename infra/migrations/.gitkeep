@@ -1,0 +1,6 @@
+# Directorio para migraciones de base de datos
+
+Este directorio contendrá los archivos de migración cuando se implemente el backend.
+
+Estructura esperada:
+- YYYYMMDD_HHMMSS_nombre_migracion.sql

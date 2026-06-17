@@ -1,0 +1,7 @@
+# Directorio para monitoreo y métricas
+
+Este directorio contendrá:
+- Configuración de Prometheus
+- Dashboards de Grafana
+- Alertas y notificaciones
+- Scripts de health checks

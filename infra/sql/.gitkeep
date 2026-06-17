@@ -1,0 +1,7 @@
+# Directorio para scripts SQL auxiliares
+
+Este directorio contendrá scripts SQL de utilidad:
+- Consultas complejas
+- Procedimientos almacenados
+- Funciones personalizadas
+- Scripts de mantenimiento

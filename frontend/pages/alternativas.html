@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explora todas las alternativas de alojamiento disponibles en Rentalia">
+  <title>Alternativas | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/habitaciones.css" />
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/supabase.js?v=2" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="alternativas-main">
+    <!-- Sección Hero -->
+    <section class="alternativas-hero">
+      <div class="alternativas-hero-content">
+        <button class="hero-btn">
+          <i class="fa-solid fa-home"></i> ENCUENTRA TU LUGAR
+        </button>
+        <h1>Nuestras Habitaciones</h1>
+        <p>Explora nuestras opciones de alojamiento diseñadas para cada estilo de vida.</p>
+      </div>
+    </section>
+
+    <!-- Listado de alternativas -->
+    <section class="habitaciones-section" id="alternativas-section">
+      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
+          <h2 class="featured-title" style="text-align: center; margin-bottom: 2rem;">Habitaciones Disponibles</h2>
+
+          <!-- Filtros y Buscador -->
+          <div class="filters-section">
+              <div class="filters-container">
+                  <div class="search-box">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                      <input type="text" id="searchInput" placeholder="Buscar por nombre...">
+                  </div>
+                  
+                  <div class="filter-group">
+                      <div class="select-wrapper">
+                          <i class="fa-solid fa-location-dot"></i>
+                          <select id="zonaFilter">
+                              <option value="">Todas las zonas</option>
+                              <option value="Roma Norte">Roma Norte</option>
+                              <option value="Condesa">Condesa</option>
+                              <option value="Polanco">Polanco</option>
+                              <option value="Narvarte">Narvarte</option>
+                              <option value="Del Valle">Del Valle</option>
+                          </select>
+                      </div>
+                      
+                      <div class="select-wrapper">
+                          <i class="fa-solid fa-dollar-sign"></i>
+                          <select id="precioFilter">
+                              <option value="">Cualquier precio</option>
+                              <option value="0-5000">Menos de $5,000</option>
+                              <option value="5000-8000">$5,000 - $8,000</option>
+                              <option value="8000-12000">$8,000 - $12,000</option>
+                              <option value="12000+">Más de $12,000</option>
+                          </select>
+                      </div>
+
+                      <div class="select-wrapper">
+                          <i class="fa-solid fa-filter"></i>
+                          <select id="statusFilter">
+                              <option value="">Todos los estados</option>
+                              <option value="available">Disponible</option>
+                              <option value="occupied">Ocupado</option>
+                              <option value="maintenance">Mantenimiento</option>
+                          </select>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="results-counter-bar">
+                  <span class="counter-badge"><span id="roomsCounter">0</span> resultados</span>
+                  <button id="clearFilters" class="clear-btn" style="display: none;">
+                      <i class="fa-solid fa-xmark"></i> Limpiar filtros
+                  </button>
+              </div>
+          </div>
+
+          <div id="habitaciones-grid" class="habitaciones-grid">
+              <!-- Loading State -->
+              <div class="loading-state" style="text-align: center; grid-column: 1/-1; padding: 3rem;">
+                  <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: #ff6b00;"></i>
+                  <p style="margin-top: 1rem; color: #718096;">Cargando habitaciones disponibles...</p>
+              </div>
+          </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>
