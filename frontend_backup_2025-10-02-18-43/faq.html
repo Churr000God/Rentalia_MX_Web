@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Preguntas frecuentes sobre Rentalia - Encuentra respuestas a tus dudas">
+  <title>Preguntas Frecuentes | Rentalia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./assets/css/header.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/footer.css" />
+  <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon" />
+
+  <!-- Scripts -->
+  <script src="./assets/js/main.js" defer></script>
+  <script src="./assets/js/faq.js" defer></script>
+</head>
+
+<body>
+  <!-- Header dinámico -->
+  <div id="header-container"></div>
+
+  <main class="faq-main">
+    <!-- Hero section -->
+    <section class="faq-hero">
+      <div class="faq-hero-content">
+        <h1>Preguntas Frecuentes</h1>
+        <p>Encuentra respuestas a las dudas más comunes sobre nuestros servicios</p>
+      </div>
+    </section>
+
+    <!-- Buscador de preguntas -->
+    <section class="faq-search">
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" id="faq-search-input" placeholder="Buscar en preguntas frecuentes...">
+          <button id="faq-search-btn">
+            <svg xmlns="https://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categorías de preguntas -->
+    <section class="faq-categories">
+      <div class="categories-container">
+        <button class="category-btn active" data-category="todas">Todas</button>
+        <button class="category-btn" data-category="reservas">Reservas</button>
+        <button class="category-btn" data-category="pagos">Pagos</button>
+        <button class="category-btn" data-category="habitaciones">Habitaciones</button>
+        <button class="category-btn" data-category="servicios">Servicios</button>
+        <button class="category-btn" data-category="politicas">Políticas</button>
+      </div>
+    </section>
+
+    <!-- Listado de preguntas -->
+    <section class="faq-questions">
+      <div class="questions-container" id="faq-accordion">
+        <!-- Las preguntas se cargarán dinámicamente desde JS -->
+      </div>
+    </section>
+
+    <!-- CTA para contacto adicional -->
+    <section class="faq-cta">
+      <div class="cta-container">
+        <h2>¿No encontraste lo que buscabas?</h2>
+        <p>Nuestro equipo está listo para ayudarte con cualquier duda que tengas</p>
+        <a href="contacto.html" class="btn">Contáctanos</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+</body>
+</html>

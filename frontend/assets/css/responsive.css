@@ -1,0 +1,113 @@
+/* responsive.css - MEJORAS PARA ALTERNATIVAS EN MÓVIL */
+
+@media (max-width: 768px) {
+  /* Alternativas - Scroll horizontal mejorado */
+  .alternativas-section {
+    padding: 2rem 1rem;
+    overflow: hidden;
+  }
+
+  .featured-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .properties-scroll-container {
+    margin: 0 -1rem;
+    padding: 0 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 0 1rem;
+  }
+
+  .properties-scroll-container::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .properties-scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .properties-scroll-container::-webkit-scrollbar-thumb {
+    background: #ff6b00;
+    border-radius: 3px;
+  }
+
+  .properties-wrapper {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    width: max-content;
+  }
+
+  .property-card {
+    min-width: 280px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  /* Hero section mejorada para móvil */
+  .hero-header {
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .cta-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .property-card {
+    min-width: 260px;
+  }
+
+  .property-image {
+    height: 200px;
+  }
+
+  .property-info {
+    padding: 1rem;
+  }
+
+  .property-title {
+    font-size: 1.2rem;
+  }
+
+  .property-price {
+    font-size: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+}
