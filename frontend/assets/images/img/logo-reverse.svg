@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Símbolo Rentalia">
+  <title>Rentalia — símbolo (fondo oscuro)</title>
+  <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165" fill="none" stroke="#F3EDE1" stroke-width="7" stroke-linecap="round"/>
+  <line x1="100" y1="165" x2="100" y2="96" stroke="#F3EDE1" stroke-width="5" stroke-linecap="round"/>
+  <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+  <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+</svg>

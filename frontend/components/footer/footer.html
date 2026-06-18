@@ -1,79 +1,112 @@
-<!-- Incluir Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<!-- ══════════════════════════════════════════════════════════
+     RENTALIA — Footer
+     Inyectado dinámicamente por main.js en <footer id="footer-container">
+     Se conserva Font Awesome para compatibilidad con páginas internas
+     que aún usan iconos FA (alternativas, experiencias, etc.).
+══════════════════════════════════════════════════════════ -->
 
-<!-- ========== Footer ========== -->
-<footer class="footer">
-  <div class="footer-container">
-    
-    <!-- Logo -->
-    <div class="footer-column footer-logo">
-      <img src="/assets/images/img/logo.png" alt="Logo Rentalia" />
-    </div>
+<!-- Font Awesome — compatibilidad con páginas internas no rediseñadas -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-    <!-- Enlaces -->
-    <div class="footer-column footer-links">
-      <h4 class="footer-title">Links</h4>
-      <ul>
-        <li><a href="/index.html">Inicio</a></li>
-        <li><a href="/pages/alternativas.html">Alternativas</a></li>
-        <li><a href="/pages/experiencias.html">Experiencias</a></li>
-        <li><a href="/pages/agendar_visita.html">Agendar Visita</a></li>
-        <li><a href="/pages/faq.html">FAQ</a></li>
-      </ul>
-    </div>
+<footer class="footer" role="contentinfo">
+  <div class="container">
 
-    <!-- Contacto -->
-    <div class="footer-column footer-contact">
-      <h4 class="footer-title">Contacto</h4>
-      <p><strong>Dirección:</strong><br>C. Palenque 35, Narvarte Poniente,<br>Benito Juárez, 03023 CDMX</p>
-      <p><strong>Teléfono:</strong><br><a href="tel:+525523215421">(55) 2321-5421</a></p>
-      <p><strong>Email:</strong><br><a href="mailto:info@rentalia.com">info@rentalia.com</a></p>
-    </div>
+    <div class="footer__grid">
 
-    <!-- Redes Sociales -->
-    <div class="footer-column footer-social">
-      <h4 class="footer-title">Síguenos</h4>
-      <ul class="wrapper">
-        <a href="https://www.facebook.com/tu_pagina" target="_blank" rel="noopener">
-          <li class="icon facebook">
-            <span class="name">Facebook</span>
-            <i class="fab fa-facebook-f"></i>
-          </li>
+      <!-- Marca -->
+      <div>
+        <a href="/" class="footer__brand">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165"
+                  fill="none" stroke="#F3EDE1" stroke-width="7" stroke-linecap="round"/>
+            <line x1="100" y1="165" x2="100" y2="96"
+                  stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+            <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+            <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+          </svg>
+          Rentalia
         </a>
-        <a href="https://www.instagram.com/tu_usuario" target="_blank" rel="noopener">
-          <li class="icon instagram">
-            <span class="name">Instagram</span>
-            <i class="fab fa-instagram"></i>
-          </li>
-        </a>
-        <a href="https://x.com/tu_usuario" target="_blank" rel="noopener">
-          <li class="icon x">
-            <span class="name">X</span>
-            <i class="fab fa-x-twitter"></i>
-          </li>
-        </a>
-        <a href="https://wa.me/5215523215421" target="_blank" rel="noopener">
-          <li class="icon whatsapp">
-            <span class="name">WhatsApp</span>
-            <i class="fab fa-whatsapp"></i>
-          </li>
-        </a>
-      </ul>
+        <p class="footer__desc">
+          Coliving amueblado con comunidad en Narvarte. Llega con tu maleta — lo demás ya está.
+        </p>
+      </div>
+
+      <!-- Sitio -->
+      <div>
+        <p class="footer__col-label">Sitio</p>
+        <ul class="footer__links" role="list">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/pages/alternativas.html">Habitaciones</a></li>
+          <li><a href="/pages/experiencias.html">Experiencias</a></li>
+          <li><a href="/pages/faq.html">Preguntas frecuentes</a></li>
+        </ul>
+      </div>
+
+      <!-- Info -->
+      <div>
+        <p class="footer__col-label">Info</p>
+        <ul class="footer__links" role="list">
+          <li><a href="/pages/faq.html#que-incluye">¿Qué incluye?</a></li>
+          <li><a href="/pages/faq.html#contratos">Contratos</a></li>
+          <li><a href="/pages/agendar_visita.html">Agendar visita</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <p class="footer__col-label">Contacto</p>
+        <!-- WhatsApp -->
+        <div class="footer__contact-row">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.36 6.36l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <a href="https://wa.me/5215523215421" target="_blank" rel="noopener noreferrer">
+            WhatsApp
+          </a>
+        </div>
+        <!-- Email -->
+        <div class="footer__contact-row">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <a href="mailto:hola@rentalia.mx">hola@rentalia.mx</a>
+        </div>
+        <!-- Instagram -->
+        <div class="footer__contact-row">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/>
+          </svg>
+          <a href="https://instagram.com/rentalia.mx" target="_blank" rel="noopener noreferrer">
+            @rentalia.mx
+          </a>
+        </div>
+        <!-- Dirección -->
+        <div class="footer__contact-row" style="margin-top:.4rem; align-items:flex-start;">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="margin-top:2px">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <a href="https://maps.google.com/?q=C.+Palenque+35,+Narvarte+Poniente,+Benito+Juárez,+CDMX" target="_blank" rel="noopener noreferrer">
+            C. Palenque 35, Narvarte Poniente,<br>Benito Juárez, CDMX
+          </a>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Mapa -->
-    <div class="footer-column footer-map">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.35688157384!2d-99.15168145634576!3d19.39698031264037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff04b2985217%3A0x36fadceb5f4333f6!2sC.%20Palenque%2035%2C%20Narvarte%20Poniente%2C%20Benito%20Ju%C3%A1rez%2C%2003023%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses!2smx!4v1753515904169!5m2!1ses!2smx"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Mapa de la ubicación en Ciudad de México">
-      </iframe>
+    <div class="footer__bottom">
+      <p class="footer__copy">© <span id="year">2026</span> Rentalia · rentalia.mx</p>
+      <p class="footer__loc">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Narvarte · CDMX
+      </p>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>© 2023 Rentalia. Todos los derechos reservados.</p>
   </div>
 </footer>

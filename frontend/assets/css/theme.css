@@ -1,0 +1,190 @@
+/* ════════════════════════════════════════════════════════════
+   RENTALIA — DESIGN SYSTEM v1
+   Fuente única de verdad: tokens, reset, base y helpers globales.
+   Cargado por main.css (@import) → disponible en todas las páginas.
+   En index.html también se enlaza directamente (después de main.css)
+   para que sus reglas base (body/html) ganen la cascada en el Home.
+════════════════════════════════════════════════════════════ */
+
+/* ── TOKENS ─────────────────────────────────────────────── */
+:root {
+  /* Colores de marca (core) */
+  --selva:      #1E4D3C;  /* primary: nav, encabezados, acciones */
+  --selva-deep: #143528;  /* hover, fondos oscuros, contraste máx  */
+  --hoja:       #8DA68F;  /* verde suave decorativo, texto sobre selva */
+  --cempa:      #E9A53A;  /* CTA / acento cempasúchil */
+  --barro:      #BC6B43;  /* precios, indicadores financieros */
+  --hueso:      #F3EDE1;  /* canvas / fondo de página */
+  --hueso-2:    #EAE2D2;  /* superficie alterna / tarjetas */
+  --tinta:      #221F1A;  /* texto — negro cálido */
+
+  /* On-colors (contraste accesible) */
+  --on-selva:   #F3EDE1;  /* hueso sobre selva/selva-deep */
+  --on-cempa:   #143528;  /* selva-deep sobre cempa — NUNCA blanco */
+  --on-hueso:   #221F1A;  /* tinta sobre hueso */
+
+  /* Semánticos / estado (portados de Material Design 3 para formularios) */
+  --secondary:           #4d6450;
+  --secondary-container: #cce7cd;
+  --tertiary:            #4c221f;
+  --error:               #ba1a1a;
+  --error-container:     #ffdad6;
+  --on-error:            #ffffff;
+  --outline:             #717974;
+  --outline-variant:     #c0c8c2;
+
+  /* Tipografía */
+  --font-display: "Young Serif", Georgia, serif;
+  --font-body:    "Figtree", system-ui, sans-serif;
+
+  /* Radios */
+  --radius-sm:   10px;
+  --radius-md:   14px;
+  --radius-lg:   18px;
+  --radius-full: 9999px;
+
+  /* Espaciado */
+  --space-xs: 4px;   --space-sm: 12px;  --space-base: 8px;
+  --space-md: 24px;  --space-lg: 48px;  --space-xl: 80px;
+  --gutter: 24px;
+  --margin-mobile:  16px;
+  --margin-desktop: 64px;
+  --max-width: 1280px;
+
+  /* Movimiento / elevación */
+  --ease: cubic-bezier(.25,.46,.45,.94);
+  --shadow-fab: 0 4px 20px rgba(30,77,60,.08);
+  --shadow-card: 0 2px 8px rgba(34,31,26,.06);
+  --shadow-card-hover: 0 18px 44px rgba(30,77,60,.13);
+}
+
+/* ── RESET ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── BASE ────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* navbar height */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--tinta);
+  background: var(--hueso);
+  -webkit-font-smoothing: antialiased;
+}
+
+img  { display: block; max-width: 100%; }
+a    { color: inherit; text-decoration: none; }
+
+*:focus-visible {
+  outline: 3px solid var(--cempa);
+  outline-offset: 3px;
+}
+
+/* ── HELPERS GLOBALES ────────────────────────────────────── */
+
+/* Accesibilidad */
+.skip-link {
+  position: absolute;
+  top: -9999px; left: 1rem;
+  background: var(--cempa); color: var(--on-cempa);
+  font-weight: 700; padding: .5rem 1rem;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  z-index: 999;
+}
+.skip-link:focus { top: 0; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+/* Contenedor */
+.container {
+  width: min(100%, 74rem);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Eyebrow / etiqueta */
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--barro);
+  margin-bottom: .7rem;
+}
+
+/* Título de sección */
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  line-height: 1.18;
+  color: var(--selva-deep);
+}
+
+/* Padding estándar de sección */
+.section { padding-block: 5rem; }
+
+/* ── BOTONES ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-body); font-weight: 700; font-size: .95rem;
+  padding: 13px 24px;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer; white-space: nowrap; line-height: 1;
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease), background 160ms;
+  text-decoration: none;
+}
+.btn:hover   { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.15); }
+.btn:active  { transform: translateY(0); box-shadow: none; }
+.btn:focus-visible { outline: 3px solid var(--cempa); outline-offset: 3px; }
+
+/* Primary — cempasúchil */
+.btn-cta { background: var(--cempa); color: var(--on-cempa); border-color: var(--cempa); }
+.btn-cta:hover { background: #f0b044; color: #e05500; }
+
+/* Ghost — para fondos oscuros */
+.btn-ghost { background: transparent; color: var(--hueso); border-color: rgba(243,237,225,.28); }
+.btn-ghost:hover { background: rgba(243,237,225,.09); }
+
+/* Outline — para fondos claros */
+.btn-outline { background: transparent; color: var(--selva); border-color: var(--selva); }
+.btn-outline:hover { background: var(--selva-deep); color: var(--hueso); border-color: var(--selva-deep); }
+
+/* ── CHIP / ETIQUETA ─────────────────────────────────────── */
+.chip {
+  display: inline-block;
+  font-size: .73rem; font-weight: 500;
+  background: rgba(30,77,60,.09); color: var(--selva);
+  padding: 4px 10px; border-radius: var(--radius-full); line-height: 1.5;
+}
+
+/* ── SKELETON LOADER ─────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--hueso-2) 25%, #d4cbbf 50%, var(--hueso-2) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 4px;
+  min-height: 1rem;
+}
+@keyframes skeleton-loading {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── UTILIDADES ──────────────────────────────────────────── */
+.is-hidden { display: none !important; }

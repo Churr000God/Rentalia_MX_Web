@@ -2,7 +2,9 @@
 RENTALIA:MX - MAIN STYLESHEET
 ============================================================== */
 
-/* Imports */
+/* Imports — theme.css va primero para que los tokens estén disponibles
+   en header.css y footer.css que se cargan a continuación.           */
+@import url('theme.css');
 @import url('../../components/header/header.css');
 @import url('../../components/footer/footer.css');
 
@@ -158,7 +160,7 @@ a:hover{
 }
 
 /* ==============================================================
-Botones (globales
+Botones (globales — solo estructura; colores en theme.css)
 ============================================================== */
 .btn{
   display: inline-flex;
@@ -170,27 +172,17 @@ Botones (globales
   font-weight: 600;
   border-radius: 999px;
   border: 2px solid transparent;
-  background-color: #ff6b00;
-  color: #ffffff;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.btn:hover{
-  background-color: #e55e00;
-  transform: translateY(-1px);
-}
-
-.btn.secondary,
-.btn-outline{
-  background-color: transparent;
-  border-color: #ff6b00;
-  color: #ff6b00;
-}
-
-.btn.secondary:hover,
-.btn-outline:hover{
+/* Variante legada — páginas no rediseñadas que usen .btn sin modificador */
+.btn-primary{
   background-color: #ff6b00;
+  color: #ffffff;
+}
+.btn-primary:hover{
+  background-color: #e55e00;
   color: #ffffff;
 }
 
@@ -227,216 +219,418 @@ Botones (globales
     }
 }
 
-/* =====================================================
-   HERO – Rentalia (Slider con contenido fijo)
-   ===================================================== */
-
+/* ════════════════════════════════════════════════
+   HERO — Rentalia
+════════════════════════════════════════════════ */
 .hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  min-height: 520px;
+  background: var(--selva-deep);
+  background-image: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(30,77,60,.45) 0%, transparent 70%);
   overflow: hidden;
+}
+
+.hero__inner {
+  padding-block: 4rem 5rem;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-/* =========================
-   Fondos
-   ========================= */
+/* Text side */
+.hero__content { color: var(--hueso); }
 
-.hero-background {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transition: opacity 1.5s ease-in-out;
-  z-index: 0;
-  pointer-events: none;
+.hero__location {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: rgba(255,255,255,.07); color: var(--hoja);
+  font-size: .78rem; font-weight: 500;
+  padding: .3rem .85rem; border-radius: 999px;
+  margin-bottom: 1.4rem;
 }
+.hero__location svg { width: 11px; height: 11px; flex-shrink: 0; }
 
-.hero-background.active {
-  opacity: 1;
+.hero__eyebrow { color: var(--hoja); margin-bottom: .6rem; }
+
+.hero__h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 9vw, 5.4rem);
+  line-height: 1.04;
+  color: var(--hueso);
+  letter-spacing: -.01em;
+  margin-bottom: 1.3rem;
 }
+.hero__h1 em { font-style: normal; color: var(--cempa); }
 
-.hero-background::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  pointer-events: none;
-}
-
-/* Rutas ajustables */
-.bg1 { background-image: url("../images/img/slider/1raimagen.png"); }
-.bg2 { background-image: url("../images/img/slider/Fachada.jpg"); }
-.bg3 { background-image: url("../images/img/slider/Fachada1.jpg"); }
-
-/* =========================
-   Contenido fijo
-   ========================= */
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: #ffffff;
-  padding: 2rem;
-  max-width: 900px;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  line-height: 1.2;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.hero-subtitle {
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  margin: 1rem 0 2.2rem;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* =========================
-   Botones
-   ========================= */
-
-.hero-buttons {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Respeta tus clases existentes */
-.hero .btn {
-  padding: 1rem 2.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-}
-
-.hero .btn-primary {
-  background: #ff6b00;
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(255, 107, 0, 0.45);
-}
-
-.hero .btn-primary:hover {
-  background: #e55a00;
-  transform: translateY(-3px);
-}
-
-.hero .btn-secondary {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid #ffffff;
-  color: #ffffff;
-  backdrop-filter: blur(6px);
-}
-
-.hero .btn-secondary:hover {
-  background: #ffffff;
-  color: #ff6b00;
-  transform: translateY(-3px);
-}
-
-/* =========================
-   Indicadores
-   ========================= */
-.availability-badge {
-  display: none; /* Se activa con JS */
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  padding: 0.6rem 1.2rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.hero__sub {
+  font-size: clamp(1rem, 1.8vw, 1.08rem);
+  color: rgba(141,166,143,.9);
+  max-width: 46ch; line-height: 1.75;
   margin-bottom: 2rem;
-  font-size: 0.95rem;
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.8s ease-out;
 }
 
-.status-indicator {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #22c55e; /* Verde disponible */
+.hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+/* Visual side — arch photo */
+.hero__visual { display: flex; justify-content: center; }
+
+.arch-wrap {
   position: relative;
+  width: min(300px, 76vw);
 }
 
-.status-indicator.busy {
-  background-color: #ef4444; /* Rojo ocupado */
+.arch-photo {
+  width: 100%;
+  padding-top: 130%;
+  border-radius: 9999px 9999px 0 0;
+  overflow: hidden;
+  position: relative;
+  outline: 3px solid var(--cempa);
+  outline-offset: 9px;
+}
+.arch-photo__fill {
+  position: absolute; inset: 0;
+  background: linear-gradient(170deg, #2c7050 0%, var(--selva) 38%, #1a4030 70%, #243828 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding: 2rem 1.5rem 1.6rem;
+}
+.arch-photo__fill--img {
+  background-size: cover;
+  background-position: center top;
+  padding: 0;
+}
+.arch-photo__note {
+  text-align: center;
+  background: rgba(20,53,40,.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: .55rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: .7rem; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: rgba(243,237,225,.5);
 }
 
-.status-indicator.pulse::after {
-  content: '';
+/* Floating price badge */
+.arch-badge {
   position: absolute;
-  top: -4px;
-  left: -4px;
-  right: -4px;
-  bottom: -4px;
-  border-radius: 50%;
-  border: 2px solid #22c55e;
-  animation: pulse-ring 2s infinite;
-  opacity: 0.6;
+  bottom: 22px; right: -18px;
+  background: var(--hueso);
+  padding: .7rem .95rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  z-index: 2;
+}
+.arch-badge strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem; line-height: 1.1;
+  color: var(--barro);
+}
+.arch-badge span {
+  font-size: .68rem; font-weight: 500;
+  color: rgba(34,31,26,.5); line-height: 1.3;
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.5); opacity: 0; }
-  50% { opacity: 0.6; }
-  100% { transform: scale(1.5); opacity: 0; }
+/* Decorative SVG leaves */
+.arch-leaf { position: absolute; pointer-events: none; }
+.arch-leaf--tr { top: -14px; right: -16px; opacity: .32; }
+.arch-leaf--bl { bottom: 40px; left: -18px; opacity: .22; transform: rotate(30deg); }
+
+@media (min-width: 900px) {
+  .hero__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+    padding-block: 5rem 6rem;
+  }
+  .hero__content { flex: 1 1 55%; }
+  .hero__visual  { flex: 0 0 40%; }
+  .arch-wrap { width: min(350px, 36vw); }
+}
+/* ════════════════════════════════════════════════
+   CONCEPT — "Más que un lugar para vivir"
+════════════════════════════════════════════════ */
+.concept {
+  background: var(--hueso-2);
+  padding-block: var(--space-xl);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.concept__inner { text-align: center; }
+
+.concept__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  color: var(--selva-deep);
+  margin-bottom: var(--space-lg);
 }
 
-.slide-indicators {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
+.concept__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gutter);
+}
+
+@media (min-width: 768px) {
+  .concept__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.concept__card {
   display: flex;
-  gap: 0.8rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 1.75rem;
+  background: var(--hueso);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(30,77,60,.1);
+  transition: box-shadow 220ms var(--ease), transform 220ms var(--ease);
+}
+.concept__card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
 }
 
-.indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
+.concept__icon {
+  font-size: 2.4rem;
+  color: var(--selva);
+  line-height: 1;
+}
+
+.concept__card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--selva-deep);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.concept__card-body {
+  font-size: .93rem;
+  color: rgba(34,31,26,.62);
+  line-height: 1.65;
+  max-width: 28ch;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════
+   HABITACIONES — Carrusel de habitaciones (home)
+════════════════════════════════════════════════ */
+.habitaciones { background: var(--hueso-2); }
+
+.habitaciones__header { margin-bottom: var(--space-lg); }
+.habitaciones__footer { text-align: center; margin-top: 2.5rem; }
+
+/* ── Carousel wrapper ─────────────────────────── */
+.rooms-carousel { overflow: hidden; }
+
+.rooms {
+  display: flex;
+  gap: var(--gutter);
+  transition: transform 420ms var(--ease);
+  will-change: transform;
+}
+
+/* ── Room card ────────────────────────────────── */
+.room-card {
+  flex: 0 0 100%;
+  background: var(--hueso);
+  border-radius: 80px 80px var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(30,77,60,.05);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 220ms var(--ease), transform 220ms var(--ease);
+}
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+@media (min-width: 768px) {
+  .room-card { flex: 0 0 calc((100% - 2 * var(--gutter)) / 3); }
+}
+
+/* Photo area */
+.room-card__photo {
+  height: 16rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Fill — real image or gradient placeholder */
+.room-card__photo-fill {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center top;
+  display: flex; align-items: flex-end;
+  padding: 1rem;
+}
+
+/* Gradient placeholders */
+.pg-a { background-image: linear-gradient(160deg, #2c7050 0%, var(--selva) 50%, #1a4030 100%); }
+.pg-b { background-image: linear-gradient(160deg, #1a3d2e 0%, #2a6048 50%, var(--selva-deep) 100%); }
+.pg-c { background-image: linear-gradient(160deg, #9e4e28 0%, var(--barro) 55%, #7a3a1e 100%); }
+.pg-d { background-image: linear-gradient(160deg, var(--selva-deep) 0%, #3a6b52 60%, #243828 100%); }
+
+.room-card__photo-label {
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: rgba(243,237,225,.45);
+  background: rgba(0,0,0,.15);
+  padding: .3rem .6rem;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+/* Badge */
+.room-card__badge {
+  position: absolute; top: 1rem; right: 1rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .72rem; font-weight: 600;
+  padding: .3rem .8rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.badge-on    { background: var(--hueso); color: var(--selva-deep); }
+.badge-off   { background: rgba(243,237,225,.85); color: var(--barro); }
+.badge-amber { background: rgba(243,237,225,.85); color: #92610a; }
+
+/* Body */
+.room-card__body {
+  padding: 1.5rem;
+  display: flex; flex-direction: column;
+  flex: 1;
+}
+.room-card__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem; color: var(--selva-deep);
+  margin: 0 0 .3rem;
+}
+.room-card__price {
+  font-family: var(--font-display);
+  font-size: 1.05rem; color: var(--barro);
+  margin: 0 0 .5rem;
+}
+
+/* Availability row */
+.room-card__avail {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .8rem; font-weight: 500;
+  color: rgba(34,31,26,.6);
+  margin: 0 0 1rem;
+}
+.avail-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot-green { background: #22c55e; }
+.dot-amber { background: #f59e0b; }
+.dot-red   { background: #ef4444; }
+
+/* Meta (zona · tipo) */
+.room-card__meta {
+  font-size: .78rem;
+  color: rgba(34,31,26,.5);
+  margin: 0 0 .4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Amenidades */
+.room-card__amenities {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem;
+  margin: 0 0 .9rem;
+}
+.room-card__amenity {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  background: rgba(30,77,60,.07);
+  color: var(--selva);
+  transition: background 150ms;
+}
+.room-card__amenity:hover { background: rgba(30,77,60,.14); }
+.room-card__amenity .material-symbols-outlined {
+  font-size: 15px;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 16;
+}
+.room-card__amenity--more {
+  font-size: .7rem; font-weight: 700;
+  color: var(--selva);
+  background: rgba(30,77,60,.07);
+  width: auto; padding: 0 .45rem;
+}
+
+/* Galería dots (sobre la foto) */
+.room-card__gallery-dots {
+  position: absolute; bottom: .6rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: .3rem;
+  pointer-events: auto;
+}
+.room-card__gallery-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  border: none; cursor: pointer; padding: 0;
+  transition: background 180ms, width 180ms;
+}
+.room-card__gallery-dot.active {
+  background: #fff;
+  width: 16px; border-radius: 3px;
+}
+
+/* Chips */
+.room-card__chips {
+  display: flex; flex-wrap: wrap; gap: .4rem;
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+/* CTA */
+.room-card__cta { width: 100%; justify-content: center; }
+
+/* ── Skeleton ─────────────────────────────────── */
+.room-card--skeleton .room-card__skel {
+  background: linear-gradient(90deg, rgba(30,77,60,.08) 25%, rgba(30,77,60,.15) 50%, rgba(30,77,60,.08) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Controls ─────────────────────────────────── */
+.rooms-carousel__controls {
+  display: flex; align-items: center;
+  justify-content: center; gap: 1rem;
+  margin-top: 2rem;
+}
+
+.rooms-carousel__arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--hueso-2);
+  border: 1px solid rgba(30,77,60,.12);
+  color: var(--selva-deep);
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 160ms, color 160ms;
+  flex-shrink: 0;
+}
+.rooms-carousel__arrow:hover { background: var(--selva-deep); color: var(--hueso); }
+.rooms-carousel__arrow:disabled { opacity: .35; pointer-events: none; }
+
+.rooms-carousel__dots { display: flex; gap: .5rem; }
+.rooms-carousel__dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(30,77,60,.2);
+  border: none; cursor: pointer; padding: 0;
+  transition: background 200ms, width 200ms;
+}
+.rooms-carousel__dot.active {
+  background: var(--selva);
+  width: 24px; border-radius: 4px;
 }
 
-.indicator.active {
-  background: #ffffff;
-  width: 36px;
-  border-radius: 6px;
-}
-
-/* =========================
-   Responsive
-   ========================= */
-
-@media (max-width: 768px) {
-  .hero-buttons {
-    flex-direction: column;
-  }
-
-  .hero .btn {
-    width: 100%;
-    max-width: 300px;
-  }
-}
 /* =====================================================
    AMENIDADES – Rentalia
    ===================================================== */
