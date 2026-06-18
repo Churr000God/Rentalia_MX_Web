@@ -490,7 +490,58 @@ function initReviewForm() {
   });
 }
 
+/* ======================================================
+   HERO DINÁMICO — foto y precio desde site_config
+   ====================================================== */
+async function loadHeroConfig() {
+  const fill  = document.querySelector('.arch-photo__fill--img');
+  const badge = document.querySelector('.arch-badge');
+  if (!fill || !badge) return;
+
+  if (!window.supabase) return;
+  const SUPABASE_URL = 'https://vefgwrxgfuzgfictdsyo.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_3Dew0GfB8vlUnItNfBm0Xw_5vMDArZM';
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  try {
+    // 1. Leer hero_habitacion_id de site_config
+    const { data: cfg } = await db
+      .from('site_config')
+      .select('value')
+      .eq('key', 'hero_habitacion_id')
+      .single();
+
+    if (!cfg?.value) return; // sin config → queda el valor hardcoded
+
+    // 2. Cargar la habitación seleccionada
+    const { data: room } = await db
+      .from('habitaciones')
+      .select('imagen_principal, precio_min')
+      .eq('id', cfg.value)
+      .single();
+
+    if (!room) return;
+
+    // 3. Actualizar DOM
+    if (room.imagen_principal) {
+      fill.style.backgroundImage = `url('${room.imagen_principal}')`;
+      const archPhoto = fill.closest('[role="img"]');
+      if (archPhoto) archPhoto.setAttribute('aria-label', 'Habitación en Rentalia, Narvarte');
+    }
+
+    if (room.precio_min != null) {
+      const formatted = room.precio_min.toLocaleString('es-MX');
+      const strong = badge.querySelector('strong');
+      if (strong) strong.textContent = `$${formatted}`;
+      badge.setAttribute('aria-label', `Desde $${formatted} al mes`);
+    }
+  } catch (_) {
+    // Fallo silencioso: el hero mantiene los valores hardcoded
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   loadReviews();
   initReviewForm();
+  loadHeroConfig();
 });

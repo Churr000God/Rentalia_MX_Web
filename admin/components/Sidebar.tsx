@@ -20,6 +20,8 @@ export default function Sidebar({ userEmail }: SidebarProps) {
     pathname === '/dashboard/amenidades-generales' ||
     pathname.startsWith('/dashboard/amenidades-generales/')
 
+  const isHomeConfigActive = pathname === '/dashboard/home-config'
+
   async function handleLogout() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -122,6 +124,29 @@ export default function Sidebar({ userEmail }: SidebarProps) {
         {/* Section: Configuración */}
         <div className="sidebar__section">
           <div className="sidebar__section-label">Configuración</div>
+
+          <Link
+            href="/dashboard/home-config"
+            className={`sidebar__link${isHomeConfigActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+            </svg>
+            Config. Home
+          </Link>
+
           <span className="sidebar__link sidebar__link--disabled">
             <svg
               className="sidebar__link-icon"

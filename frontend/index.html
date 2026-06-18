@@ -18,6 +18,8 @@
     <script src="./assets/js/main.js?v=4" defer></script>
     <script src="./assets/js/rooms-carousel.js" defer></script>
     <script src="./assets/js/location-amenities.js" defer></script>
+    <script src="./assets/js/como-funciona.js" defer></script>
+    <script src="./assets/js/comunidad.js" defer></script>
   </head>
 
   <body>
@@ -202,6 +204,80 @@
             <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
             <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
             <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─── CÓMO FUNCIONA ─────────────────────────────── -->
+      <section class="section como" id="como-funciona" aria-labelledby="como-h2">
+        <div class="container">
+
+          <div class="como__header">
+            <span class="eyebrow">Sin complicaciones</span>
+            <h2 class="h2" id="como-h2">Mudarte es así de fácil</h2>
+          </div>
+
+          <div class="como__steps-wrap">
+            <!-- Línea conectora — JS actualiza el ancho de .steps__progress -->
+            <div class="steps__track" aria-hidden="true">
+              <div class="steps__progress"></div>
+            </div>
+
+            <ol class="steps" role="list">
+              <li class="step step--active">
+                <button class="step__btn" aria-current="step">
+                  <span class="step__num" aria-hidden="true">1</span>
+                  <span class="step__h3">Elige tu cuarto</span>
+                  <span class="step__p">Revisa habitaciones disponibles, precios y fechas de entrada desde donde estés. Sin citas previas.</span>
+                </button>
+              </li>
+              <li class="step">
+                <button class="step__btn" aria-current="false">
+                  <span class="step__num" aria-hidden="true">2</span>
+                  <span class="step__h3">Agenda tu visita</span>
+                  <span class="step__p">Ven a conocer la casa en Narvarte. Sin presión: es para que sientas el espacio y resuelvas tus dudas.</span>
+                </button>
+              </li>
+              <li class="step">
+                <button class="step__btn" aria-current="false">
+                  <span class="step__num" aria-hidden="true">3</span>
+                  <span class="step__h3">Aplica fácil</span>
+                  <span class="step__p">Solo tu identificación, una referencia y el depósito. Sin aval, sin fiador. Todo en línea en minutos.</span>
+                </button>
+              </li>
+              <li class="step">
+                <button class="step__btn" aria-current="false">
+                  <span class="step__num" aria-hidden="true">4</span>
+                  <span class="step__h3">¡Múdate!</span>
+                  <span class="step__p">Llega con tu maleta. La cama, la cocina equipada y la comunidad ya están esperándote.</span>
+                </button>
+              </li>
+            </ol>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ─── COMUNIDAD ─────────────────────────────── -->
+      <section class="section comunidad" id="comunidad" aria-labelledby="comunidad-h2">
+        <div class="container">
+
+          <div class="comunidad__header">
+            <span class="eyebrow comunidad__eye">La vida en Rentalia</span>
+            <h2 class="h2 comunidad__h2" id="comunidad-h2">Tu casa, tus <em>personas</em></h2>
+            <p class="comunidad__lead">
+              El coliving de Narvarte donde la cocina huele a café por las mañanas y la terraza se convierte en tu lugar favorito de la semana.
+            </p>
+          </div>
+
+          <!-- JS rellena desde Supabase (community_gallery) -->
+          <div class="gallery" id="communityGallery">
+            <div class="gallery__item gallery__item--wide  gallery__item--skel" data-slot="1"></div>
+            <div class="gallery__item gallery__item--square gallery__item--skel" data-slot="2"></div>
+            <div class="gallery__item gallery__item--square gallery__item--skel" data-slot="3"></div>
+            <div class="gallery__item gallery__item--square gallery__item--skel" data-slot="4"></div>
+            <div class="gallery__item gallery__item--square gallery__item--skel" data-slot="5"></div>
           </div>
 
         </div>
