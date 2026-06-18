@@ -16,6 +16,10 @@ export default function Sidebar({ userEmail }: SidebarProps) {
     pathname === '/dashboard/habitaciones' ||
     pathname.startsWith('/dashboard/habitaciones/')
 
+  const isAmenidadesActive =
+    pathname === '/dashboard/amenidades-generales' ||
+    pathname.startsWith('/dashboard/amenidades-generales/')
+
   async function handleLogout() {
     const supabase = createClient()
     await supabase.auth.signOut()
@@ -55,6 +59,27 @@ export default function Sidebar({ userEmail }: SidebarProps) {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
             Habitaciones
+          </Link>
+
+          <Link
+            href="/dashboard/amenidades-generales"
+            className={`sidebar__link${isAmenidadesActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <path d="M9 22V12h6v10" />
+              <circle cx="19" cy="5" r="3" />
+            </svg>
+            Amenidades generales
           </Link>
 
           <span className="sidebar__link sidebar__link--disabled">

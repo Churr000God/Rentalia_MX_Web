@@ -17,6 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
     <script src="./assets/js/main.js?v=4" defer></script>
     <script src="./assets/js/rooms-carousel.js" defer></script>
+    <script src="./assets/js/location-amenities.js" defer></script>
   </head>
 
   <body>
@@ -175,7 +176,39 @@
         </div>
       </section>
 
+      <!-- ─── AMENIDADES GENERALES ──────────────── -->
+      <section class="section amenidades" id="amenidades" aria-labelledby="amenidades-h2">
+        <div class="amenidades__inner">
+
+          <div class="amenidades__header">
+            <span class="eyebrow amenidades__eye">La ubicación</span>
+            <h2 class="h2 amenidades__h2" id="amenidades-h2">Todo lo que incluye <em>vivir aquí</em></h2>
+            <p class="amenidades__sub">Espacios, servicios y comodidades disponibles para todos los residentes de Casa Narvarte.</p>
+          </div>
+
+          <!-- Filtros por categoría -->
+          <div class="amenidades__filters" role="group" aria-label="Filtrar amenidades por categoría">
+            <button class="amenidades__filter active" data-cat="all">Todos</button>
+            <button class="amenidades__filter" data-cat="interior">Interiores</button>
+            <button class="amenidades__filter" data-cat="exterior">Exteriores</button>
+            <button class="amenidades__filter" data-cat="servicios">Servicios</button>
+            <button class="amenidades__filter" data-cat="comunidad">Comunidad</button>
+          </div>
+
+          <!-- Grid — JS rellena desde Supabase -->
+          <div class="amenidades__grid" id="amenidadesGrid" aria-live="polite">
+            <!-- Skeletons mientras carga -->
+            <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
+            <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
+            <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
+            <div class="amenity amenity--skel" aria-hidden="true"><div class="amenity__icon amenity__icon--skel"></div><div class="amenity__info"><span class="amenity__name amenity__skel-line"></span></div></div>
+          </div>
+
+        </div>
+      </section>
+
     </main>
+
 
     <footer id="footer-container"></footer>
   </body>
