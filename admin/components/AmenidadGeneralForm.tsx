@@ -89,7 +89,7 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
     }
 
     setSaving(false)
-    if (err) { setError(err.message); return; }
+    if (err) { setError(err.message); return }
     router.push('/dashboard/amenidades-generales')
     router.refresh()
   }
@@ -97,74 +97,88 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
   return (
     <form onSubmit={handleSubmit}>
       {error && (
-        <div className="alert alert--error" style={{ marginBottom: '1.5rem' }}>
-          {error}
-        </div>
+        <div className="alert alert--error">{error}</div>
       )}
 
-      {/* Label */}
-      <div className="form-field">
-        <label className="form-field__label">Nombre *</label>
-        <input
-          className="form-field__input"
-          type="text"
-          required
-          placeholder="Ej. Terraza con vista"
-          value={form.label}
-          onChange={e => {
-            set('label', e.target.value)
-            if (!initialData) set('slug', autoSlug(e.target.value))
-          }}
-        />
-      </div>
+      {/* ── Información básica ── */}
+      <p className="form-section-title">Información básica</p>
 
-      {/* Slug */}
-      <div className="form-field">
-        <label className="form-field__label">Slug (identificador único)</label>
-        <input
-          className="form-field__input"
-          type="text"
-          placeholder="terraza_vista"
-          value={form.slug}
-          onChange={e => set('slug', e.target.value)}
-        />
-        <p className="form-field__hint">Solo letras minúsculas, números y guiones bajos.</p>
-      </div>
-
-      {/* Description */}
-      <div className="form-field">
-        <label className="form-field__label">Descripción corta</label>
-        <input
-          className="form-field__input"
-          type="text"
-          placeholder="Ej. Azotea con vista y área de convivencia"
-          maxLength={120}
-          value={form.description}
-          onChange={e => set('description', e.target.value)}
-        />
-      </div>
-
-      {/* Icon + preview */}
-      <div className="form-field">
-        <label className="form-field__label">Ícono (Material Symbols)</label>
-        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <div className="form-group">
+          <label className="form-label">
+            Nombre <span>*</span>
+          </label>
           <input
-            className="form-field__input"
+            className="form-input"
+            type="text"
+            required
+            placeholder="Ej. Terraza con vista"
+            value={form.label}
+            onChange={e => {
+              set('label', e.target.value)
+              if (!initialData) set('slug', autoSlug(e.target.value))
+            }}
+          />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">
+            Slug{' '}
+            <span style={{ color: 'var(--gray-500)', fontWeight: 400, fontSize: '.8rem' }}>
+              (identificador único)
+            </span>
+          </label>
+          <input
+            className="form-input"
+            type="text"
+            placeholder="terraza_vista"
+            value={form.slug}
+            onChange={e => set('slug', e.target.value)}
+          />
+          <p className="form-hint">Solo letras minúsculas, números y guiones bajos.</p>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Descripción corta</label>
+          <input
+            className="form-input"
+            type="text"
+            placeholder="Ej. Azotea con vista y área de convivencia"
+            maxLength={120}
+            value={form.description}
+            onChange={e => set('description', e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* ── Ícono ── */}
+      <p className="form-section-title">Ícono</p>
+
+      <div className="form-group">
+        <label className="form-label">Nombre del ícono (Material Symbols)</label>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <input
+            className="form-input"
             type="text"
             placeholder="Ej. wifi, cooking, deck"
             value={form.icon}
             onChange={e => set('icon', e.target.value)}
             style={{ flex: 1 }}
           />
-          <span
-            className="material-symbols-outlined"
-            style={{ fontSize: 32, color: 'var(--selva, #1E4D3C)', flexShrink: 0 }}
-          >
-            {form.icon || 'help'}
-          </span>
+          <div style={{
+            width: 48, height: 48, flexShrink: 0,
+            background: 'var(--selva)', borderRadius: 'var(--radius-md)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 24, color: 'var(--hueso)' }}>
+              {form.icon || 'help'}
+            </span>
+          </div>
         </div>
-        <p className="form-field__hint">Sugerencias:</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '.4rem', marginTop: '.4rem' }}>
+        <p className="form-hint" style={{ marginTop: 10, marginBottom: 8 }}>
+          Haz clic para seleccionar:
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {ICON_SUGGESTIONS.map(s => (
             <button
               key={s}
@@ -172,24 +186,41 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
               title={s}
               onClick={() => set('icon', s)}
               style={{
-                border: form.icon === s ? '2px solid var(--selva, #1E4D3C)' : '1px solid #e0e0e0',
-                borderRadius: 8, background: '#fafafa', padding: '.3rem .5rem',
-                cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: '.75rem',
+                width: 40, height: 40,
+                border: form.icon === s
+                  ? '2px solid var(--selva)'
+                  : '1px solid var(--gray-200)',
+                borderRadius: 'var(--radius-md)',
+                background: form.icon === s
+                  ? 'rgba(30, 77, 60, 0.08)'
+                  : 'var(--white)',
+                cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'border-color 0.15s, background 0.15s',
               }}
             >
-              <span className="material-symbols-outlined" style={{ fontSize: 18 }}>{s}</span>
-              {s}
+              <span
+                className="material-symbols-outlined"
+                style={{
+                  fontSize: 20,
+                  color: form.icon === s ? 'var(--selva)' : 'var(--gray-700)',
+                }}
+              >
+                {s}
+              </span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Category + orden */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-        <div className="form-field">
-          <label className="form-field__label">Categoría</label>
+      {/* ── Configuración ── */}
+      <p className="form-section-title">Configuración</p>
+
+      <div className="form-grid">
+        <div className="form-group">
+          <label className="form-label">Categoría</label>
           <select
-            className="form-field__input"
+            className="form-select"
             value={form.category}
             onChange={e => set('category', e.target.value)}
           >
@@ -198,10 +229,11 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
             ))}
           </select>
         </div>
-        <div className="form-field">
-          <label className="form-field__label">Orden</label>
+
+        <div className="form-group">
+          <label className="form-label">Orden</label>
           <input
-            className="form-field__input"
+            className="form-input"
             type="number"
             min={0}
             value={form.orden}
@@ -210,22 +242,44 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
         </div>
       </div>
 
-      {/* Active */}
-      <div className="form-field" style={{ display: 'flex', alignItems: 'center', gap: '.75rem' }}>
-        <input
-          id="active-check"
-          type="checkbox"
-          checked={form.active}
-          onChange={e => set('active', e.target.checked)}
-          style={{ width: 18, height: 18, cursor: 'pointer' }}
-        />
-        <label htmlFor="active-check" style={{ cursor: 'pointer', fontWeight: 500 }}>
-          Visible en el sitio
-        </label>
+      {/* Toggle visible */}
+      <div style={{ marginTop: 20, display: 'flex', alignItems: 'center', gap: 12 }}>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={form.active}
+          onClick={() => set('active', !form.active)}
+          style={{
+            width: 44, height: 24, borderRadius: 12, flexShrink: 0,
+            background: form.active ? 'var(--selva)' : 'var(--gray-300)',
+            border: 'none', cursor: 'pointer', position: 'relative',
+            transition: 'background 0.2s',
+          }}
+        >
+          <span style={{
+            position: 'absolute', top: 3,
+            left: form.active ? 23 : 3,
+            width: 18, height: 18, borderRadius: '50%',
+            background: 'var(--white)',
+            transition: 'left 0.2s',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+          }} />
+        </button>
+        <div>
+          <div style={{ fontSize: '.9rem', fontWeight: 600, color: 'var(--tinta)' }}>
+            Visible en el sitio
+          </div>
+          <div className="form-hint">
+            {form.active ? 'Se mostrará en la home pública.' : 'No se mostrará en la home pública.'}
+          </div>
+        </div>
       </div>
 
-      {/* Actions */}
-      <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+      {/* Acciones */}
+      <div style={{
+        display: 'flex', gap: '1rem', marginTop: '2rem',
+        paddingTop: '1.5rem', borderTop: '1px solid var(--gray-200)',
+      }}>
         <button type="submit" className="btn btn--primary" disabled={saving}>
           {saving ? 'Guardando…' : mode === 'create' ? 'Crear amenidad' : 'Guardar cambios'}
         </button>
