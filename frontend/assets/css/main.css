@@ -1417,3 +1417,36 @@ Botones (globales — solo estructura; colores en theme.css)
     .features-grid, .possibilities-grid { grid-template-columns: 1fr; }
 }
 
+/* ════════════════════════════════════════════════
+   CTA FINAL — Cierre con llamada a la acción
+════════════════════════════════════════════════ */
+.section.cta-final {
+  background: var(--hueso-2);
+  text-align: center;
+}
+.cta-final__h2 {
+  color: var(--selva);
+  max-width: 18ch;
+  margin-inline: auto;
+}
+.cta-final__h2 em { font-style: normal; color: var(--cempa); }
+.cta-final__sub {
+  color: rgba(34,31,26,.55);
+  font-size: 1rem;
+  margin: 1rem auto 0;
+}
+.cta-final__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .9rem;
+  margin-top: 2rem;
+}
+.cta-final__actions .btn-cta { font-size: 1rem; padding: 14px 28px; }
+.cta-final__actions .btn-ghost { color: var(--selva); border-color: transparent; }
+.cta-final__actions .btn-ghost:hover { background: var(--selva); color: var(--hueso); border-color: var(--selva); }
+
+@media (max-width: 768px) {
+  .cta-final__actions { flex-direction: column; align-items: stretch; }
+}
+
