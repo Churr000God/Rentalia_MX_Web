@@ -12,7 +12,7 @@ async function getHabitacion(id: string) {
   const { data, error } = await supabase
     .from('habitaciones')
     .select(
-      'id, nombre, descripcion, zona, tipo, status, precio_min, precio_max, imagen_principal, imagenes, amenities, tags, orden'
+      'id, nombre, descripcion, zona, tipo, status, precio_min, precio_max, imagen_principal, imagenes, amenities, tags, orden, piso, metros_cuadrados, fecha_disponibilidad'
     )
     .eq('id', id)
     .single()
@@ -70,6 +70,9 @@ export default async function EditarHabitacionPage({ params }: PageProps) {
               amenities: habitacion.amenities,
               tags: habitacion.tags,
               orden: habitacion.orden,
+              piso: habitacion.piso,
+              metros_cuadrados: habitacion.metros_cuadrados,
+              fecha_disponibilidad: habitacion.fecha_disponibilidad,
             }}
           />
         </div>

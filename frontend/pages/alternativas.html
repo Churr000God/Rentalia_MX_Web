@@ -3,108 +3,219 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Explora todas las alternativas de alojamiento disponibles en Rentalia">
-  <title>Alternativas | Rentalia</title>
+  <meta name="description" content="Explora todas las habitaciones disponibles en Rentalia — Narvarte, CDMX">
+  <title>Habitaciones | Rentalia</title>
 
-  <!-- Estilos -->
+  <link rel="stylesheet" href="../assets/css/theme.css" />
   <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/habitaciones.css" />
+  <link rel="stylesheet" href="../assets/css/alternativas.css" />
   <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="../assets/js/main.js?v=3" defer></script>
-  <script src="../assets/js/supabase.js?v=2" defer></script>
 </head>
 
 <body>
-  <!-- Header dinámico -->
   <div id="header-container"></div>
 
-  <main class="alternativas-main">
-    <!-- Sección Hero -->
-    <section class="alternativas-hero">
-      <div class="alternativas-hero-content">
-        <button class="hero-btn">
-          <i class="fa-solid fa-home"></i> ENCUENTRA TU LUGAR
-        </button>
-        <h1>Nuestras Habitaciones</h1>
-        <p>Explora nuestras opciones de alojamiento diseñadas para cada estilo de vida.</p>
+  <main id="main">
+
+    <!-- ─── PAGE HEADER ──────────────────────────── -->
+    <section class="page-header" aria-labelledby="page-h1">
+      <div class="container page-header__inner">
+
+        <div class="page-header__text">
+          <span class="eyebrow page-header__eyebrow">Encuentra tu lugar</span>
+          <h1 class="page-header__h1" id="page-h1">Nuestras habitaciones</h1>
+          <p class="page-header__sub">
+            Por ahora somos solo Narvarte — y así queremos que sea: una sola casa, bien hecha, con comunidad real. Elige tu cuarto y llega cuando quieras.
+          </p>
+          <div class="page-header__pills">
+            <span class="page-header__pill">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Narvarte, CDMX
+            </span>
+            <span class="page-header__pill">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              Estancia flexible
+            </span>
+            <span class="page-header__pill">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                <path d="M7 11V7a5 5 0 019.9-1"/>
+              </svg>
+              Sin aval
+            </span>
+          </div>
+        </div>
+
+        <div class="page-header__aside">
+          <svg width="110" height="130" viewBox="0 0 200 200"
+               xmlns="http://www.w3.org/2000/svg"
+               aria-hidden="true">
+            <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165"
+                  fill="none" stroke="#F3EDE1" stroke-width="7" stroke-linecap="round"/>
+            <line x1="100" y1="165" x2="100" y2="96"
+                  stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+            <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+            <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+          </svg>
+        </div>
+
       </div>
     </section>
 
-    <!-- Listado de alternativas -->
-    <section class="habitaciones-section" id="alternativas-section">
-      <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
-          <h2 class="featured-title" style="text-align: center; margin-bottom: 2rem;">Habitaciones Disponibles</h2>
+    <!-- ─── FILTER BAR ───────────────────────────── -->
+    <div class="filter-bar" role="search" aria-label="Filtros de habitaciones">
+      <div class="container filter-bar__inner">
 
-          <!-- Filtros y Buscador -->
-          <div class="filters-section">
-              <div class="filters-container">
-                  <div class="search-box">
-                      <i class="fa-solid fa-magnifying-glass"></i>
-                      <input type="text" id="searchInput" placeholder="Buscar por nombre...">
-                  </div>
-                  
-                  <div class="filter-group">
-                      <div class="select-wrapper">
-                          <i class="fa-solid fa-location-dot"></i>
-                          <select id="zonaFilter">
-                              <option value="">Todas las zonas</option>
-                              <option value="Roma Norte">Roma Norte</option>
-                              <option value="Condesa">Condesa</option>
-                              <option value="Polanco">Polanco</option>
-                              <option value="Narvarte">Narvarte</option>
-                              <option value="Del Valle">Del Valle</option>
-                          </select>
-                      </div>
-                      
-                      <div class="select-wrapper">
-                          <i class="fa-solid fa-dollar-sign"></i>
-                          <select id="precioFilter">
-                              <option value="">Cualquier precio</option>
-                              <option value="0-5000">Menos de $5,000</option>
-                              <option value="5000-8000">$5,000 - $8,000</option>
-                              <option value="8000-12000">$8,000 - $12,000</option>
-                              <option value="12000+">Más de $12,000</option>
-                          </select>
-                      </div>
-
-                      <div class="select-wrapper">
-                          <i class="fa-solid fa-filter"></i>
-                          <select id="statusFilter">
-                              <option value="">Todos los estados</option>
-                              <option value="available">Disponible</option>
-                              <option value="occupied">Ocupado</option>
-                              <option value="maintenance">Mantenimiento</option>
-                          </select>
-                      </div>
-                  </div>
-              </div>
-
-              <div class="results-counter-bar">
-                  <span class="counter-badge"><span id="roomsCounter">0</span> resultados</span>
-                  <button id="clearFilters" class="clear-btn" style="display: none;">
-                      <i class="fa-solid fa-xmark"></i> Limpiar filtros
-                  </button>
-              </div>
+        <!-- Precio -->
+        <div class="filter-group">
+          <span class="filter-group__label" id="fl-precio">Precio / mes</span>
+          <div class="filter-pills" role="group" aria-labelledby="fl-precio">
+            <button class="pill-btn is-active" data-filter="precio" data-value="todos">Todos</button>
+            <button class="pill-btn" data-filter="precio" data-value="10000-11000">$10,000–11,000</button>
+            <button class="pill-btn" data-filter="precio" data-value="11000-12500">$11,000–12,500</button>
           </div>
+        </div>
 
-          <div id="habitaciones-grid" class="habitaciones-grid">
-              <!-- Loading State -->
-              <div class="loading-state" style="text-align: center; grid-column: 1/-1; padding: 3rem;">
-                  <i class="fa-solid fa-circle-notch fa-spin fa-3x" style="color: #ff6b00;"></i>
-                  <p style="margin-top: 1rem; color: #718096;">Cargando habitaciones disponibles...</p>
-              </div>
+        <div class="filter-divider" aria-hidden="true"></div>
+
+        <!-- Disponibilidad -->
+        <div class="filter-group">
+          <span class="filter-group__label" id="fl-estado">Disponibilidad</span>
+          <div class="filter-pills" role="group" aria-labelledby="fl-estado">
+            <button class="pill-btn is-active" data-filter="estado" data-value="todos">Todos</button>
+            <button class="pill-btn" data-filter="estado" data-value="disponible">Disponible ya</button>
+            <button class="pill-btn" data-filter="estado" data-value="proximo">Próximamente</button>
           </div>
+        </div>
+
+        <!-- Contador + limpiar -->
+        <div class="filter-bar__right">
+          <p class="filter-count" aria-live="polite" aria-atomic="true">
+            <em id="result-count">4</em> cuartos
+          </p>
+          <button class="clear-btn" id="clearFilters" hidden>Limpiar filtros</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ─── ROOMS GRID ───────────────────────────── -->
+    <section class="rooms-section" aria-label="Listado de habitaciones">
+      <div class="container">
+
+        <!-- Skeletons mientras carga -->
+        <div class="rooms-grid" id="roomsGrid">
+          <div class="room-card room-card--skeleton" aria-hidden="true"></div>
+          <div class="room-card room-card--skeleton" aria-hidden="true"></div>
+          <div class="room-card room-card--skeleton" aria-hidden="true"></div>
+        </div>
+
+        <!-- Empty state (oculto por defecto) -->
+        <div class="empty-state" id="emptyState" hidden role="status" aria-live="polite">
+          <div class="empty-arch" aria-hidden="true">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
+              <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165"
+                    fill="none" stroke="#1E4D3C" stroke-width="7" stroke-linecap="round"/>
+              <line x1="100" y1="165" x2="100" y2="96"
+                    stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+              <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+              <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+            </svg>
+          </div>
+          <h3 class="empty-state__h3">Pronto más cuartos</h3>
+          <p class="empty-state__p">Ningún cuarto coincide con esos filtros. ¿Te avisamos cuando haya disponibilidad?</p>
+          <button class="btn btn-outline empty-state__clear" id="emptyStateClear">Limpiar filtros</button>
+        </div>
+
       </div>
     </section>
+
+    <!-- ─── WAITLIST CTA ─────────────────────────── -->
+    <section class="waitlist-section" aria-labelledby="waitlist-h2">
+      <div class="container">
+        <div class="waitlist-card">
+
+          <!-- Icono decorativo -->
+          <div class="waitlist-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 42V20L24 6l18 14v22H30V30h-12v12H6z"
+                    stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M18 42v-8a6 6 0 1 1 12 0v8"
+                    stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <h2 class="waitlist-card__h2" id="waitlist-h2">
+            Pronto más cuartos en Rentalia
+          </h2>
+          <p class="waitlist-card__sub">
+            Constantemente preparamos nuevos espacios. Si hoy no encontraste el cuarto ideal,
+            déjanos tu correo y serás el primero en enterarte cuando haya disponibilidad.
+          </p>
+
+          <form class="waitlist-card__form" id="waitlistForm" novalidate>
+            <label class="sr-only" for="waitlist-email">Tu correo electrónico</label>
+            <input
+              class="waitlist-card__input"
+              id="waitlist-email"
+              type="email"
+              name="email"
+              placeholder="Tu correo electrónico"
+              autocomplete="email"
+              required
+            />
+            <button type="submit" class="waitlist-card__btn">Avisarme</button>
+          </form>
+
+          <p class="waitlist-card__note" id="waitlistMsg" aria-live="polite"></p>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CTA BANDA ─────────────────────────────── -->
+    <section class="cta-banda" aria-labelledby="cta-banda-h2">
+      <div class="container cta-banda__inner">
+        <div>
+          <h2 class="cta-banda__h2" id="cta-banda-h2">
+            ¿No encuentras tu <em>cuarto ideal?</em><br>Agenda una visita
+          </h2>
+          <p class="cta-banda__sub">
+            Ven a conocer la casa, camina los espacios y resuelve todas tus dudas. Sin presión.
+          </p>
+        </div>
+        <div class="cta-banda__actions">
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+me+interesa+agendar+una+visita+en+Rentalia"
+             class="btn btn-cta"
+             style="font-size:1rem; padding:14px 28px;"
+             target="_blank" rel="noopener noreferrer">
+            Agendar por WhatsApp
+          </a>
+          <a href="/" class="btn btn-ghost cta-banda__ghost">Ver la casa</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- Footer dinámico -->
   <div id="footer-container"></div>
+
+  <script src="../assets/js/alternativas.js" defer></script>
 </body>
 </html>

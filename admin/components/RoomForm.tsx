@@ -18,6 +18,9 @@ interface RoomFormData {
   amenities: string[]
   tags: string[]
   orden: string
+  piso: string
+  metros_cuadrados: string
+  fecha_disponibilidad: string
 }
 
 interface RoomFormProps {
@@ -36,6 +39,9 @@ interface RoomFormProps {
     amenities: string[] | null
     tags: string[] | null
     orden: number | null
+    piso: number | null
+    metros_cuadrados: number | null
+    fecha_disponibilidad: string | null
   }
 }
 
@@ -54,6 +60,9 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
     amenities: initialData?.amenities ?? [],
     tags: initialData?.tags ?? [],
     orden: initialData?.orden != null ? String(initialData.orden) : '',
+    piso: initialData?.piso != null ? String(initialData.piso) : '',
+    metros_cuadrados: initialData?.metros_cuadrados != null ? String(initialData.metros_cuadrados) : '',
+    fecha_disponibilidad: initialData?.fecha_disponibilidad ?? '',
   })
   const [tagInput, setTagInput] = useState('')
   const [imagenInput, setImagenInput] = useState('')
@@ -141,6 +150,9 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
       amenities: form.amenities,
       tags: form.tags.length > 0 ? form.tags : null,
       orden: form.orden !== '' ? Number(form.orden) : null,
+      piso: form.piso !== '' ? Number(form.piso) : null,
+      metros_cuadrados: form.metros_cuadrados !== '' ? Number(form.metros_cuadrados) : null,
+      fecha_disponibilidad: form.fecha_disponibilidad.trim() || null,
     }
 
     const supabase = createClient()
@@ -335,6 +347,57 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
             placeholder="Ej. 1"
           />
           <span className="form-hint">Menor número = aparece primero</span>
+        </div>
+      </div>
+
+      {/* Section: Detalles del cuarto */}
+      <div className="form-section-title">Detalles del cuarto</div>
+
+      <div className="form-grid">
+        <div className="form-group">
+          <label className="form-label" htmlFor="piso">Piso</label>
+          <input
+            id="piso"
+            name="piso"
+            type="number"
+            className="form-input"
+            value={form.piso}
+            onChange={handleChange}
+            min={1}
+            placeholder="Ej. 1"
+          />
+          <span className="form-hint">Número de piso dentro del inmueble.</span>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label" htmlFor="metros_cuadrados">Metros cuadrados</label>
+          <input
+            id="metros_cuadrados"
+            name="metros_cuadrados"
+            type="number"
+            className="form-input"
+            value={form.metros_cuadrados}
+            onChange={handleChange}
+            min={1}
+            placeholder="Ej. 16"
+          />
+          <span className="form-hint">Superficie aproximada en m².</span>
+        </div>
+
+        <div className="form-group form-grid--full">
+          <label className="form-label" htmlFor="fecha_disponibilidad">Disponibilidad</label>
+          <input
+            id="fecha_disponibilidad"
+            name="fecha_disponibilidad"
+            type="text"
+            className="form-input"
+            value={form.fecha_disponibilidad}
+            onChange={handleChange}
+            placeholder="Ej. Disponible ahora  /  1 de agosto"
+          />
+          <span className="form-hint">
+            Texto libre que aparece en la tarjeta. Ej: "Disponible ahora", "1 de julio".
+          </span>
         </div>
       </div>
 

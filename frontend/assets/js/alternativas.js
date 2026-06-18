@@ -1,280 +1,289 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Datos de las habitaciones
-  const habitaciones = [
-    {
-      id: 1,
-      nombre: "Habitación Ejecutiva",
-      detalles: "30m² · 1 cama doble · Wifi gratis",
-      descripcion: "Amplia habitación con vista al mar, cama king size y escritorio ejecutivo. Ideal para viajes de negocios. La habitación incluye servicio de habitación las 24 horas y acceso a la sala ejecutiva del hotel.",
-      precio: 120,
-      capacidad: 2,
-      disponible: true,
-      amenities: ["wifi", "tv", "ac", "minibar"],
-      imagenes: [
-        "/assets/images/img/alternativas/habitacion1.jpg",
-        "/assets/images/img/alternativas/habitacion1-2.jpg",
-        "/assets/images/img/alternativas/habitacion1-3.jpg"
-      ],
-      ubicacion: "19.39703,-99.151874",
-      direccion: "C. Palenque 35, Narvarte Poniente, Benito Juárez, 03023 Ciudad de México, CDMX"
-    },
-    {
-      id: 2,
-      nombre: "Suite Familiar",
-      detalles: "45m² · 2 camas dobles · Cocina pequeña",
-      descripcion: "Espaciosa suite con dos habitaciones separadas y área de estar. Perfecta para familias. Incluye cunas disponibles bajo petición y servicio de niñera con reserva previa.",
-      precio: 180,
-      capacidad: 4,
-      disponible: true,
-      amenities: ["wifi", "tv", "ac", "cocina", "sofa"],
-      imagenes: [
-        "/assets/images/img/habitaciones/familiar.jpg",
-        "/assets/images/img/habitaciones/familiar-2.jpg",
-        "/assets/images/img/habitaciones/familiar-3.jpg"
-      ],
-      ubicacion: "19.39703,-99.151874",
-      direccion: "Calle Principal 123, Planta 2, Ciudad Ejemplo"
-    },
-    {
-      id: 3,
-      nombre: "Habitación Económica",
-      detalles: "20m² · 1 cama individual · Wifi gratis",
-      descripcion: "Cómoda habitación individual con todas las comodidades básicas para una estancia agradable. Perfecta para viajeros solitarios que buscan comodidad a buen precio.",
-      precio: 80,
-      capacidad: 1,
-      disponible: true,
-      amenities: ["wifi", "tv"],
-      imagenes: [
-        "/assets/images/img/habitaciones/economica.jpg",
-        "/assets/images/img/habitaciones/economica-2.jpg"
-      ],
-      ubicacion: "19.39703,-99.151874",
-      direccion: "Calle Principal 123, Planta 1, Ciudad Ejemplo"
-    },
-    {
-      id: 4,
-      nombre: "Habitación Presidencial",
-      detalles: "60m² · 1 cama king size · Jacuzzi",
-      descripcion: "La suite más exclusiva de nuestro hotel, con jacuzzi privado, sala de estar independiente y vistas panorámicas. Incluye servicio de mayordomo las 24 horas.",
-      precio: 350,
-      capacidad: 2,
-      disponible: true,
-      amenities: ["wifi", "tv", "ac", "minibar", "jacuzzi", "servicio habitación"],
-      imagenes: [
-        "/assets/images/img/habitaciones/presidencial.jpg",
-        "/assets/images/img/habitaciones/presidencial-2.jpg",
-        "/assets/images/img/habitaciones/presidencial-3.jpg",
-        "/assets/images/img/habitaciones/presidencial-4.jpg"
-      ],
-      ubicacion: "19.39703,-99.151874",
-      direccion: "Calle Principal 123, Planta 7, Ciudad Ejemplo"
-    }
-  ];
+/* alternativas.js — Catálogo de habitaciones con filtros y carga desde Supabase */
+(function () {
+  const SUPABASE_URL = 'https://vefgwrxgfuzgfictdsyo.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_3Dew0GfB8vlUnItNfBm0Xw_5vMDArZM';
 
-  // Mapeo de íconos y nombres completos para amenities
-  const amenityIcons = {
-    wifi: { icon: "fas fa-wifi", nombre: "WiFi gratis" },
-    tv: { icon: "fas fa-tv", nombre: "TV por cable" },
-    ac: { icon: "fas fa-snowflake", nombre: "Aire acondicionado" },
-    minibar: { icon: "fas fa-glass-whiskey", nombre: "Minibar" },
-    cocina: { icon: "fas fa-utensils", nombre: "Cocina equipada" },
-    sofa: { icon: "fas fa-couch", nombre: "Sofá cama" },
-    jacuzzi: { icon: "fas fa-hot-tub", nombre: "Jacuzzi" },
-    "servicio habitación": { icon: "fas fa-concierge-bell", nombre: "Servicio a la habitación" }
+  const AMENITIES = {
+    wifi:            { label: 'Wifi',           icon: 'wifi' },
+    bano_privado:    { label: 'Baño propio',     icon: 'bathtub' },
+    amueblada:       { label: 'Amueblada',       icon: 'bed' },
+    cocina:          { label: 'Cocina',          icon: 'cooking' },
+    aire:            { label: 'Clima A/C',       icon: 'ac_unit' },
+    lavadora:        { label: 'Lavadora',        icon: 'local_laundry_service' },
+    estacionamiento: { label: 'Estacionamiento', icon: 'directions_car' },
+    mascotas:        { label: 'Pet friendly',    icon: 'pets' },
+    servicios:       { label: 'Servicios incl.', icon: 'bolt' },
+    escritorio:      { label: 'Escritorio',      icon: 'desk' },
   };
 
-  // Elementos del DOM - compatibles con ambas páginas
-  const wrapper = document.getElementById("properties-wrapper");
-  const detalleSection = document.getElementById("habitacion-detalle");
-  const alternativasSection = document.getElementById("alternativas-section");
-  const atrasBtn = document.getElementById("atras-btn");
+  // ── Estado ───────────────────────────────────────
+  const state = { precio: 'todos', estado: 'todos' };
+  let allRooms = [];
 
-  // Verificar si los elementos existen antes de proceder
-  if (!wrapper) return;
+  // ── DOM refs ─────────────────────────────────────
+  const grid       = document.getElementById('roomsGrid');
+  const counter    = document.getElementById('result-count');
+  const clearBtn   = document.getElementById('clearFilters');
+  const emptyState = document.getElementById('emptyState');
+  const emptyClear = document.getElementById('emptyStateClear');
 
-  // Función para mostrar la sección de detalles - COMPATIBLE CON AMBAS PÁGINAS
-  function mostrarDetalles(habitacion) {
-    if (!detalleSection) return;
-    
-    // Ocultar listado y mostrar detalles
-    if (alternativasSection) {
-      alternativasSection.style.display = "none";
-    }
-    detalleSection.style.display = "block";
-    
-    // DETECCIÓN AUTOMÁTICA DE ESTRUCTURA DE PÁGINA
-    const isIndexPage = document.getElementById("detalle-titulo") !== null;
-    
-    if (isIndexPage) {
-      // ESTRUCTURA DEL INDEX.HTML
-      const detalleTitulo = document.getElementById("detalle-titulo");
-      const detallePrecio = document.getElementById("detalle-precio");
-      const detalleDescripcion = document.getElementById("detalle-descripcion");
-      const detalleUbicacion = document.getElementById("detalle-ubicacion");
-      const detalleCaracteristicas = document.getElementById("detalle-caracteristicas-lista");
-      
-      if (detalleTitulo) detalleTitulo.textContent = habitacion.nombre;
-      if (detallePrecio) detallePrecio.textContent = `$${habitacion.precio}`;
-      if (detalleDescripcion) detalleDescripcion.textContent = habitacion.descripcion;
-      if (detalleUbicacion) detalleUbicacion.textContent = habitacion.direccion;
-      
-      // Cargar características (amenities)
-      if (detalleCaracteristicas) {
-        detalleCaracteristicas.innerHTML = habitacion.amenities.map(amenity => {
-          const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
-          return `
-            <li>
-              <i class="${amenityData.icon}"></i>
-              <span>${amenityData.nombre}</span>
-            </li>
-          `;
-        }).join("");
-      }
-      
-      // Configurar botones de acción del index.html
-      const agendarVisitaBtn = document.getElementById("agendar-visita-btn");
-      const contactarBtn = document.getElementById("contactar-btn");
-      
-      if (agendarVisitaBtn) {
-        agendarVisitaBtn.onclick = () => {
-          window.location.href = `pages/agendar_visita.html?habitacion=${habitacion.id}`;
-        };
-      }
-      
-      if (contactarBtn) {
-        contactarBtn.onclick = () => {
-          alert(`Contactando sobre: ${habitacion.nombre}\nTeléfono: +52 55 1234 5678`);
-        };
-      }
-    } else {
-      // ESTRUCTURA DEL ALTERNATIVAS.HTML (original)
-      document.getElementById("detalle-nombre").textContent = habitacion.nombre;
-      document.getElementById("detalle-precio").innerHTML = `$${habitacion.precio}<small>/noche</small>`;
-      document.getElementById("detalle-resumen").textContent = habitacion.detalles;
-      document.getElementById("detalle-descripcion").textContent = habitacion.descripcion;
-      document.getElementById("detalle-direccion").textContent = habitacion.direccion;
-      
-      // Configurar el mapa (solo para alternativas.html)
-      const mapaIframe = document.getElementById("detalle-mapa");
-      if (mapaIframe && habitacion.ubicacion) {
-        const [lat, lng] = habitacion.ubicacion.split(',');
-        mapaIframe.src = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.355742137737!2d-99.15445398846602!3d19.397029581799238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff04b2985217%3A0x36fadceb5f4333f6!2sC.%20Palenque%2035%2C%20Narvarte%20Poniente%2C%20Benito%20Ju%C3%A1rez%2C%2003023%20Ciudad%20de%20M%C3%A9xico%2C%20CDMX!5e0!3m2!1ses-419!2smx!4v1755569447630!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade`;
-      }
-      
-      // Cargar amenities (solo para alternativas.html)
-      const amenitiesContainer = document.getElementById("detalle-amenities");
-      if (amenitiesContainer) {
-        amenitiesContainer.innerHTML = habitacion.amenities.map(amenity => {
-          const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
-          return `
-            <div class="amenity-item">
-              <i class="${amenityData.icon}"></i>
-              <span>${amenityData.nombre}</span>
-            </div>
-          `;
-        }).join("");
-      }
-      
-      // Configurar el botón de reserva (solo para alternativas.html)
-      const reservarBtn = document.getElementById("reservar-btn");
-      if (reservarBtn) {
-        reservarBtn.onclick = () => {
-          alert(`Redirigiendo a reserva de: ${habitacion.nombre}`);
-          // window.location.href = `reservar.html?habitacion=${habitacion.id}`;
-        };
-      }
-    }
-    
-    // Cargar imágenes (común para ambas páginas)
-    const mainImage = document.getElementById("main-image");
-    const thumbsContainer = document.getElementById("gallery-thumbs");
-    
-    if (mainImage && thumbsContainer && habitacion.imagenes && habitacion.imagenes.length > 0) {
-      mainImage.src = habitacion.imagenes[0];
-      mainImage.alt = `Imagen de ${habitacion.nombre}`;
-      
-      thumbsContainer.innerHTML = habitacion.imagenes.map((img, index) => `
-        <img src="${img}" alt="Miniatura ${index + 1}" 
-             class="${index === 0 ? 'active' : ''}" 
-             onclick="cambiarImagenPrincipal('${img}', this)">
-      `).join("");
-    }
+  // ── Filtros ───────────────────────────────────────
+  document.querySelectorAll('.pill-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const group = btn.dataset.filter;
+      const value = btn.dataset.value;
+      state[group] = value;
+      btn.closest('.filter-pills').querySelectorAll('.pill-btn').forEach((b) => {
+        b.classList.toggle('is-active', b === btn);
+      });
+      renderVisible();
+    });
+  });
+
+  [clearBtn, emptyClear].forEach((el) => {
+    el?.addEventListener('click', () => {
+      state.precio = 'todos';
+      state.estado = 'todos';
+      document.querySelectorAll('.pill-btn').forEach((b) => {
+        b.classList.toggle('is-active', b.dataset.value === 'todos');
+      });
+      renderVisible();
+    });
+  });
+
+  // ── Helpers ───────────────────────────────────────
+  function matchesPrecio(room, filtro) {
+    if (filtro === 'todos') return true;
+    const [lo, hi] = filtro.split('-').map(Number);
+    const precio = room.precio_min ?? room.precio_max ?? 0;
+    return precio >= lo && precio <= hi;
   }
 
-  // Función global para cambiar imagen principal
-  window.cambiarImagenPrincipal = function(src, thumb) {
-    const mainImage = document.getElementById("main-image");
-    if (mainImage) {
-      mainImage.src = src;
-    }
-    if (thumb) {
-      document.querySelectorAll("#gallery-thumbs img").forEach(img => {
-        img.classList.remove("active");
-      });
-      thumb.classList.add("active");
-    }
-  };
+  function matchesEstado(room, filtro) {
+    if (filtro === 'todos') return true;
+    if (filtro === 'disponible') return room.status === 'available';
+    if (filtro === 'proximo')    return room.status === 'maintenance' || room.status === 'occupied';
+    return true;
+  }
 
-  // Función para volver al listado - COMPATIBLE CON AMBAS PÁGINAS
-  if (atrasBtn) {
-    atrasBtn.addEventListener("click", () => {
-      if (detalleSection) detalleSection.style.display = "none";
-      if (alternativasSection) {
-        alternativasSection.style.display = "block";
-        alternativasSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+  function fmtPrecio(min, max) {
+    const fmt = (n) => n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
+    if (min && max && min !== max) return `${fmt(min)}–${fmt(max)}`;
+    return fmt(min || max || 0);
+  }
+
+  // ── Render ────────────────────────────────────────
+  function renderVisible() {
+    const visible = allRooms.filter(
+      (r) => matchesPrecio(r, state.precio) && matchesEstado(r, state.estado)
+    );
+
+    const isDefault = state.precio === 'todos' && state.estado === 'todos';
+    if (clearBtn) clearBtn.hidden = isDefault;
+
+    if (counter) counter.textContent = visible.length;
+
+    grid.innerHTML = '';
+
+    if (visible.length === 0) {
+      emptyState.hidden = false;
+      return;
+    }
+    emptyState.hidden = true;
+
+    visible.forEach((room, i) => {
+      const card = buildCard(room);
+      grid.appendChild(card);
+      // Stagger reveal
+      requestAnimationFrame(() => {
+        setTimeout(() => card.classList.add('is-visible'), i * 80);
+      });
     });
   }
 
-  // Función para crear tarjetas
-  function crearTarjetaHabitacion(habitacion) {
-    const card = document.createElement("div");
-    card.className = "property-card";
-    
-    const amenitiesHTML = habitacion.amenities.slice(0, 3).map(amenity => {
-      const amenityData = amenityIcons[amenity] || { icon: "fas fa-check", nombre: amenity };
-      return `<i class="${amenityData.icon}" title="${amenityData.nombre}"></i>`;
+  function buildCard(room) {
+    const isAvailable = room.status === 'available';
+    const imagenes = Array.isArray(room.imagenes) ? room.imagenes : [];
+    const tags     = Array.isArray(room.tags)     ? room.tags     : [];
+    const amenities = Array.isArray(room.amenities) ? room.amenities : [];
+
+    const imgFront = imagenes[0] || '';
+    const imgBack  = imagenes[1] || '';
+
+    const badgeCls  = isAvailable ? 'badge-on' : 'badge-prox';
+    const badgeTxt  = isAvailable ? 'Disponible' : 'Próximamente';
+    const dotCls    = isAvailable ? 'dot-green' : 'dot-amber';
+    const availTxt  = room.fecha_disponibilidad || (isAvailable ? 'Disponible ahora' : 'Próximamente');
+    const ctaCls    = isAvailable ? 'room-card__cta--fill' : 'room-card__cta--outline';
+    const ctaTxt    = isAvailable ? 'Ver cuarto' : 'Avisarme cuando esté libre';
+    const slug      = (room.nombre || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '-');
+
+    const metaPiso = room.piso ? `
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/></svg>
+        Piso ${room.piso}
+      </span>` : '';
+
+    const metaM2 = room.metros_cuadrados ? `
+      <span class="meta-item">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/></svg>
+        ${room.metros_cuadrados} m²
+      </span>` : '';
+
+    const amenHTML = amenities.slice(0, 5).map((slug) => {
+      const a = AMENITIES[slug];
+      if (!a) return '';
+      return `<span class="amenity-icon" title="${a.label}">
+        <span class="material-symbols-outlined">${a.icon}</span>
+      </span>`;
     }).join('');
 
-    card.innerHTML = `
-      <div class="property-image" style="background-image: url('${habitacion.imagenes[0]}')">
-        <div class="price-tag">$${habitacion.precio}<small>/noche</small></div>
+    const chipsHTML = tags.map((t) =>
+      `<span class="chip">${t}</span>`
+    ).join('');
+
+    const arrowSvg = isAvailable ? `
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>` : '';
+
+    const article = document.createElement('article');
+    article.className = 'room-card';
+    article.dataset.precio = room.precio_min || room.precio_max || 0;
+    article.dataset.estado = isAvailable ? 'disponible' : 'proximo';
+    article.setAttribute('aria-labelledby', `card-${slug}`);
+
+    article.innerHTML = `
+      <div class="room-card__photo">
+        ${imgFront ? `<img class="room-card__img room-card__img--front"
+          src="${imgFront}" alt="${room.nombre}" loading="lazy">` : ''}
+        ${imgBack  ? `<img class="room-card__img room-card__img--back"
+          src="${imgBack}" alt="${room.nombre} — vista alternativa" loading="lazy">` : ''}
+        <span class="room-card__pin" aria-label="${room.zona || 'Narvarte'}">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          ${room.zona || 'Narvarte'}
+        </span>
+        <span class="room-card__badge ${badgeCls}">${badgeTxt}</span>
       </div>
-      <div class="property-info">
-        <h3 class="property-name">${habitacion.nombre}</h3>
-        <p class="property-details">${habitacion.detalles}</p>
-        <div class="property-amenities">
-          ${amenitiesHTML}
-          ${habitacion.amenities.length > 3 ? `<span>+${habitacion.amenities.length - 3}</span>` : ''}
+
+      <div class="room-card__body">
+        <h2 class="room-card__name" id="card-${slug}">${room.nombre}</h2>
+
+        <div class="room-card__meta">
+          ${metaPiso}
+          ${metaM2}
+          <span class="meta-item">
+            <svg viewBox="0 0 24 24"><path d="M4 12h16a2 2 0 010 4H4a2 2 0 010-4z"/><path d="M6 12V6a2 2 0 012-2h3"/></svg>
+            Baño privado
+          </span>
         </div>
-        <div class="capacity">
-          <i class="fas fa-user-friends"></i> ${habitacion.capacidad} persona${habitacion.capacidad > 1 ? 's' : ''}
+
+        <div class="room-card__price-block">
+          <span class="room-card__price">${fmtPrecio(room.precio_min, room.precio_max)}</span>
+          <span class="room-card__price-note">/ mes · todo incluido</span>
         </div>
-        <button class="btn ver-detalle" data-id="${habitacion.id}">
-          <i class="fas fa-search"></i> Ver detalles
-        </button>
+
+        <div class="room-card__avail">
+          <span class="avail-dot ${dotCls}" aria-hidden="true"></span>
+          ${availTxt}
+        </div>
+
+        ${amenHTML ? `<div class="room-card__amenities">${amenHTML}</div>` : ''}
+
+        <div class="room-card__divider" aria-hidden="true"></div>
+
+        ${chipsHTML ? `<div class="room-card__chips">${chipsHTML}</div>` : ''}
+
+        <a href="/pages/detalle-habitacion.html?id=${room.id}"
+           class="room-card__cta ${ctaCls}">
+          ${ctaTxt} ${arrowSvg}
+        </a>
       </div>
     `;
-    
-    return card;
+
+    return article;
   }
 
-  // Agregar tarjetas al contenedor
-  habitaciones.forEach(habitacion => {
-    if (habitacion.disponible) {
-      wrapper.appendChild(crearTarjetaHabitacion(habitacion));
+  // ── Carga desde Supabase ──────────────────────────
+  async function load() {
+    let db;
+    try {
+      db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) {
+      console.error('Supabase no disponible:', e);
+      grid.innerHTML = '';
+      return;
     }
+
+    const { data, error } = await db
+      .from('habitaciones')
+      .select('id, nombre, zona, tipo, status, precio_min, precio_max, imagenes, amenities, tags, piso, metros_cuadrados, fecha_disponibilidad, orden')
+      .in('status', ['available', 'occupied', 'maintenance'])
+      .order('orden', { ascending: true, nullsFirst: false });
+
+    if (error || !data) {
+      console.error('Error cargando habitaciones:', error);
+      grid.innerHTML = '';
+      return;
+    }
+
+    allRooms = data;
+    renderVisible();
+  }
+
+  load();
+
+  // ── Waitlist form ─────────────────────────────
+  const waitlistForm = document.getElementById('waitlistForm');
+  const waitlistMsg  = document.getElementById('waitlistMsg');
+
+  waitlistForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const emailInput = document.getElementById('waitlist-email');
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    const btn = waitlistForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    waitlistMsg.className = 'waitlist-card__note';
+    waitlistMsg.textContent = '';
+
+    let db;
+    try {
+      db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch {
+      showMsg('error', 'No se pudo conectar. Intenta de nuevo.');
+      btn.disabled = false; btn.textContent = 'Avisarme';
+      return;
+    }
+
+    const { error } = await db
+      .from('waitlist')
+      .insert([{ email }]);
+
+    if (error) {
+      if (error.code === '23505') {
+        showMsg('ok', '¡Ya estás en la lista! Te avisaremos pronto.');
+      } else {
+        showMsg('error', 'Algo salió mal. Intenta de nuevo.');
+      }
+    } else {
+      showMsg('ok', '¡Listo! Te avisaremos en cuanto haya un nuevo cuarto disponible.');
+      emailInput.value = '';
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Avisarme';
   });
 
-  // Evento para los botones "Ver detalles" - FUNCIONAL PARA AMBAS PÁGINAS
-  document.addEventListener('click', function(e) {
-    const verDetalleBtn = e.target.closest('.ver-detalle');
-    if (verDetalleBtn) {
-      const id = verDetalleBtn.getAttribute('data-id');
-      const habitacion = habitaciones.find(h => h.id == id);
-      if (habitacion) {
-        mostrarDetalles(habitacion);
-      }
-    }
-  });
-});
+  function showMsg(type, text) {
+    waitlistMsg.className = `waitlist-card__note waitlist-card__note--${type === 'ok' ? 'ok' : 'err'}`;
+    waitlistMsg.textContent = text;
+  }
+})();

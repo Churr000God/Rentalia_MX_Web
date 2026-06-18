@@ -20,7 +20,8 @@ export default function Sidebar({ userEmail }: SidebarProps) {
     pathname === '/dashboard/amenidades-generales' ||
     pathname.startsWith('/dashboard/amenidades-generales/')
 
-  const isHomeConfigActive = pathname === '/dashboard/home-config'
+  const isHomeConfigActive  = pathname === '/dashboard/home-config'
+  const isWaitlistActive    = pathname === '/dashboard/waitlist'
 
   async function handleLogout() {
     const supabase = createClient()
@@ -119,6 +120,31 @@ export default function Sidebar({ userEmail }: SidebarProps) {
             FAQs
             <span className="sidebar__link-badge">Próximo</span>
           </span>
+        </div>
+
+        {/* Section: Leads */}
+        <div className="sidebar__section">
+          <div className="sidebar__section-label">Leads</div>
+
+          <Link
+            href="/dashboard/waitlist"
+            className={`sidebar__link${isWaitlistActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Lista de espera
+          </Link>
         </div>
 
         {/* Section: Configuración */}
