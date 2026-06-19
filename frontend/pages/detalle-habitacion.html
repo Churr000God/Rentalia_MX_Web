@@ -1,46 +1,387 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Detalles de la habitación - Rentalia">
-    <title>Detalle de Habitación | Rentalia</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" id="page-meta" content="Habitación amueblada en Narvarte, CDMX · Todo incluido · Rentalia">
+  <title id="page-title">Cargando · Rentalia</title>
+  <meta name="theme-color" content="#143528">
 
-    <!-- Estilos -->
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/detalle.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Swiper -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../assets/js/main.js" defer></script>
-    <script src="../assets/js/detalle.js" defer></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/detalle.css">
 </head>
 <body>
-    <div id="header-container"></div>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
 
-    <!-- Breadcrumb -->
-    <div class="breadcrumb-section">
-        <nav class="breadcrumb">
-            <a href="../index.html"><i class="fa-solid fa-home"></i> Inicio</a>
-            <i class="fa-solid fa-chevron-right"></i>
-            <a href="./alternativas.html">Alternativas</a>
-            <i class="fa-solid fa-chevron-right"></i>
-            <span id="breadcrumb-room">Cargando...</span>
-        </nav>
+  <!-- Navbar (inyectado por main.js) -->
+  <div id="header-container"></div>
+
+  <!-- ══════════════════════════════════════
+       LIGHTBOX
+  ══════════════════════════════════════ -->
+  <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos" hidden>
+    <div class="lb__backdrop" id="lbBackdrop"></div>
+    <div class="lb__inner">
+      <button class="lb__close" id="lbClose" aria-label="Cerrar visor">
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        Cerrar
+      </button>
+      <button class="lb__nav lb__prev" id="lbPrev" aria-label="Foto anterior">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+      </button>
+      <div class="lb__photo">
+        <img class="lb__img" id="lbImg" src="" alt="" loading="eager">
+      </div>
+      <button class="lb__nav lb__next" id="lbNext" aria-label="Foto siguiente">
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+      </button>
+      <p class="lb__counter" id="lbCounter" aria-live="polite"></p>
+      <p class="lb__caption" id="lbCaption"></p>
     </div>
+  </div>
 
-    <main class="detalle-container" id="detalle-container">
-        <!-- Loading State -->
-        <div class="loading-state">
-            <div class="loading-spinner"></div>
-            <p>Cargando detalles de la habitación...</p>
+  <!-- ══════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════ -->
+  <main id="main">
+
+    <!-- BREADCRUMB ──────────────────────── -->
+    <nav class="d-breadcrumb" aria-label="Migas de pan">
+      <div class="container">
+        <ol>
+          <li><a href="../index.html">Inicio</a></li>
+          <li><a href="./alternativas.html">Habitaciones</a></li>
+          <li><span aria-current="page" id="breadcrumb-room">Cargando…</span></li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- GALERÍA ─────────────────────────── -->
+    <section class="d-gallery" aria-label="Galería de fotos" id="gallerySection">
+
+      <!-- Mobile: carrusel snap -->
+      <div class="d-gallery__mobile">
+        <div class="d-gallery__track" id="mobileTrack" role="list" aria-label="Fotos de la habitación">
+          <!-- slides generados por JS -->
+          <div class="d-gallery__slide d-gallery__slide--skeleton"></div>
         </div>
-    </main>
+        <div class="d-gallery__dots" id="mobileDots" role="tablist" aria-label="Navegar fotos"></div>
+        <div class="d-gallery__arrows">
+          <button class="d-gallery__arrow" id="galleryPrev" aria-label="Foto anterior">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+          </button>
+          <button class="d-gallery__arrow" id="galleryNext" aria-label="Foto siguiente">
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </button>
+        </div>
+      </div>
 
-    <div id="footer-container"></div>
+      <!-- Desktop: mosaico -->
+      <div class="d-gallery__mosaic" id="galleryMosaic" role="group" aria-label="Fotos de la habitación">
+        <!-- populated by JS -->
+        <div class="d-gallery__main d-gallery__item--skeleton"></div>
+        <div class="d-gallery__thumb d-gallery__item--skeleton"></div>
+        <div class="d-gallery__thumb d-tour-tile" aria-label="Recorrido virtual 360° — próximamente">
+          <div class="d-tour-tile__inner">
+            <span class="material-symbols-outlined d-tour-tile__icon" aria-hidden="true">globe</span>
+            <p class="d-tour-tile__label">Recorrido 360°</p>
+            <p class="d-tour-tile__sub">Matterport próximamente</p>
+            <span class="d-tour-tile__badge">Próximamente</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón "Ver todas" — desktop -->
+      <button class="d-gallery__all-btn" id="galleryAllBtn" aria-label="Ver todas las fotos">
+        <span class="material-symbols-outlined" aria-hidden="true">grid_on</span>
+        Ver todas las fotos
+      </button>
+
+    </section><!-- /d-gallery -->
+
+    <!-- CONTENIDO DETALLE ────────────────── -->
+    <section class="d-content" aria-labelledby="room-h1">
+      <div class="container">
+
+        <!-- Loading skeleton -->
+        <div class="d-loading" id="detailLoading" aria-live="polite" aria-label="Cargando habitación">
+          <div class="d-skel d-skel--h1"></div>
+          <div class="d-skel d-skel--text"></div>
+          <div class="d-skel d-skel--text d-skel--short"></div>
+        </div>
+
+        <!-- Layout 2 columnas (oculto hasta que cargue) -->
+        <div class="d-layout" id="detailLayout" hidden>
+
+          <!-- ── Columna izquierda ── -->
+          <div class="d-left">
+
+            <!-- Encabezado del cuarto -->
+            <header class="d-room-header">
+              <h1 class="d-room-name" id="room-h1">—</h1>
+              <div class="d-room-meta">
+                <span class="d-room-location" id="room-location-wrap">
+                  <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                  <span id="room-location">Narvarte, CDMX</span>
+                </span>
+                <div class="d-chips" id="room-chips" role="list" aria-label="Características destacadas">
+                  <span class="d-chip" role="listitem">Sin aval</span>
+                  <span class="d-chip" role="listitem">Estancia flexible</span>
+                  <span class="d-chip" role="listitem">Limpieza incluida</span>
+                  <span class="d-chip d-chip--highlight" role="listitem">Comunidad</span>
+                </div>
+              </div>
+            </header>
+
+            <!-- Descripción -->
+            <p class="d-description" id="room-description">—</p>
+
+            <div class="d-divider" aria-hidden="true"></div>
+
+            <!-- Características -->
+            <section aria-labelledby="chars-h2">
+              <h2 class="d-section-title" id="chars-h2">Características</h2>
+              <div class="d-chars-grid" id="charsGrid" role="list">
+                <!-- generado por JS -->
+              </div>
+            </section>
+
+            <div class="d-divider" aria-hidden="true"></div>
+
+            <!-- Qué incluye + Amenidades -->
+            <div class="d-includes-layout">
+              <section aria-labelledby="includes-h2">
+                <h2 class="d-section-title" id="includes-h2">Qué incluye tu renta</h2>
+                <ul class="d-check-list" role="list">
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                    Amueblado completo
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                    Servicios (Luz, Agua, Gas)
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                    WiFi de alta velocidad
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                    Limpieza quincenal
+                  </li>
+                </ul>
+              </section>
+
+              <section aria-labelledby="amenidades-h2">
+                <h2 class="d-section-title" id="amenidades-h2">Amenidades de la casa</h2>
+                <ul class="d-icon-list" role="list">
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">countertops</span>
+                    Cocina equipada
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">potted_plant</span>
+                    Terraza con plantas
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">local_laundry_service</span>
+                    Lavandería
+                  </li>
+                  <li role="listitem">
+                    <span class="material-symbols-outlined" aria-hidden="true">security</span>
+                    Seguridad 24/7
+                  </li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="d-divider" aria-hidden="true"></div>
+
+            <!-- Ubicación -->
+            <section aria-labelledby="location-h2">
+              <h2 class="d-section-title" id="location-h2">Ubicación</h2>
+              <div class="d-map" role="img" aria-label="Mapa de ubicación aproximada — Narvarte, CDMX">
+                <div class="d-map__bg">
+                  <div class="d-map__pin" aria-hidden="true">
+                    <span class="material-symbols-outlined">home_pin</span>
+                    <span class="d-map__pin-label">Rentalia</span>
+                  </div>
+                </div>
+                <div class="d-map__card">
+                  <div class="d-map__card-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">directions_walk</span>
+                    <span>8 min a Metro Etiopía</span>
+                  </div>
+                  <div class="d-map__card-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">park</span>
+                    <span>12 min a Parque Hundido</span>
+                  </div>
+                  <div class="d-map__card-item">
+                    <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
+                    <span>5 min a Supermercado</span>
+                  </div>
+                </div>
+              </div>
+              <p class="d-map__note">La dirección exacta se comparte al confirmar la visita o reserva.</p>
+            </section>
+
+          </div><!-- /d-left -->
+
+          <!-- ── Columna derecha: panel de reserva ── -->
+          <aside class="d-panel-wrapper" aria-label="Panel de reserva">
+            <div class="d-panel">
+
+              <!-- Precio -->
+              <div class="d-panel__price-row">
+                <span class="d-panel__price" id="panel-price">$—</span>
+                <span class="d-panel__price-note">/ mes</span>
+              </div>
+              <p class="d-panel__inclusive">Todo incluido · Sin costos ocultos</p>
+
+              <div class="d-panel__divider" aria-hidden="true"></div>
+
+              <!-- Flexibilidad (Código 1 style) -->
+              <div class="d-panel__flex-note" role="note" aria-label="Estancia flexible">
+                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                <p><strong>Mismo precio de 1 a 6 meses.</strong> Sin penalización por estancia corta.</p>
+              </div>
+
+              <!-- Disponibilidad (Código 1 callout) -->
+              <div class="d-panel__avail" id="panelAvail" role="status" aria-live="polite">
+                <span class="d-panel__avail-dot" id="panelAvailDot" aria-hidden="true"></span>
+                <div>
+                  <span class="d-panel__avail-title" id="panelAvailTitle">Disponible</span>
+                  <span class="d-panel__avail-date" id="panelAvailDate"></span>
+                </div>
+              </div>
+
+              <!-- Depósito (Código 2 tabular) -->
+              <div class="d-panel__row">
+                <span class="d-panel__row-label">Depósito</span>
+                <span class="d-panel__row-value">1 mes</span>
+              </div>
+
+              <div class="d-panel__divider" aria-hidden="true"></div>
+
+              <!-- CTAs -->
+              <a href="#" class="btn btn-cta d-panel__cta-primary" id="ctaReserve" target="_blank" rel="noopener noreferrer">
+                Reservar mi lugar
+                <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+              </a>
+              <a href="#" class="btn btn-outline d-panel__cta-secondary" id="ctaVisit" target="_blank" rel="noopener noreferrer">
+                Agendar visita
+              </a>
+
+              <!-- Garantías (Código 2) -->
+              <div class="d-panel__guarantees" role="list">
+                <div class="d-panel__guarantee" role="listitem">
+                  <span class="material-symbols-outlined" aria-hidden="true">verified</span>
+                  <span>Sin aval ni complicaciones</span>
+                </div>
+                <div class="d-panel__guarantee" role="listitem">
+                  <span class="material-symbols-outlined" aria-hidden="true">cloud_done</span>
+                  <span>Proceso 100% en línea</span>
+                </div>
+                <div class="d-panel__guarantee" role="listitem">
+                  <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                  <span>Respuesta garantizada en 24h</span>
+                </div>
+              </div>
+
+            </div><!-- /d-panel -->
+          </aside>
+
+        </div><!-- /d-layout -->
+
+        <!-- Error state -->
+        <div class="d-error" id="detailError" hidden role="alert">
+          <span class="material-symbols-outlined d-error__icon" aria-hidden="true">error</span>
+          <p class="d-error__msg" id="errorMsg">Ocurrió un error al cargar la habitación.</p>
+          <a href="../index.html" class="btn btn-outline">Volver al inicio</a>
+        </div>
+
+      </div><!-- /container -->
+    </section><!-- /d-content -->
+
+    <!-- CÓMO FUNCIONA ───────────────────── -->
+    <section class="d-steps" aria-labelledby="steps-h2">
+      <div class="container">
+        <h2 class="d-steps__h2" id="steps-h2">Cómo es rentar aquí</h2>
+        <ol class="d-steps__grid" role="list">
+          <li class="d-step">
+            <div class="d-step__num" aria-hidden="true">1</div>
+            <div>
+              <h3 class="d-step__h3">Elige</h3>
+              <p class="d-step__p">Encuentra el cuarto que mejor se adapte a tu estilo.</p>
+            </div>
+          </li>
+          <li class="d-step">
+            <div class="d-step__num" aria-hidden="true">2</div>
+            <div>
+              <h3 class="d-step__h3">Agenda</h3>
+              <p class="d-step__p">Visita presencial o por videollamada, sin presión.</p>
+            </div>
+          </li>
+          <li class="d-step">
+            <div class="d-step__num" aria-hidden="true">3</div>
+            <div>
+              <h3 class="d-step__h3">Aplica</h3>
+              <p class="d-step__p">Sube tus documentos y paga tu apartado. Sin aval.</p>
+            </div>
+          </li>
+          <li class="d-step">
+            <div class="d-step__num" aria-hidden="true">4</div>
+            <div>
+              <h3 class="d-step__h3">Múdate</h3>
+              <p class="d-step__p">Bienvenido a tu nueva comunidad Rentalia.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- OTROS CUARTOS ────────────────────── -->
+    <section class="d-other" aria-labelledby="other-h2">
+      <div class="container">
+        <div class="d-other__header">
+          <h2 class="d-other__h2" id="other-h2">Otras opciones en la zona</h2>
+          <a href="./alternativas.html" class="d-other__link">Ver todas</a>
+        </div>
+        <div class="d-other__grid" id="otherRooms" role="list">
+          <!-- generado por JS -->
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- BARRA MÓVIL FIJA ────────────────── -->
+  <div class="d-mobile-bar" id="mobileBar" role="complementary" aria-label="Reservar habitación">
+    <div class="d-mobile-bar__left">
+      <span class="d-mobile-bar__room" id="mbarRoom">—</span>
+      <span class="d-mobile-bar__price" id="mbarPrice">
+        $— <span class="d-mobile-bar__note">/ mes</span>
+      </span>
+    </div>
+    <a href="#" class="btn btn-cta d-mobile-bar__btn" id="mbarCta" target="_blank" rel="noopener noreferrer">
+      Reservar
+    </a>
+  </div>
+
+  <!-- Footer (inyectado por main.js) -->
+  <div id="footer-container"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/detalle.js" defer></script>
 </body>
 </html>
