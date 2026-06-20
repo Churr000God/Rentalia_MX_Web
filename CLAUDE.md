@@ -40,7 +40,7 @@ Plataforma web para alquiler de habitaciones (rentalia.mx). Sitio público + API
 - El backend accede vía `asyncpg` (directo) + `supabase-py` (cliente).
 - El frontend accede vía `@supabase/supabase-js` (CDN), directamente, para tablas `habitaciones`/`habitacion_estilos`/`faqs`.
 - Variables de entorno necesarias: `SUPABASE_URL`, `SUPABASE_KEY`, `SUPABASE_DB_URL`.
-- Tablas principales: `habitaciones`, `habitacion_estilos`, `reviews_internal`, `faqs`, `user_questions`.
+- Tablas principales: `habitaciones`, `habitacion_estilos`, `reviews_internal`, `faqs`, `user_questions`, `ubicaciones`, `location_amenities`.
 
 ---
 
@@ -59,7 +59,14 @@ Crea `.env` copiando `.env.example` y llenando al menos:
 
 ## Desarrollo local
 
-### Backend FastAPI
+### Arranque rápido (todos los servicios)
+```bash
+bash scripts/dev-all.sh
+```
+Levanta backend :8000 + admin :4000 + frontend :8080 en background. Ctrl-C apaga los tres.
+Requiere: `.env` raíz (con `SUPABASE_URL`/`KEY`), `admin/.env.local` y `backend/.venv`.
+
+### Backend FastAPI (manual)
 ```bash
 cd backend
 pip install fastapi uvicorn supabase python-dotenv httpx asyncpg pydantic
@@ -68,7 +75,7 @@ uvicorn app.main:app --reload --port 8000
 - Verificar: `curl http://localhost:8000/health`
 - Docs interactivas: `http://localhost:8000/docs`
 
-### Frontend
+### Frontend (manual)
 Abrir `frontend/` con Live Server (VS Code) o cualquier servidor estático en el puerto **8080** u **8081**.
 
 ### CORS

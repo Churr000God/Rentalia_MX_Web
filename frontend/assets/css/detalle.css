@@ -3,6 +3,11 @@
    Depende de theme.css (tokens) + main.css (btn, chip, container, etc.)
 ════════════════════════════════════════════════ */
 
+/* Respeta el atributo hidden aunque el CSS defina display en la clase */
+.d-loading[hidden],
+.d-layout[hidden],
+.d-error[hidden] { display: none !important; }
+
 /* Material Symbols — ajuste de peso visual */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
@@ -644,64 +649,10 @@ body { padding-bottom: 76px; }
 }
 @media (min-width: 600px) { .d-map { height: 320px; } }
 
-.d-map__bg {
+/* Contenedor Leaflet — ocupa todo el .d-map */
+#locationMap {
   width: 100%;
   height: 100%;
-  /* Mapa decorativo CSS — cuadrícula tipo plano urbano */
-  background:
-    linear-gradient(180deg, #e8ede6 0%, #dde4db 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Calles horizontales y verticales (decorativas) */
-.d-map__bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(0deg, rgba(200,210,200,.55) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,210,200,.55) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-.d-map__bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(0deg, rgba(170,190,170,.35) 2px, transparent 2px),
-    linear-gradient(90deg, rgba(170,190,170,.35) 2px, transparent 2px);
-  background-size: 120px 120px;
-}
-
-/* Pin central */
-.d-map__pin {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .2rem;
-  background: var(--selva);
-  color: var(--hueso);
-  padding: .7rem .9rem .55rem;
-  border-radius: var(--radius-full);
-  box-shadow: 0 4px 16px rgba(20,53,40,.35);
-}
-.d-map__pin .material-symbols-outlined {
-  font-size: 22px !important;
-  color: var(--cempa);
-}
-.d-map__pin-label {
-  font-size: .65rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--hoja);
 }
 
 /* Tarjeta de distancias */
@@ -717,7 +668,7 @@ body { padding-bottom: 76px; }
   display: flex;
   flex-direction: column;
   gap: .5rem;
-  z-index: 2;
+  z-index: 1000; /* por encima de los panes de Leaflet */
   min-width: 180px;
 }
 

@@ -4,8 +4,14 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 
+interface Ubicacion {
+  id: string
+  nombre: string
+}
+
 interface AmenidadGeneralFormProps {
   mode: 'create' | 'edit'
+  ubicaciones?: Ubicacion[]
   initialData?: {
     id: string
     slug: string
@@ -15,6 +21,7 @@ interface AmenidadGeneralFormProps {
     category: string
     active: boolean
     orden: number
+    ubicacion_id: string | null
   }
 }
 
@@ -32,19 +39,20 @@ const ICON_SUGGESTIONS = [
   'outdoor_grill', 'meeting_room', 'work', 'bolt',
 ]
 
-export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGeneralFormProps) {
+export default function AmenidadGeneralForm({ mode, initialData, ubicaciones = [] }: AmenidadGeneralFormProps) {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
   const [form, setForm] = useState({
-    slug:        initialData?.slug        ?? '',
-    label:       initialData?.label       ?? '',
-    description: initialData?.description ?? '',
-    icon:        initialData?.icon        ?? 'home',
-    category:    initialData?.category    ?? 'interior',
-    active:      initialData?.active      ?? true,
-    orden:       initialData?.orden       ?? 0,
+    slug:         initialData?.slug         ?? '',
+    label:        initialData?.label        ?? '',
+    description:  initialData?.description  ?? '',
+    icon:         initialData?.icon         ?? 'home',
+    category:     initialData?.category     ?? 'interior',
+    active:       initialData?.active       ?? true,
+    orden:        initialData?.orden        ?? 0,
+    ubicacion_id: initialData?.ubicacion_id ?? '',
   })
 
   function set(field: string, value: unknown) {
@@ -67,13 +75,14 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
 
     const supabase = createClient()
     const payload = {
-      slug:        form.slug || autoSlug(form.label),
-      label:       form.label,
-      description: form.description || null,
-      icon:        form.icon,
-      category:    form.category,
-      active:      form.active,
-      orden:       Number(form.orden),
+      slug:         form.slug || autoSlug(form.label),
+      label:        form.label,
+      description:  form.description || null,
+      icon:         form.icon,
+      category:     form.category,
+      active:       form.active,
+      orden:        Number(form.orden),
+      ubicacion_id: form.ubicacion_id || null,
     }
 
     let err
@@ -211,6 +220,27 @@ export default function AmenidadGeneralForm({ mode, initialData }: AmenidadGener
             </button>
           ))}
         </div>
+      </div>
+
+      {/* ── Ubicación ── */}
+      <p className="form-section-title">Ubicación</p>
+
+      <div className="form-group">
+        <label className="form-label">Asociar a una ubicación</label>
+        <select
+          className="form-select"
+          value={form.ubicacion_id}
+          onChange={e => set('ubicacion_id', e.target.value)}
+        >
+          <option value="">— Global (aplica a todas las ubicaciones) —</option>
+          {ubicaciones.map(u => (
+            <option key={u.id} value={u.id}>{u.nombre}</option>
+          ))}
+        </select>
+        <p className="form-hint">
+          Si seleccionas una ubicación, esta amenidad solo aparecerá en los cuartos de esa propiedad.
+          Dejarlo en "Global" la aplica a todas.
+        </p>
       </div>
 
       {/* ── Configuración ── */}

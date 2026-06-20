@@ -13,6 +13,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
+  <!-- Leaflet (mapa real OpenStreetMap) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
+
   <!-- CSS -->
   <link rel="stylesheet" href="../assets/css/theme.css">
   <link rel="stylesheet" href="../assets/css/main.css">
@@ -158,77 +162,29 @@
 
             <!-- Qué incluye + Amenidades -->
             <div class="d-includes-layout">
-              <section aria-labelledby="includes-h2">
+              <section aria-labelledby="includes-h2" id="incluyeSection" hidden>
                 <h2 class="d-section-title" id="includes-h2">Qué incluye tu renta</h2>
-                <ul class="d-check-list" role="list">
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                    Amueblado completo
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                    Servicios (Luz, Agua, Gas)
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                    WiFi de alta velocidad
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
-                    Limpieza quincenal
-                  </li>
-                </ul>
+                <!-- Llenado por detalle.js desde habitaciones.incluye -->
+                <ul class="d-check-list" id="incluyeList" role="list"></ul>
               </section>
 
-              <section aria-labelledby="amenidades-h2">
+              <section aria-labelledby="amenidades-h2" id="houseAmenitiesSection" hidden>
                 <h2 class="d-section-title" id="amenidades-h2">Amenidades de la casa</h2>
-                <ul class="d-icon-list" role="list">
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">countertops</span>
-                    Cocina equipada
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">potted_plant</span>
-                    Terraza con plantas
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">local_laundry_service</span>
-                    Lavandería
-                  </li>
-                  <li role="listitem">
-                    <span class="material-symbols-outlined" aria-hidden="true">security</span>
-                    Seguridad 24/7
-                  </li>
-                </ul>
+                <!-- Llenado por detalle.js desde location_amenities filtradas por ubicacion_id -->
+                <ul class="d-icon-list" id="houseAmenitiesList" role="list"></ul>
               </section>
             </div>
 
             <div class="d-divider" aria-hidden="true"></div>
 
             <!-- Ubicación -->
-            <section aria-labelledby="location-h2">
+            <section aria-labelledby="location-h2" id="locationSection" hidden>
               <h2 class="d-section-title" id="location-h2">Ubicación</h2>
-              <div class="d-map" role="img" aria-label="Mapa de ubicación aproximada — Narvarte, CDMX">
-                <div class="d-map__bg">
-                  <div class="d-map__pin" aria-hidden="true">
-                    <span class="material-symbols-outlined">home_pin</span>
-                    <span class="d-map__pin-label">Rentalia</span>
-                  </div>
-                </div>
-                <div class="d-map__card">
-                  <div class="d-map__card-item">
-                    <span class="material-symbols-outlined" aria-hidden="true">directions_walk</span>
-                    <span>8 min a Metro Etiopía</span>
-                  </div>
-                  <div class="d-map__card-item">
-                    <span class="material-symbols-outlined" aria-hidden="true">park</span>
-                    <span>12 min a Parque Hundido</span>
-                  </div>
-                  <div class="d-map__card-item">
-                    <span class="material-symbols-outlined" aria-hidden="true">shopping_cart</span>
-                    <span>5 min a Supermercado</span>
-                  </div>
-                </div>
+              <div class="d-map" role="region" aria-label="Mapa de ubicación aproximada">
+                <!-- Mapa real Leaflet — se inicializa por detalle.js -->
+                <div id="locationMap"></div>
+                <!-- Tarjeta de distancias — se llena por JS desde ubicacion.distancias -->
+                <div class="d-map__card" id="distanciasCard" hidden></div>
               </div>
               <p class="d-map__note">La dirección exacta se comparte al confirmar la visita o reserva.</p>
             </section>

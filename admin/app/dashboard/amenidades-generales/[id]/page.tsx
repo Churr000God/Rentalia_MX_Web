@@ -7,15 +7,28 @@ interface Props {
   params: Promise<{ id: string }>
 }
 
+async function getUbicaciones() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('ubicaciones')
+    .select('id, nombre')
+    .eq('activo', true)
+    .order('orden', { ascending: true })
+  return data ?? []
+}
+
 export default async function EditarAmenidadPage({ params }: Props) {
   const { id } = await params
   const supabase = await createClient()
 
-  const { data, error } = await supabase
-    .from('location_amenities')
-    .select('id, slug, label, description, icon, category, active, orden')
-    .eq('id', id)
-    .single()
+  const [{ data, error }, ubicaciones] = await Promise.all([
+    supabase
+      .from('location_amenities')
+      .select('id, slug, label, description, icon, category, active, orden, ubicacion_id')
+      .eq('id', id)
+      .single(),
+    getUbicaciones(),
+  ])
 
   if (error || !data) notFound()
 
@@ -44,7 +57,11 @@ export default async function EditarAmenidadPage({ params }: Props) {
         </div>
 
         <div className="card" style={{ maxWidth: 700 }}>
-          <AmenidadGeneralForm mode="edit" initialData={data} />
+          <AmenidadGeneralForm
+            mode="edit"
+            ubicaciones={ubicaciones}
+            initialData={data}
+          />
         </div>
       </main>
     </>

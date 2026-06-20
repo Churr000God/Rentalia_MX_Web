@@ -5,10 +5,17 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/utils/supabase/client'
 import { AMENITIES } from '@/lib/amenities'
 
+interface Ubicacion {
+  id: string
+  nombre: string
+  zona: string | null
+}
+
 interface RoomFormData {
   nombre: string
   descripcion: string
   zona: string
+  ubicacion_id: string
   tipo: 'privada' | 'compartida' | 'estudio' | ''
   status: 'available' | 'occupied' | 'maintenance' | ''
   precio_min: string
@@ -17,6 +24,7 @@ interface RoomFormData {
   imagenes: string[]
   amenities: string[]
   tags: string[]
+  incluye: string[]
   orden: string
   piso: string
   metros_cuadrados: string
@@ -25,11 +33,13 @@ interface RoomFormData {
 
 interface RoomFormProps {
   mode: 'create' | 'edit'
+  ubicaciones?: Ubicacion[]
   initialData?: {
     id: string
     nombre: string
     descripcion: string | null
     zona: string | null
+    ubicacion_id: string | null
     tipo: string | null
     status: string | null
     precio_min: number | null
@@ -38,6 +48,7 @@ interface RoomFormProps {
     imagenes: string[] | null
     amenities: string[] | null
     tags: string[] | null
+    incluye: string[] | null
     orden: number | null
     piso: number | null
     metros_cuadrados: number | null
@@ -45,12 +56,13 @@ interface RoomFormProps {
   }
 }
 
-export default function RoomForm({ mode, initialData }: RoomFormProps) {
+export default function RoomForm({ mode, initialData, ubicaciones = [] }: RoomFormProps) {
   const router = useRouter()
   const [form, setForm] = useState<RoomFormData>({
     nombre: initialData?.nombre ?? '',
     descripcion: initialData?.descripcion ?? '',
     zona: initialData?.zona ?? '',
+    ubicacion_id: initialData?.ubicacion_id ?? '',
     tipo: (initialData?.tipo as RoomFormData['tipo']) ?? '',
     status: (initialData?.status as RoomFormData['status']) ?? '',
     precio_min: initialData?.precio_min != null ? String(initialData.precio_min) : '',
@@ -59,12 +71,14 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
     imagenes: initialData?.imagenes ?? [],
     amenities: initialData?.amenities ?? [],
     tags: initialData?.tags ?? [],
+    incluye: initialData?.incluye ?? [],
     orden: initialData?.orden != null ? String(initialData.orden) : '',
     piso: initialData?.piso != null ? String(initialData.piso) : '',
     metros_cuadrados: initialData?.metros_cuadrados != null ? String(initialData.metros_cuadrados) : '',
     fecha_disponibilidad: initialData?.fecha_disponibilidad ?? '',
   })
   const [tagInput, setTagInput] = useState('')
+  const [incluyeInput, setIncluyeInput] = useState('')
   const [imagenInput, setImagenInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -98,6 +112,25 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
 
   function removeTag(tag: string) {
     setForm((prev) => ({ ...prev, tags: prev.tags.filter((t) => t !== tag) }))
+  }
+
+  function handleIncluyeKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter' || e.key === ',' || e.key === ';') {
+      e.preventDefault()
+      addIncluye()
+    }
+  }
+
+  function addIncluye() {
+    const trimmed = incluyeInput.trim()
+    if (trimmed && !form.incluye.includes(trimmed)) {
+      setForm((prev) => ({ ...prev, incluye: [...prev.incluye, trimmed] }))
+    }
+    setIncluyeInput('')
+  }
+
+  function removeIncluye(item: string) {
+    setForm((prev) => ({ ...prev, incluye: prev.incluye.filter((i) => i !== item) }))
   }
 
   function handleImagenKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -141,6 +174,7 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
       nombre: form.nombre.trim(),
       descripcion: form.descripcion.trim() || null,
       zona: form.zona.trim() || null,
+      ubicacion_id: form.ubicacion_id || null,
       tipo: form.tipo || null,
       status: form.status || null,
       precio_min: form.precio_min !== '' ? Number(form.precio_min) : null,
@@ -149,6 +183,7 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
       imagenes: form.imagenes,
       amenities: form.amenities,
       tags: form.tags.length > 0 ? form.tags : null,
+      incluye: form.incluye,
       orden: form.orden !== '' ? Number(form.orden) : null,
       piso: form.piso !== '' ? Number(form.piso) : null,
       metros_cuadrados: form.metros_cuadrados !== '' ? Number(form.metros_cuadrados) : null,
@@ -236,6 +271,30 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
             placeholder="Descripción de la habitación, amenidades destacadas…"
             rows={4}
           />
+        </div>
+
+        {/* Ubicación */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="ubicacion_id">
+            Ubicación
+          </label>
+          <select
+            id="ubicacion_id"
+            name="ubicacion_id"
+            className="form-select"
+            value={form.ubicacion_id}
+            onChange={handleChange}
+          >
+            <option value="">— Sin ubicación —</option>
+            {ubicaciones.map(u => (
+              <option key={u.id} value={u.id}>
+                {u.nombre}{u.zona ? ` — ${u.zona}` : ''}
+              </option>
+            ))}
+          </select>
+          <span className="form-hint">
+            Agrupa la habitación bajo una propiedad. Define el mapa y amenidades de la casa compartidas.
+          </span>
         </div>
 
         {/* Zona */}
@@ -468,9 +527,16 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
 
       <div className="form-grid">
         <div className="form-group form-grid--full">
-          <label className="form-label">Selecciona las amenidades disponibles</label>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
-            {AMENITIES.map((amenity) => {
+
+          {/* Grupo 1: con ícono en la tarjeta del catálogo */}
+          <label className="form-label">
+            Con ícono en la tarjeta del catálogo
+          </label>
+          <p className="form-hint" style={{ marginBottom: 8 }}>
+            Aparecen como íconos en <strong>/alternativas</strong> (máx 4 visibles + contador).
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: 20 }}>
+            {AMENITIES.filter(a => a.showInCard).map((amenity) => {
               const active = form.amenities.includes(amenity.slug)
               return (
                 <button
@@ -478,6 +544,7 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
                   type="button"
                   onClick={() => toggleAmenity(amenity.slug)}
                   style={{
+                    display: 'flex', alignItems: 'center', gap: 6,
                     padding: '6px 12px',
                     borderRadius: '8px',
                     border: active ? '2px solid #1E4D3C' : '1px solid #c0c8c2',
@@ -489,13 +556,93 @@ export default function RoomForm({ mode, initialData }: RoomFormProps) {
                     transition: 'all 140ms',
                   }}
                 >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>{amenity.icon}</span>
                   {amenity.label}
                 </button>
               )
             })}
           </div>
+
+          {/* Grupo 2: solo visibles en el detalle */}
+          <label className="form-label">
+            Solo visibles en Características del detalle
+          </label>
+          <p className="form-hint" style={{ marginBottom: 8 }}>
+            No generan ícono en la tarjeta del catálogo. Aparecen en la grilla de características de la página de detalle.
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+            {AMENITIES.filter(a => !a.showInCard).map((amenity) => {
+              const active = form.amenities.includes(amenity.slug)
+              return (
+                <button
+                  key={amenity.slug}
+                  type="button"
+                  onClick={() => toggleAmenity(amenity.slug)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 6,
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    border: active ? '2px solid #1E4D3C' : '1px solid #c0c8c2',
+                    background: active ? 'rgba(30,77,60,.1)' : 'transparent',
+                    color: active ? '#143528' : '#555',
+                    cursor: 'pointer',
+                    fontSize: '0.82rem',
+                    fontWeight: active ? 600 : 400,
+                    transition: 'all 140ms',
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>{amenity.icon}</span>
+                  {amenity.label}
+                </button>
+              )
+            })}
+          </div>
+
+        </div>
+      </div>
+
+      {/* Section: Qué incluye la renta */}
+      <div className="form-section-title">Qué incluye la renta</div>
+
+      <div className="form-grid">
+        <div className="form-group form-grid--full">
+          <label className="form-label" htmlFor="incluye-input">
+            Ítems incluidos
+          </label>
+          <div
+            className="tag-input-container"
+            onClick={() => document.getElementById('incluye-input')?.focus()}
+          >
+            {form.incluye.map((item) => (
+              <span key={item} className="tag-chip">
+                {item}
+                <button
+                  type="button"
+                  className="tag-chip__remove"
+                  onClick={() => removeIncluye(item)}
+                  aria-label={`Eliminar ${item}`}
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+            <input
+              id="incluye-input"
+              type="text"
+              className="tag-text-input"
+              value={incluyeInput}
+              onChange={(e) => setIncluyeInput(e.target.value)}
+              onKeyDown={handleIncluyeKeyDown}
+              onBlur={addIncluye}
+              placeholder={
+                form.incluye.length === 0
+                  ? 'Ej. Amueblado completo · presiona Enter para agregar…'
+                  : ''
+              }
+            />
+          </div>
           <span className="form-hint">
-            Se muestran como íconos en la tarjeta de la home (máx 4 visibles + contador).
+            Se muestra en "Qué incluye tu renta" del detalle. Ej: "Amueblado completo", "WiFi de alta velocidad".
           </span>
         </div>
       </div>

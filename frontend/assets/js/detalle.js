@@ -21,7 +21,9 @@
     estacionamiento: { label: 'Estacionamiento',  icon: 'directions_car' },
     mascotas:        { label: 'Pet friendly',     icon: 'pets' },
     servicios:       { label: 'Servicios incl.',  icon: 'bolt' },
-    escritorio:      { label: 'Escritorio',       icon: 'desk' },
+    escritorio:       { label: 'Escritorio',        icon: 'desk'    },
+    cama_matrimonial: { label: 'Cama matrimonial',  icon: 'king_bed' },
+    ventana_exterior: { label: 'Ventana exterior',  icon: 'window'  },
   };
 
   /* ── Estado ──────────────────────────────────── */
@@ -40,8 +42,14 @@
   let elPanelPrice, elPanelAvail, elPanelAvailDot, elPanelAvailTitle, elPanelAvailDate;
   let elCtaReserve, elCtaVisit, elMbarRoom, elMbarPrice, elMbarCta;
   let elOtherRooms;
+  // mapa + secciones dinámicas
+  let elLocationSection, elLocationMap, elDistanciasCard;
+  let elIncluyeSection, elIncluyeList;
+  let elHouseAmenitiesSection, elHouseAmenitiesList;
   // lightbox
   let elLb, elLbBackdrop, elLbClose, elLbPrev, elLbNext, elLbImg, elLbCounter, elLbCaption;
+  // instancia del mapa Leaflet
+  let leafletMap = null;
 
   /* ══════════════════════════════════════════════
      INIT
@@ -75,7 +83,15 @@
     elMbarRoom      = document.getElementById('mbarRoom');
     elMbarPrice     = document.getElementById('mbarPrice');
     elMbarCta       = document.getElementById('mbarCta');
-    elOtherRooms    = document.getElementById('otherRooms');
+    elOtherRooms            = document.getElementById('otherRooms');
+    // mapa + secciones dinámicas
+    elLocationSection       = document.getElementById('locationSection');
+    elLocationMap           = document.getElementById('locationMap');
+    elDistanciasCard        = document.getElementById('distanciasCard');
+    elIncluyeSection        = document.getElementById('incluyeSection');
+    elIncluyeList           = document.getElementById('incluyeList');
+    elHouseAmenitiesSection = document.getElementById('houseAmenitiesSection');
+    elHouseAmenitiesList    = document.getElementById('houseAmenitiesList');
     // lightbox
     elLb        = document.getElementById('lightbox');
     elLbBackdrop = document.getElementById('lbBackdrop');
@@ -115,7 +131,7 @@
     try {
       const { data, error } = await db
         .from('habitaciones')
-        .select('id, nombre, descripcion, zona, tipo, status, precio_min, precio_max, imagenes, amenities, tags, piso, metros_cuadrados, fecha_disponibilidad, orden')
+        .select('id, nombre, descripcion, zona, ubicacion_id, tipo, status, precio_min, precio_max, imagenes, amenities, tags, incluye, piso, metros_cuadrados, fecha_disponibilidad, orden')
         .eq('id', id)
         .single();
 
@@ -124,11 +140,57 @@
 
       currentRoom = data;
       renderRoom(data);
-      await loadOtherRooms(id);
+
+      // Cargar en paralelo: ubicación + amenidades de la casa + otros cuartos
+      await Promise.all([
+        loadUbicacion(data.ubicacion_id),
+        loadHouseAmenities(data.ubicacion_id),
+        loadOtherRooms(id),
+      ]);
 
     } catch (err) {
       console.error('Error cargando habitación:', err);
       showError('No se encontró la habitación o hubo un error de conexión.');
+    }
+  }
+
+  async function loadUbicacion(ubicacionId) {
+    if (!ubicacionId) return;
+    try {
+      const { data, error } = await db
+        .from('ubicaciones')
+        .select('nombre, zona, lat, lng, distancias')
+        .eq('id', ubicacionId)
+        .single();
+      if (error || !data) return;
+      renderMap(data);
+      renderDistancias(data.distancias || []);
+    } catch (e) {
+      console.warn('No se cargó la ubicación:', e);
+    }
+  }
+
+  async function loadHouseAmenities(ubicacionId) {
+    try {
+      let query = db
+        .from('location_amenities')
+        .select('label, icon, description')
+        .eq('active', true)
+        .order('orden', { ascending: true });
+
+      if (ubicacionId) {
+        // Amenidades de esta ubicación específica
+        query = query.eq('ubicacion_id', ubicacionId);
+      } else {
+        // Sin ubicacion_id: mostrar amenidades globales (ubicacion_id null)
+        query = query.is('ubicacion_id', null);
+      }
+
+      const { data, error } = await query;
+      if (error || !data || data.length === 0) return;
+      renderHouseAmenities(data);
+    } catch (e) {
+      console.warn('No se cargaron las amenidades de la casa:', e);
     }
   }
 
@@ -214,6 +276,9 @@
     // Características
     renderChars(room, amenities);
 
+    // Qué incluye la renta (desde habitaciones.incluye)
+    renderIncluye(room.incluye || []);
+
     // Precio
     const precio = fmtPrecio(room.precio_min, room.precio_max);
     if (elPanelPrice) elPanelPrice.textContent = precio;
@@ -249,8 +314,8 @@
     if (!elCharsGrid) return;
     const chars = [];
 
-    // Cama — siempre mostrar (dato estático hasta que haya campo en DB)
-    chars.push({ icon: 'king_bed', text: 'Cama matrimonial' });
+    // Cama matrimonial
+    if (amenities.includes('cama_matrimonial')) chars.push({ icon: 'king_bed', text: 'Cama matrimonial' });
 
     // Piso
     if (room.piso) chars.push({ icon: 'layers', text: `Piso ${room.piso}` });
@@ -271,8 +336,8 @@
     // Clima
     if (amenities.includes('aire')) chars.push({ icon: 'ac_unit', text: 'Clima A/C' });
 
-    // Ventana (estático)
-    chars.push({ icon: 'window', text: 'Ventana exterior' });
+    // Ventana exterior
+    if (amenities.includes('ventana_exterior')) chars.push({ icon: 'window', text: 'Ventana exterior' });
 
     elCharsGrid.innerHTML = chars.map(c => `
       <div class="d-char-card" role="listitem">
@@ -308,6 +373,87 @@
           : 'Consultar disponibilidad';
       }
     }
+  }
+
+  /* ── Qué incluye la renta ── */
+  function renderIncluye(incluyeArr) {
+    if (!elIncluyeList || !elIncluyeSection) return;
+    const items = Array.isArray(incluyeArr) ? incluyeArr : [];
+    if (items.length === 0) return;
+
+    elIncluyeList.innerHTML = items.map(item => `
+      <li role="listitem">
+        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+        ${item}
+      </li>
+    `).join('');
+    elIncluyeSection.hidden = false;
+  }
+
+  /* ── Amenidades de la casa ── */
+  function renderHouseAmenities(rows) {
+    if (!elHouseAmenitiesList || !elHouseAmenitiesSection) return;
+    if (!rows || rows.length === 0) return;
+
+    elHouseAmenitiesList.innerHTML = rows.map(a => `
+      <li role="listitem" title="${a.description || ''}">
+        <span class="material-symbols-outlined" aria-hidden="true">${a.icon}</span>
+        ${a.label}
+      </li>
+    `).join('');
+    elHouseAmenitiesSection.hidden = false;
+  }
+
+  /* ── Mapa Leaflet ── */
+  function renderMap(ubicacion) {
+    if (!elLocationSection || !elLocationMap) return;
+    if (!ubicacion.lat || !ubicacion.lng) return;
+    if (typeof L === 'undefined') return; // Leaflet no cargó
+
+    elLocationSection.hidden = false;
+
+    // Destruir mapa previo si existe (hot-reload seguro)
+    if (leafletMap) {
+      leafletMap.remove();
+      leafletMap = null;
+    }
+
+    leafletMap = L.map('locationMap', {
+      center: [ubicacion.lat, ubicacion.lng],
+      zoom: 15,
+      scrollWheelZoom: false,
+      zoomControl: true,
+    });
+
+    // Tiles OpenStreetMap (gratis, sin API key)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(leafletMap);
+
+    // Círculo aproximado (~300 m) en vez de pin exacto
+    L.circle([ubicacion.lat, ubicacion.lng], {
+      radius: 300,
+      color: '#143528',
+      fillColor: '#1E4D3C',
+      fillOpacity: 0.18,
+      weight: 2,
+    }).addTo(leafletMap);
+  }
+
+  /* ── Distancias (card superpuesta) ── */
+  function renderDistancias(distancias) {
+    if (!elDistanciasCard) return;
+    const items = Array.isArray(distancias) ? distancias : [];
+    if (items.length === 0) return;
+
+    elDistanciasCard.innerHTML = items.map(d => `
+      <div class="d-map__card-item">
+        <span class="material-symbols-outlined" aria-hidden="true">${d.icon || 'place'}</span>
+        <span>${d.text}</span>
+      </div>
+    `).join('');
+    elDistanciasCard.hidden = false;
   }
 
   /* ══════════════════════════════════════════════

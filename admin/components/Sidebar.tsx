@@ -20,6 +20,10 @@ export default function Sidebar({ userEmail }: SidebarProps) {
     pathname === '/dashboard/amenidades-generales' ||
     pathname.startsWith('/dashboard/amenidades-generales/')
 
+  const isUbicacionesActive =
+    pathname === '/dashboard/ubicaciones' ||
+    pathname.startsWith('/dashboard/ubicaciones/')
+
   const isHomeConfigActive  = pathname === '/dashboard/home-config'
   const isWaitlistActive    = pathname === '/dashboard/waitlist'
 
@@ -62,6 +66,26 @@ export default function Sidebar({ userEmail }: SidebarProps) {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
             Habitaciones
+          </Link>
+
+          <Link
+            href="/dashboard/ubicaciones"
+            className={`sidebar__link${isUbicacionesActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+            Ubicaciones
           </Link>
 
           <Link

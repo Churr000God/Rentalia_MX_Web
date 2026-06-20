@@ -1,7 +1,20 @@
 import Link from 'next/link'
+import { createClient } from '@/utils/supabase/server'
 import RoomForm from '@/components/RoomForm'
 
-export default function NuevaHabitacionPage() {
+async function getUbicaciones() {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('ubicaciones')
+    .select('id, nombre, zona')
+    .eq('activo', true)
+    .order('orden', { ascending: true })
+  return data ?? []
+}
+
+export default async function NuevaHabitacionPage() {
+  const ubicaciones = await getUbicaciones()
+
   return (
     <>
       <header className="top-header">
@@ -29,7 +42,7 @@ export default function NuevaHabitacionPage() {
         </div>
 
         <div className="card" style={{ maxWidth: 780 }}>
-          <RoomForm mode="create" />
+          <RoomForm mode="create" ubicaciones={ubicaciones} />
         </div>
       </main>
     </>

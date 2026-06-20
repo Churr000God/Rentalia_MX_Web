@@ -5,6 +5,26 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2026-06-19
+
+### Añadido
+
+#### Feature: Ubicaciones — agrupar habitaciones por propiedad
+
+- **Base de datos** (`database/migrations/010_ubicaciones.sql`): tabla `ubicaciones` (nombre, zona pública, lat/lng, `distancias` jsonb, activo, orden). Columnas `ubicacion_id` (FK → `ubicaciones`) e `incluye` (jsonb) en `habitaciones`. Columna `ubicacion_id` en `location_amenities` (NULL = amenidad global; ON DELETE CASCADE). RLS: lectura anónima sólo si `activo`, CRUD para autenticados. Seed "Casa Narvarte" + migración de datos existentes.
+- **Admin — CRUD de ubicaciones**: formulario `UbicacionForm.tsx` (nombre, zona, dirección interna, lat/lng, editor dinámico de puntos de interés, toggle activo, orden); páginas `dashboard/ubicaciones/` (lista), `nueva/` y `[id]/` (edición); enlace "Ubicaciones" con ícono de pin en el `Sidebar.tsx`.
+- **Admin — Habitaciones** (`RoomForm.tsx`): selector de `ubicacion_id`; campo "Qué incluye la renta" como chips editables (`incluye`); amenidades divididas por `showInCard` (con ícono en tarjeta de catálogo vs sólo en detalle).
+- **Admin — Amenidades generales** (`AmenidadGeneralForm.tsx`): selector para asociar la amenidad a una ubicación concreta o dejarla global (aplica a todas).
+- **Admin — `lib/amenities.ts`**: flag `showInCard` en cada amenidad; nuevas amenidades `cama_matrimonial` y `ventana_exterior` marcadas como sólo-detalle.
+- **Frontend — Detalle de habitación** (`detalle-habitacion.html`, `detalle.js`, `detalle.css`): sustituye mapa decorativo CSS por mapa **Leaflet real** (tiles OSM, círculo aproximado ~300 m para privacidad). Secciones "Qué incluye", "Amenidades de la casa" y "Ubicación" pasan de contenido hardcodeado a secciones dinámicas cargadas desde Supabase (`ubicacion_id`, `incluye`, `location_amenities`). Cargas en paralelo con `Promise.all`.
+
+#### Infraestructura
+
+- **`scripts/dev-all.sh`**: script único que levanta los 3 servicios activos en background (backend FastAPI :8000, admin Next.js :4000, frontend estático :8080), verifica prerrequisitos y apaga todos con un solo Ctrl-C.
+- **`backend/uv.lock`**: lockfile del gestor `uv` para el backend Python.
+
+---
+
 ## [Unreleased] - 2026-01-09
 
 ### Añadido
