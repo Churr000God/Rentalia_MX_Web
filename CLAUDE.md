@@ -27,20 +27,26 @@ Plataforma web para alquiler de habitaciones (rentalia.mx). Sitio público + API
   - `GET /api/reviews/google`
   - `GET /api/reviews/internal`
   - `POST /api/reviews/internal` — crea reseña (pendiente aprobación)
+  - `POST /api/visitas` — guarda solicitud en tabla `visitas` + envía correo SMTP best-effort (smtplib STARTTLS)
+- Dos clientes Supabase en `main.py`:
+  - `supabase` (anon key `SUPABASE_KEY`) — lecturas con RLS (reviews aprobadas, etc.)
+  - `supabase_admin` (service_role `SUPABASE_SERVICE_KEY`) — escrituras server-side sin RLS (`/api/visitas`)
+  - Razón: la key `sb_publishable_*` no autentica como rol `anon` en PostgREST para inserts, incluso con policies permisivas.
 - Depende de: fastapi, uvicorn, gunicorn, python-dotenv, supabase, httpx, asyncpg.
 - **NO usa MySQL ni SQLAlchemy** en código (pymysql/sqlalchemy declarados en pyproject pero sin imports).
 
 ### Backend auxiliar — `backend_node/` (Express / Node)
 - Puerto **3000**, un solo endpoint: `POST /api/visitas` — envía email vía MailerSend.
+- **Obsoleto para el flujo de visitas**: el agendamiento ahora vive íntegramente en FastAPI (`POST /api/visitas` en `backend/app/main.py`). El backend Node ya no se usa para esto.
 - **No está en docker-compose.yml** y no tiene Dockerfile propio.
-- Es un microservicio satélite independiente. No tocarlo salvo trabajo específico en él.
+- No tocarlo salvo trabajo específico en él.
 
 ### Base de datos — **Supabase (PostgreSQL)**
 - Toda la persistencia es Postgres gestionado por Supabase.
 - El backend accede vía `asyncpg` (directo) + `supabase-py` (cliente).
 - El frontend accede vía `@supabase/supabase-js` (CDN), directamente, para tablas `habitaciones`/`habitacion_estilos`/`faqs`.
-- Variables de entorno necesarias: `SUPABASE_URL`, `SUPABASE_KEY`, `SUPABASE_DB_URL`.
-- Tablas principales: `habitaciones`, `habitacion_estilos`, `reviews_internal`, `faqs`, `user_questions`, `ubicaciones`, `location_amenities`.
+- Variables de entorno necesarias: `SUPABASE_URL`, `SUPABASE_KEY`, `SUPABASE_SERVICE_KEY`, `SUPABASE_DB_URL`.
+- Tablas principales: `habitaciones`, `habitacion_estilos`, `reviews_internal`, `faqs`, `user_questions`, `ubicaciones`, `location_amenities`, `visitas`, `site_config`.
 
 ---
 
@@ -51,9 +57,10 @@ basedir = pathlib.Path(__file__).parent.parent.parent  # raíz del repo
 load_dotenv(basedir / ".env")
 ```
 Crea `.env` copiando `.env.example` y llenando al menos:
-- `SUPABASE_URL`, `SUPABASE_KEY`, `SUPABASE_DB_URL`
+- `SUPABASE_URL`, `SUPABASE_KEY`, `SUPABASE_SERVICE_KEY` (service_role para escrituras server-side)
+- `SUPABASE_DB_URL` (para asyncpg en `/rooms`)
 - `GOOGLE_PLACES_API_KEY`, `GOOGLE_PLACE_ID` (para reviews de Google)
-- `MAILERSEND_API_KEY` (para visitas, en `backend_node/`)
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `MAIL_FROM`, `MAIL_TO` (para correos de visitas)
 
 ---
 

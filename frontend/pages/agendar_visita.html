@@ -1,165 +1,322 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agendar Visita | Rentalia</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Agenda una visita para conocer Rentalia, el coliving en Narvarte, CDMX. Sin compromiso, respondemos en menos de 24 h. O escríbenos por WhatsApp.">
+  <title>Agendar visita · Conoce Rentalia Narvarte · CDMX</title>
+  <meta name="theme-color" content="#143528">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-  <!-- Flatpickr -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-  <!-- CSS -->
+  <!-- CSS: theme → main → agendar -->
+  <link rel="stylesheet" href="../assets/css/theme.css">
   <link rel="stylesheet" href="../assets/css/main.css">
-  <link rel="stylesheet" href="../assets/css/agendar-visita.css">
-  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../assets/css/agendar.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
 
-  <!-- Scripts -->
+  <!-- Supabase JS (carga dinámica de habitaciones en el select) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../assets/js/supabase.js" defer></script>
-  <script src="../assets/js/main.js?v=3" defer></script>
 </head>
-
 <body>
-  <!-- Header dinámico -->
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+  <!-- Botón flotante WhatsApp (mobile) -->
+  <a class="wa-float"
+     href="https://wa.me/5215523215421?text=Hola%2C+quiero+agendar+una+visita+a+Rentalia+Narvarte"
+     target="_blank" rel="noopener noreferrer"
+     aria-label="Escríbenos por WhatsApp para agendar tu visita">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M16 0C7.163 0 0 7.155 0 15.996c0 2.822.742 5.572 2.153 7.996L0 32l8.236-2.12A15.943 15.943 0 0016 32C24.837 32 32 24.845 32 15.996 32 7.155 24.837 0 16 0zm7.27 19.34c-.398-.199-2.353-1.16-2.718-1.294-.366-.133-.632-.199-.898.2-.266.398-1.03 1.293-1.262 1.56-.232.265-.465.298-.863.1-.398-.2-1.68-.62-3.2-1.977-1.183-1.056-1.982-2.36-2.215-2.758-.232-.398-.024-.613.174-.811.18-.18.399-.465.598-.697.2-.232.266-.399.4-.664.132-.266.066-.498-.033-.697-.1-.2-.898-2.163-1.23-2.96-.325-.777-.655-.673-.899-.685l-.764-.013c-.266 0-.697.1-1.063.498-.366.398-1.395 1.362-1.395 3.323 0 1.96 1.428 3.854 1.627 4.12.2.265 2.81 4.29 6.81 6.018.952.41 1.695.655 2.274.838.956.303 1.827.26 2.515.158.767-.114 2.353-.962 2.685-1.892.333-.93.333-1.727.233-1.893-.1-.165-.366-.265-.764-.464z"/>
+    </svg>
+  </a>
+
+  <!-- Header inyectado por main.js -->
   <div id="header-container"></div>
 
-  <!-- HERO -->
-  <section class="agendar-hero">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <i class="fa-solid fa-calendar-check"></i>
-        Agendamiento en línea
+  <main id="main">
+
+    <!-- PAGE HEADER -->
+    <section class="page-header" aria-labelledby="page-h1">
+      <div class="container page-header__inner">
+        <span class="eyebrow page-header__eyebrow">Estás a un paso</span>
+        <h1 class="page-header__h1" id="page-h1">Agenda tu visita</h1>
+        <p class="page-header__sub">
+          Ven a conocer la casa y la comunidad. Te respondemos en menos de 24 horas, sin compromiso.
+        </p>
       </div>
-      <h1 class="hero-title">Agenda tu Visita</h1>
-      <p class="hero-subtitle">
-        Ven y conoce personalmente nuestras propiedades.
-      </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- MAIN -->
-  <main class="agendar-main">
-    <div class="booking-layout">
+    <!-- CONTACT SECTION -->
+    <section class="contact-section" id="contactSection">
+      <div class="container">
+        <div class="contact-layout">
 
-      <!-- FORM -->
-      <div class="form-card">
-        <div class="form-header">
-          <div class="form-icon">
-            <i class="fa-solid fa-calendar-days"></i>
-          </div>
-          <h2 class="form-title">Reserva tu Visita</h2>
-          <p class="form-subtitle">
-            Completa los pasos para agendar tu cita
-          </p>
-        </div>
+          <!-- Columna izquierda: formulario -->
+          <div class="contact-form-col">
+            <form id="visitForm" novalidate aria-label="Formulario para agendar visita">
 
-        <!-- STEPS -->
-        <div class="progress-steps">
-          <div class="progress-line" id="progressLine"></div>
+              <h2 class="form-heading" id="form-heading">
+                Cuéntanos <span>un poco de ti</span>
+              </h2>
 
-          <div class="step active"><div class="step-circle">1</div><span>Propiedad</span></div>
-          <div class="step"><div class="step-circle">2</div><span>Fecha</span></div>
-          <div class="step"><div class="step-circle">3</div><span>Datos</span></div>
-          <div class="step"><div class="step-circle">4</div><span>Confirmar</span></div>
-        </div>
+              <p class="form-required-note">
+                Los campos con <abbr title="obligatorio" aria-label="obligatorio">*</abbr> son obligatorios.
+              </p>
 
-        <!-- FORM -->
-        <form id="visitaForm">
+              <!-- Anuncio de errores para lectores de pantalla -->
+              <div id="formErrors" role="alert" aria-live="polite" aria-atomic="true" class="sr-only"></div>
 
-          <!-- STEP 1 -->
-          <div class="form-step active" id="step1">
-            <h3 class="section-title"><i class="fa-solid fa-building"></i> Propiedad</h3>
-            <div id="propertySelector" class="property-selector">
-                <!-- Se llenará dinámicamente -->
-                <div class="loading-state">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Cargando propiedades...
+              <div class="form-fields">
+
+                <!-- Nombre -->
+                <div class="form-field">
+                  <label class="form-label" for="f-nombre">
+                    Tu nombre <span class="req" aria-hidden="true">*</span>
+                  </label>
+                  <input class="form-input" id="f-nombre" name="nombre" type="text"
+                         placeholder="Ej. Andrea Torres"
+                         autocomplete="name" required aria-required="true"
+                         aria-describedby="err-nombre">
+                  <span class="form-error" id="err-nombre" role="alert" aria-live="polite"></span>
                 </div>
+
+                <!-- WhatsApp + Correo -->
+                <div class="form-row-2">
+                  <div class="form-field">
+                    <label class="form-label" for="f-whatsapp">
+                      WhatsApp <span class="req" aria-hidden="true">*</span>
+                    </label>
+                    <input class="form-input" id="f-whatsapp" name="whatsapp" type="tel"
+                           placeholder="+52 55 1234 5678"
+                           autocomplete="tel" required aria-required="true"
+                           aria-describedby="err-whatsapp">
+                    <span class="form-error" id="err-whatsapp" role="alert" aria-live="polite"></span>
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label" for="f-email">
+                      Correo <span class="req" aria-hidden="true">*</span>
+                    </label>
+                    <input class="form-input" id="f-email" name="email" type="email"
+                           placeholder="tuemail@ejemplo.com"
+                           autocomplete="email" required aria-required="true"
+                           aria-describedby="err-email">
+                    <span class="form-error" id="err-email" role="alert" aria-live="polite"></span>
+                  </div>
+                </div>
+
+                <!-- Cuarto de interés (cargado dinámicamente desde Supabase) -->
+                <div class="form-field">
+                  <label class="form-label" for="f-cuarto">
+                    Cuarto de interés <span class="opt">(opcional)</span>
+                  </label>
+                  <div class="form-select-wrap">
+                    <select class="form-select" id="f-cuarto" name="cuarto">
+                      <option value="">Cualquier cuarto disponible</option>
+                      <!-- Opciones cargadas dinámicamente por agendar.js -->
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Fecha preferida (texto libre) -->
+                <div class="form-field">
+                  <label class="form-label" for="f-fecha">
+                    ¿Cuándo te gustaría visitarnos? <span class="opt">(opcional)</span>
+                  </label>
+                  <input class="form-input" id="f-fecha" name="fecha" type="text"
+                         placeholder="Ej. martes por la tarde, cualquier fin de semana…">
+                </div>
+
+                <!-- Mensaje libre -->
+                <div class="form-field">
+                  <label class="form-label" for="f-mensaje">
+                    ¿Algo que quieras contarnos? <span class="opt">(opcional)</span>
+                  </label>
+                  <textarea class="form-textarea" id="f-mensaje" name="mensaje" rows="3"
+                            placeholder="Cuánto tiempo buscas quedarte, si vives solo/a, preguntas que tengas…"></textarea>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-submit-block">
+                  <button type="submit" class="btn btn-cta form-submit-btn" id="submitBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="4" width="18" height="18" rx="2"/>
+                      <path d="M16 2v4M8 2v4M3 10h18"/>
+                    </svg>
+                    Agendar mi visita
+                  </button>
+                  <div class="form-microcopy">
+                    <span>Sin compromiso</span>
+                    <span>Respuesta en 24 h</span>
+                    <span>Sin aval</span>
+                  </div>
+                  <p class="form-privacy">
+                    Al enviar aceptas nuestro <a href="/privacidad">Aviso de privacidad</a>.
+                    Tus datos se usan solo para contactarte sobre tu visita.
+                  </p>
+                </div>
+
+              </div><!-- /form-fields -->
+            </form>
+
+            <!-- ESTADO DE ÉXITO (oculto hasta envío exitoso) -->
+            <div class="form-success" id="formSuccess" hidden tabindex="-1"
+                 role="status" aria-live="polite" aria-atomic="true">
+              <div class="form-success__arch" aria-hidden="true">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
+                  <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165" fill="none" stroke="#1E4D3C" stroke-width="7" stroke-linecap="round"/>
+                  <line x1="100" y1="165" x2="100" y2="96" stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+                  <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+                </svg>
+              </div>
+              <h2 class="form-success__h2">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                ¡Tu visita está en camino!
+              </h2>
+              <p class="form-success__p">
+                Recibimos tu mensaje y te contactamos en las próximas horas por WhatsApp o correo
+                para confirmar la visita. Ya casi estás en casa.
+              </p>
+              <div class="form-success__actions">
+                <a href="../pages/alternativas.html" class="btn btn-cta">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                  Explorar habitaciones
+                </a>
+                <a href="../index.html" class="btn btn-outline">Volver al inicio</a>
+              </div>
+              <p class="form-success__wa">
+                ¿Prefieres platicar ahora?
+                <a href="https://wa.me/5215523215421?text=Hola%2C+ya+mandé+el+formulario+en+Rentalia+y+quiero+confirmar+mi+visita"
+                   target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a>
+              </p>
+            </div><!-- /form-success -->
+
+          </div><!-- /contact-form-col -->
+
+          <!-- Columna derecha: sidebar -->
+          <aside class="contact-sidebar" aria-label="Formas de contacto">
+
+            <!-- WhatsApp CTA card -->
+            <div class="wa-card">
+              <div class="wa-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 0C7.163 0 0 7.155 0 15.996c0 2.822.742 5.572 2.153 7.996L0 32l8.236-2.12A15.943 15.943 0 0016 32C24.837 32 32 24.845 32 15.996 32 7.155 24.837 0 16 0zm7.27 19.34c-.398-.199-2.353-1.16-2.718-1.294-.366-.133-.632-.199-.898.2-.266.398-1.03 1.293-1.262 1.56-.232.265-.465.298-.863.1-.398-.2-1.68-.62-3.2-1.977-1.183-1.056-1.982-2.36-2.215-2.758-.232-.398-.024-.613.174-.811.18-.18.399-.465.598-.697.2-.232.266-.399.4-.664.132-.266.066-.498-.033-.697-.1-.2-.898-2.163-1.23-2.96-.325-.777-.655-.673-.899-.685l-.764-.013c-.266 0-.697.1-1.063.498-.366.398-1.395 1.362-1.395 3.323 0 1.96 1.428 3.854 1.627 4.12.2.265 2.81 4.29 6.81 6.018.952.41 1.695.655 2.274.838.956.303 1.827.26 2.515.158.767-.114 2.353-.962 2.685-1.892.333-.93.333-1.727.233-1.893-.1-.165-.366-.265-.764-.464z"/>
+                </svg>
+              </div>
+              <span class="wa-card__label">Contacto inmediato</span>
+              <h3 class="wa-card__h3">¿Prefieres WhatsApp?</h3>
+              <p class="wa-card__p">Escríbenos directo y te respondemos al momento. Sin formularios, sin espera.</p>
+              <a class="wa-btn"
+                 href="https://wa.me/5215523215421?text=Hola%2C+quiero+agendar+una+visita+a+Rentalia+Narvarte"
+                 target="_blank" rel="noopener noreferrer"
+                 aria-label="Abrir WhatsApp para agendar visita">
+                <svg viewBox="0 0 32 32" aria-hidden="true">
+                  <path d="M16 0C7.163 0 0 7.155 0 15.996c0 2.822.742 5.572 2.153 7.996L0 32l8.236-2.12A15.943 15.943 0 0016 32C24.837 32 32 24.845 32 15.996 32 7.155 24.837 0 16 0zm7.27 19.34c-.398-.199-2.353-1.16-2.718-1.294-.366-.133-.632-.199-.898.2-.266.398-1.03 1.293-1.262 1.56-.232.265-.465.298-.863.1-.398-.2-1.68-.62-3.2-1.977-1.183-1.056-1.982-2.36-2.215-2.758-.232-.398-.024-.613.174-.811.18-.18.399-.465.598-.697.2-.232.266-.399.4-.664.132-.266.066-.498-.033-.697-.1-.2-.898-2.163-1.23-2.96-.325-.777-.655-.673-.899-.685l-.764-.013c-.266 0-.697.1-1.063.498-.366.398-1.395 1.362-1.395 3.323 0 1.96 1.428 3.854 1.627 4.12.2.265 2.81 4.29 6.81 6.018.952.41 1.695.655 2.274.838.956.303 1.827.26 2.515.158.767-.114 2.353-.962 2.685-1.892.333-.93.333-1.727.233-1.893-.1-.165-.366-.265-.764-.464z"/>
+                </svg>
+                Escríbenos por WhatsApp
+              </a>
             </div>
 
-            <div class="form-actions">
-              <button type="button" class="btn btn-primary" onclick="nextStep(2)">
-                Continuar
-              </button>
+            <!-- Info de contacto -->
+            <div class="contact-card">
+              <span class="contact-card__label">También puedes contactarnos</span>
+              <div class="contact-row">
+                <div class="contact-row__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.36 6.36l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                  </svg>
+                </div>
+                <a href="https://wa.me/5215523215421" target="_blank" rel="noopener noreferrer">
+                  +52 1 55 2321 5421 · WhatsApp
+                </a>
+              </div>
+              <div class="contact-row">
+                <div class="contact-row__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <a href="mailto:hola@rentalia.mx">hola@rentalia.mx</a>
+              </div>
+              <div class="contact-row">
+                <div class="contact-row__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
+                </div>
+                <span>Casa Rentalia · Narvarte Poniente, CDMX</span>
+              </div>
             </div>
-          </div>
 
-          <!-- STEP 2 -->
-          <div class="form-step" id="step2">
-            <h3 class="section-title"><i class="fa-solid fa-calendar"></i> Fecha y hora</h3>
-
-            <input id="fecha" class="form-input" placeholder="Selecciona fecha" readonly>
-
-            <div class="time-slots" id="timeSlots"></div>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Atrás</button>
-              <button type="button" class="btn btn-primary" onclick="nextStep(3)">Continuar</button>
+            <!-- Referencia de ubicación -->
+            <div class="location-card">
+              <div class="location-card__header">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span class="location-card__title">Narvarte Poniente · CDMX</span>
+              </div>
+              <div class="location-card__body">
+                <div class="location-near" role="list">
+                  <div class="location-near-item" role="listitem">
+                    <span>Metro Etiopía</span><span class="location-near-dist">8 min</span>
+                  </div>
+                  <div class="location-near-item" role="listitem">
+                    <span>Parque Hundido</span><span class="location-near-dist">12 min</span>
+                  </div>
+                  <div class="location-near-item" role="listitem">
+                    <span>Eje 3 Sur</span><span class="location-near-dist">3 min</span>
+                  </div>
+                  <div class="location-near-item" role="listitem">
+                    <span>Supercito</span><span class="location-near-dist">5 min</span>
+                  </div>
+                </div>
+                <p class="location-note">La dirección exacta se comparte al confirmar la visita.</p>
+              </div>
             </div>
-          </div>
 
-          <!-- STEP 3 -->
-          <div class="form-step" id="step3">
-            <h3 class="section-title"><i class="fa-solid fa-user"></i> Datos</h3>
-
-            <input id="nombre" class="form-input" placeholder="Nombre completo" required>
-            <input id="email" class="form-input" placeholder="Correo electrónico" type="email" required>
-            <input id="telefono" class="form-input" placeholder="Teléfono" type="tel" required>
-
-            <textarea id="comentarios" class="form-textarea" placeholder="Comentarios"></textarea>
-
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Atrás</button>
-              <button type="button" class="btn btn-primary" onclick="nextStep(4)">Continuar</button>
+            <!-- Por qué Rentalia (chips) -->
+            <div>
+              <p style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(34,31,26,.38);margin-bottom:.6rem;">
+                Por qué Rentalia
+              </p>
+              <div class="sidebar-chips">
+                <span class="chip">Sin aval</span>
+                <span class="chip">Todo incluido</span>
+                <span class="chip">Estancia flexible</span>
+                <span class="chip">Comunidad</span>
+                <span class="chip">Respuesta en 24 h</span>
+                <span class="chip">Firma en línea</span>
+              </div>
             </div>
-          </div>
 
-          <!-- STEP 4 -->
-          <div class="form-step" id="step4">
-            <h3 class="section-title"><i class="fa-solid fa-check"></i> Confirmar</h3>
-            <div id="confirmationSummary"></div>
+          </aside><!-- /contact-sidebar -->
 
-            <div class="form-actions">
-              <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Atrás</button>
-              <button type="submit" class="btn btn-primary">Confirmar Visita</button>
-            </div>
-          </div>
+        </div><!-- /contact-layout -->
+      </div><!-- /container -->
+    </section>
 
-          <!-- SUCCESS -->
-          <div class="success-message" id="successMessage" style="display: none;">
-            <div style="text-align: center; padding: 2rem;">
-                <i class="fa-solid fa-circle-check" style="color: #22c55e; font-size: 4rem; margin-bottom: 1rem;"></i>
-                <h3>¡Visita agendada!</h3>
-                <p>Recibirás un correo de confirmación.</p>
-                <button onclick="window.location.reload()" class="btn btn-primary" style="margin-top: 1rem;">Agendar otra</button>
-            </div>
-          </div>
-
-        </form>
-      </div>
-
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <div class="info-card summary-card">
-          <h3>Resumen</h3>
-          <p id="summaryProperty"><strong>Propiedad:</strong> <span>-</span></p>
-          <p id="summaryDate"><strong>Fecha:</strong> <span>-</span></p>
-          <p id="summaryTime"><strong>Hora:</strong> <span>-</span></p>
-        </div>
-      </aside>
-
-    </div>
   </main>
 
-  <!-- Footer dinámico -->
+  <!-- Footer inyectado por main.js -->
   <div id="footer-container"></div>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
-  <script src="../assets/js/agendar_visita.js"></script>
-
+  <script src="../assets/js/main.js" defer></script>
+  <script src="../assets/js/agendar.js" defer></script>
 </body>
 </html>
