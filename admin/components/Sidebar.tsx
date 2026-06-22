@@ -24,8 +24,9 @@ export default function Sidebar({ userEmail }: SidebarProps) {
     pathname === '/dashboard/ubicaciones' ||
     pathname.startsWith('/dashboard/ubicaciones/')
 
-  const isHomeConfigActive  = pathname === '/dashboard/home-config'
-  const isWaitlistActive    = pathname === '/dashboard/waitlist'
+  const isHomeConfigActive     = pathname === '/dashboard/home-config'
+  const isComoFuncionaActive   = pathname === '/dashboard/como-funciona'
+  const isWaitlistActive       = pathname === '/dashboard/waitlist'
 
   async function handleLogout() {
     const supabase = createClient()
@@ -195,6 +196,27 @@ export default function Sidebar({ userEmail }: SidebarProps) {
               <rect x="3" y="14" width="7" height="7" rx="1" />
             </svg>
             Config. Home
+          </Link>
+
+          <Link
+            href="/dashboard/como-funciona"
+            className={`sidebar__link${isComoFuncionaActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            Cómo funciona
           </Link>
 
           <span className="sidebar__link sidebar__link--disabled">

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Renta un cuarto amueblado en Narvarte sin aval ni fiador. 4 pasos: elige, visita, aplica y múdate. Estancia desde 1 mes, todo incluido. Rentalia CDMX.">
+  <title>Cómo funciona · Sin aval · Rentalia</title>
+  <meta name="theme-color" content="#143528">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+  <!-- CSS: theme → main → como-funciona -->
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/como-funciona.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
+
+  <!-- Supabase JS (contenido dinámico: pasos, valor, FAQ) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+  <!-- Header inyectado por main.js -->
+  <div id="header-container"></div>
+
+  <main id="main">
+
+    <!-- ══════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════ -->
+    <section class="cf-hero" aria-labelledby="cf-hero-h1">
+
+      <!-- Arcos zaguán decorativos -->
+      <svg class="cf-hero__arch cf-hero__arch--left"
+           viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165"
+              fill="none" stroke="#F3EDE1" stroke-width="7" stroke-linecap="round"/>
+        <line x1="100" y1="165" x2="100" y2="96"
+              stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+        <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+        <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+      </svg>
+      <svg class="cf-hero__arch cf-hero__arch--right"
+           viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165"
+              fill="none" stroke="#F3EDE1" stroke-width="7" stroke-linecap="round"/>
+        <line x1="100" y1="165" x2="100" y2="96"
+              stroke="#8DA68F" stroke-width="5" stroke-linecap="round"/>
+        <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+        <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+      </svg>
+
+      <div class="container cf-hero__inner">
+        <span class="eyebrow cf-hero__eyebrow">Sin complicaciones</span>
+        <h1 class="cf-hero__h1" id="cf-hero-h1">
+          Mudarte nunca<br>fue tan <em>fácil</em>
+        </h1>
+        <p class="cf-hero__sub">
+          Sin aval, sin trámites eternos: en 4 pasos estás en casa.
+          Todo en línea y con respuesta en 24 horas.
+        </p>
+        <div class="cf-hero__badges" role="list">
+          <span class="cf-hero__badge" role="listitem">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            Sin aval
+          </span>
+          <span class="cf-hero__badge" role="listitem">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Respuesta en 24 h
+          </span>
+          <span class="cf-hero__badge" role="listitem">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+            100% en línea
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         4 PASOS
+    ══════════════════════════════════════════════ -->
+    <section class="cf-steps section" aria-labelledby="cf-steps-h2">
+      <div class="container">
+
+        <div class="cf-steps__header">
+          <span class="eyebrow">El proceso</span>
+          <h2 class="h2" id="cf-steps-h2">4 pasos y ya estás en casa</h2>
+        </div>
+
+        <ol class="cf-steps__grid" role="list">
+
+          <!-- Paso 1 -->
+          <li class="cf-step" data-paso="1" role="listitem">
+            <div class="cf-step__arch-wrap">
+              <img src="../assets/images/img/alternativas/Op-1-1.jpeg"
+                   alt="Habitación amueblada con vista, lista para entrar"
+                   loading="lazy" width="864" height="1184">
+            </div>
+            <div class="cf-step__num" aria-label="Paso 1">1</div>
+            <h3 class="cf-step__h3">Elige tu cuarto</h3>
+            <p class="cf-step__p">
+              Explora habitaciones disponibles con precio, fotos y fecha de entrada. Decide desde donde estés.
+            </p>
+          </li>
+
+          <!-- Paso 2 -->
+          <li class="cf-step" data-paso="2" role="listitem">
+            <div class="cf-step__arch-wrap">
+              <img src="../assets/images/img/alternativas/habitacion1-3.jpg"
+                   alt="Conoce la casa y sus espacios en persona o virtualmente"
+                   loading="lazy" width="960" height="1280">
+            </div>
+            <div class="cf-step__num" aria-label="Paso 2">2</div>
+            <h3 class="cf-step__h3">Agenda tu visita</h3>
+            <p class="cf-step__p">
+              Ven en persona a conocer la casa o solicita un recorrido virtual 360°. Sin presión, sin cita larga.
+            </p>
+          </li>
+
+          <!-- Paso 3 -->
+          <li class="cf-step" data-paso="3" role="listitem">
+            <div class="cf-step__arch-wrap">
+              <img src="../assets/images/img/alternativas/Op-2-2.jpeg"
+                   alt="Solicitud sencilla: solo ID, referencias y depósito"
+                   loading="lazy" width="747" height="1024">
+            </div>
+            <div class="cf-step__num" aria-label="Paso 3">3</div>
+            <h3 class="cf-step__h3">Aplica con lo mínimo</h3>
+            <p class="cf-step__p">
+              Sin aval ni fiador. Solo ID oficial, 2 referencias personales y el depósito del primer mes.
+            </p>
+          </li>
+
+          <!-- Paso 4 -->
+          <li class="cf-step" data-paso="4" role="listitem">
+            <div class="cf-step__arch-wrap">
+              <img src="../assets/images/img/alternativas/Op-3-2.jpeg"
+                   alt="Múdate — llega con tu maleta y empieza ya"
+                   loading="lazy" width="747" height="1024">
+            </div>
+            <div class="cf-step__num" aria-label="Paso 4">4</div>
+            <h3 class="cf-step__h3">Múdate</h3>
+            <p class="cf-step__p">
+              Firma digital desde tu teléfono y llega con tu maleta. La cama está lista. Bienvenido a casa.
+            </p>
+          </li>
+
+        </ol>
+
+        <!-- CTA intermedio -->
+        <div style="text-align:center; margin-top:3.5rem; display:flex; flex-wrap:wrap; gap:.75rem; justify-content:center;">
+          <a href="/pages/alternativas.html" class="btn btn-cta">
+            Ver habitaciones disponibles
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+quiero+agendar+una+visita+en+Rentalia+Narvarte"
+             class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+            Agendar visita por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         REQUISITOS
+    ══════════════════════════════════════════════ -->
+    <section class="cf-req section" aria-labelledby="cf-req-h2">
+      <div class="container">
+
+        <div class="cf-req__header">
+          <span class="eyebrow">Requisitos</span>
+          <h2 class="h2" id="cf-req-h2">¿Qué necesitas para entrar?</h2>
+          <p class="cf-req__sub">
+            Nada raro, nada escondido. Estos son todos los requisitos — sin letra chica ni sorpresas.
+          </p>
+        </div>
+
+        <div class="cf-req__grid" role="list">
+
+          <div class="cf-req__card" role="listitem">
+            <div class="cf-req__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <path d="M6 9h4M6 13h8"/>
+              </svg>
+            </div>
+            <span class="cf-req__label">Requisito 1</span>
+            <span class="cf-req__name">Identificación oficial</span>
+            <p class="cf-req__detail">
+              INE, pasaporte o cualquier ID oficial vigente. Sin historial crediticio requerido.
+            </p>
+          </div>
+
+          <div class="cf-req__card" role="listitem">
+            <div class="cf-req__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="9" cy="7" r="3"/>
+                <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/>
+                <path d="M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+            <span class="cf-req__label">Requisito 2</span>
+            <span class="cf-req__name">2 referencias personales</span>
+            <p class="cf-req__detail">
+              Dos personas que te conozcan: amigos, familia o conocidos. No tienen que avalar nada.
+            </p>
+          </div>
+
+          <div class="cf-req__card" role="listitem">
+            <div class="cf-req__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <span class="cf-req__label">Requisito 3</span>
+            <span class="cf-req__name">Depósito de 1 mes</span>
+            <p class="cf-req__detail">
+              Se regresa íntegro al término de la estancia si el cuarto está en buen estado.
+            </p>
+          </div>
+
+          <div class="cf-req__card" role="listitem">
+            <div class="cf-req__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="1" y="4" width="22" height="16" rx="2"/>
+                <path d="M1 10h22"/>
+              </svg>
+            </div>
+            <span class="cf-req__label">Requisito 4</span>
+            <span class="cf-req__name">Primer mes de renta</span>
+            <p class="cf-req__detail">
+              Depósito + primer mes al apartar el cuarto. Pago con tarjeta de crédito o débito.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="cf-req__note" role="note">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v4M12 16h.01"/>
+          </svg>
+          Eso es todo. Sin depósitos múltiples, sin aval, sin póliza jurídica.
+          El pago se hace con tarjeta de crédito o débito.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         VALOR: SIN AVAL + FLEXIBLE
+    ══════════════════════════════════════════════ -->
+    <section class="cf-value" aria-labelledby="cf-value-sinaval-h2">
+      <div class="container">
+        <div class="cf-value__blocks">
+
+          <!-- Bloque 1: Sin aval -->
+          <div class="cf-value__block" data-bloque="sinaval">
+            <div class="cf-value__text">
+              <span class="eyebrow cf-value__eyebrow">El diferenciador</span>
+              <h2 class="cf-value__h2 cf-value__h2--cempa" id="cf-value-sinaval-h2">
+                Sin aval.<br>En serio.
+              </h2>
+              <p class="cf-value__p">
+                Rentar en México normalmente requiere un fiador con propiedades, pólizas jurídicas
+                y meses de trámite. En Rentalia lo quitamos todo. Confiamos en las personas,
+                no en los papeles.
+              </p>
+              <a href="/pages/alternativas.html" class="btn btn-ghost">
+                Ver cuartos disponibles
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+            <div class="cf-value__img-wrap">
+              <img src="../assets/images/img/slider/Fachada.jpg"
+                   alt="Edificio Rentalia en Narvarte — tu próxima casa"
+                   loading="lazy" width="700" height="437">
+            </div>
+          </div>
+
+          <!-- Bloque 2: Flexible -->
+          <div class="cf-value__block cf-value__block--reverse" data-bloque="flexible">
+            <div class="cf-value__text">
+              <span class="eyebrow cf-value__eyebrow">Flexibilidad</span>
+              <h2 class="cf-value__h2 cf-value__h2--barro" id="cf-value-flex-h2">
+                Flexible<br>de verdad.
+              </h2>
+              <p class="cf-value__p">
+                ¿Solo un mes? ¿Seis meses? Tú decides. Mismo precio sin importar el tiempo de tu
+                estancia. Y si tus planes cambian, cancelar es tan sencillo como avisar con 30 días
+                de anticipación.
+              </p>
+            </div>
+            <div class="cf-value__img-wrap">
+              <img src="../assets/images/img/slider/1raimagen.png"
+                   alt="Vivir en Narvarte — ambientes y comunidad"
+                   loading="lazy" width="1536" height="1024">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         FAQ
+    ══════════════════════════════════════════════ -->
+    <section class="cf-faq section" aria-labelledby="cf-faq-h2">
+      <div class="container">
+
+        <div class="cf-faq__header">
+          <span class="eyebrow">Dudas frecuentes</span>
+          <h2 class="h2" id="cf-faq-h2">Preguntas que siempre nos hacen</h2>
+        </div>
+
+        <div class="cf-faq__list" id="cf-faq-list">
+
+          <details class="cf-faq__item">
+            <summary class="cf-faq__summary">
+              ¿Cuánto tiempo mínimo me puedo quedar?
+              <span class="material-symbols-outlined cf-faq__chevron" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="cf-faq__body">
+              <p>Desde 1 mes, sin compromisos de estancia larga. Y lo mejor: el precio es el mismo
+              si te quedas 1 mes o 6. Sin penalización por salirte antes de tiempo.</p>
+            </div>
+          </details>
+
+          <details class="cf-faq__item">
+            <summary class="cf-faq__summary">
+              ¿Qué incluye exactamente la renta mensual?
+              <span class="material-symbols-outlined cf-faq__chevron" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="cf-faq__body">
+              <p>Todo lo que necesitas para vivir sin preocuparte de recibos extra: cuarto amueblado
+              (cama, escritorio, clóset), luz, agua y gas, internet de alta velocidad (300 Mbps),
+              limpieza quincenal, y acceso a cocina equipada, lavandería y terraza.</p>
+            </div>
+          </details>
+
+          <details class="cf-faq__item">
+            <summary class="cf-faq__summary">
+              ¿Aceptan mascotas?
+              <span class="material-symbols-outlined cf-faq__chevron" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="cf-faq__body">
+              <p>Por el momento no aceptamos mascotas. Queremos que todos los que viven en la casa
+              estén cómodos, y lo dejamos fuera para garantizar la convivencia. Si eso cambia,
+              lo avisamos primero a nuestra comunidad.</p>
+            </div>
+          </details>
+
+          <details class="cf-faq__item">
+            <summary class="cf-faq__summary">
+              ¿Cómo se hace el pago mensual?
+              <span class="material-symbols-outlined cf-faq__chevron" aria-hidden="true">expand_more</span>
+            </summary>
+            <div class="cf-faq__body">
+              <p>La renta se paga mensualmente con tarjeta de crédito o débito. Sin efectivo, sin
+              transferencias complicadas. El cobro se realiza cada mes en la misma fecha de tu entrada.</p>
+            </div>
+          </details>
+
+        </div>
+
+        <a href="/pages/faq.html" class="cf-faq__more">
+          Ver todas las preguntas frecuentes →
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         CTA FINAL
+    ══════════════════════════════════════════════ -->
+    <section class="cf-cta" aria-labelledby="cf-cta-h2">
+      <div class="container">
+        <div class="cf-cta__card">
+          <h2 class="cf-cta__h2" id="cf-cta-h2">
+            ¿List@ para<br><em>mudarte?</em>
+          </h2>
+          <p class="cf-cta__sub">
+            Elige tu cuarto o agenda una visita — en el orden que prefieras.
+          </p>
+          <div class="cf-cta__actions">
+            <a href="/pages/alternativas.html"
+               class="btn btn-cta" style="font-size:1rem; padding:14px 28px;">
+              Ver habitaciones
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+            <a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+quiero+agendar+una+visita+en+Rentalia+Narvarte"
+               class="btn btn-ghost" style="font-size:1rem; padding:14px 28px;"
+               target="_blank" rel="noopener noreferrer">
+              Agendar visita por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer inyectado por main.js -->
+  <footer id="footer-container"></footer>
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js?v=3" defer></script>
+  <script src="../assets/js/como-funciona-page.js" defer></script>
+</body>
+</html>
