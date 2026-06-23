@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad · La vida en Rentalia Narvarte · CDMX</title>
+  <meta name="description" content="En Rentalia no llegas a un cuarto: llegas a una comunidad. Gente real, momentos reales, convivencia sin imposición. Coliving en Narvarte, CDMX.">
+  <meta name="theme-color" content="#143528">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/comunidad-page.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de fotos de la comunidad" hidden>
+  <div class="lightbox__bg" id="lbBg"></div>
+  <div class="lb-inner">
+    <button class="lb-close" id="lbClose" aria-label="Cerrar visor">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      Cerrar
+    </button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="lb-photo" id="lbPhoto"></div>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Foto siguiente">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <p class="lb-counter" id="lbCounter" aria-live="polite"></p>
+    <p class="lb-caption" id="lbCaption"></p>
+  </div>
+</div>
+
+<!-- Header dinámico -->
+<div id="header-container"></div>
+
+<main id="main">
+
+  <!-- ══ HERO ══════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-h1">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="eyebrow hero__eyebrow" id="comunidadEyebrow">Más que roomies</span>
+        <h1 class="hero__h1" id="hero-h1">La vida en Rentalia</h1>
+        <p class="hero__sub" id="comunidadSub">Aquí no llegas a un cuarto: llegas a una comunidad. Gente con la que da gusto compartir la ciudad.</p>
+        <div class="hero__chips">
+          <span class="hero__chip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg>
+            Estudiantes
+          </span>
+          <span class="hero__chip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+            Profesionistas
+          </span>
+          <span class="hero__chip">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/></svg>
+            Viajeros
+          </span>
+        </div>
+        <div class="hero__ctas">
+          <a href="/pages/alternativas.html" class="btn btn-cta">
+            Explorar habitaciones
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/pages/agendar_visita.html" class="btn btn-ghost">Agendar visita</a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__arch" id="heroArch">
+          <div class="hero__arch-fill gp-a" role="img" aria-label="Vida en Rentalia — foto de la casa habitada"></div>
+        </div>
+        <div class="hero__card" aria-label="Eventos mensuales">
+          <div class="hero__card-num">12+</div>
+          <p class="hero__card-label">Eventos mensuales para conectar</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MANIFIESTO ════════════════════════════════ -->
+  <section class="manifiesto fade-up" aria-labelledby="man-h2">
+    <div class="container manifiesto__inner">
+      <div class="manifiesto__quote-row">
+        <h2 class="manifiesto__quote" id="man-h2">
+          No buscamos llenar cuartos. Buscamos que llegues a un lugar donde <em>quieras estar.</em>
+        </h2>
+        <div class="manifiesto__text">
+          <div class="manifiesto__divider" aria-hidden="true"></div>
+          <p>La convivencia en Rentalia es sin imposición: hay vida de comunidad para quien quiere y espacio propio para quien lo necesita. No tienes que ser sociable todo el tiempo.</p>
+          <p>Elegimos a los residentes con cuidado — no por requisitos fríos, sino porque queremos que te sientas cómodo con quienes vives. Gente que tiene algo en común aunque lo conozca apenas.</p>
+          <p>La casa tiene vida propia. Sobremesas en la cocina, tardes en la terraza, el café del domingo. No eventos programados: momentos que pasan solos cuando la gente convive en un lugar bien hecho.</p>
+        </div>
+      </div>
+      <div class="pilares" role="list" id="pilaresGrid"></div>
+    </div>
+  </section>
+
+  <!-- ══ GALERÍA ════════════════════════════════════ -->
+  <section class="galeria-section fade-up" aria-labelledby="gal-h2">
+    <div class="container">
+      <div class="g-header">
+        <span class="eyebrow g-header__eyebrow">Fotos de la casa</span>
+        <h2 class="g-header__h2" id="gal-h2">Momentos reales</h2>
+        <p class="g-header__sub">Así se ve Rentalia cuando hay gente adentro.</p>
+      </div>
+      <div class="gal-grid" id="galGrid" role="group" aria-label="Galería de la comunidad"></div>
+    </div>
+  </section>
+
+  <!-- ══ EVENTOS ════════════════════════════════════ -->
+  <section class="eventos-section fade-up" aria-labelledby="ev-h2">
+    <div class="container">
+      <div class="ev-header">
+        <div>
+          <span class="eyebrow" id="eventosEyebrow">Vida en casa</span>
+          <h2 class="ev-header__h2" id="ev-h2">Agenda de la casa</h2>
+        </div>
+      </div>
+      <div class="ev-grid" id="eventosGrid" role="list"></div>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIOS ════════════════════════════════ -->
+  <section class="testimonios-section fade-up" aria-labelledby="test-h2">
+    <div class="container">
+      <div class="test-header">
+        <span class="eyebrow test-header__eyebrow">Voces de la comunidad</span>
+        <h2 class="test-header__h2" id="test-h2">Lo que dicen quienes viven aquí</h2>
+      </div>
+      <div class="test-grid" role="list" id="testimoniosGrid"></div>
+    </div>
+  </section>
+
+  <!-- ══ CÓMO CUIDAMOS ══════════════════════════════ -->
+  <section class="cuida-section fade-up" aria-labelledby="cuida-h2">
+    <div class="container cuida-layout">
+      <div class="cuida-col">
+        <span class="eyebrow cuida-col__eyebrow" id="cuidaEyebrow">Por qué funciona</span>
+        <h2 class="cuida-col__h2" id="cuida-h2">Cómo cuidamos la convivencia</h2>
+        <div class="cuida-items" role="list" id="cuidaGrid"></div>
+      </div>
+      <div class="cuida-visual">
+        <div class="cuida-arch">
+          <div class="cuida-arch-fill gp-e" role="img" aria-label="Residentes de Rentalia conviviendo"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONNECTION / ENTORNO ════════════════════════ -->
+  <section class="connection-section fade-up" aria-labelledby="conn-h2">
+    <div class="container connection-inner">
+      <div class="connection-text">
+        <span class="eyebrow connection-text__eyebrow" id="connEyebrow">Narvarte afuera</span>
+        <h2 class="connection-text__h2" id="conn-h2">La comunidad no termina en la puerta</h2>
+        <p class="connection-text__p" id="connTexto">Nuestras casas están en el corazón de Narvarte, conectándote con los mejores cafés, parques, mercados y la vida de barrio de la colonia.</p>
+        <a href="/pages/amenidades.html" class="connection-link" id="connLink">
+          <span id="connLinkText">Ver amenidades y experiencias</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="connection-photos">
+        <div class="connection-photo gp-b" id="connFoto1" role="img" aria-label="Cafetería de Narvarte"></div>
+        <div class="connection-photo gp-c" id="connFoto2" role="img" aria-label="Parque Hundido"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA BAND ═══════════════════════════════════ -->
+  <section class="cta-banda" aria-labelledby="cta-comunidad-h2">
+    <div class="container cta-banda__inner">
+      <h2 class="cta-banda__h2" id="cta-comunidad-h2">
+        ¿Quieres vivir <em>aquí?</em>
+      </h2>
+      <p class="cta-banda__sub" id="ctaTexto">Agenda una visita sin compromiso y conoce el espacio en persona.</p>
+      <div class="cta-banda__actions">
+        <a href="/pages/alternativas.html" class="btn btn-ghost" style="font-size:1rem;padding:14px 28px;">Ver habitaciones</a>
+        <a href="/pages/agendar_visita.html" class="btn btn-cta" style="font-size:1rem;padding:14px 28px;">Agendar visita</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer dinámico -->
+<footer id="footer-container"></footer>
+
+<script src="../assets/js/main.js?v=3" defer></script>
+<script src="../assets/js/comunidad-page.js" defer></script>
+</body>
+</html>
