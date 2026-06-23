@@ -24,7 +24,7 @@ export default async function EditarAmenidadPage({ params }: Props) {
   const [{ data, error }, ubicaciones] = await Promise.all([
     supabase
       .from('location_amenities')
-      .select('id, slug, label, description, icon, category, active, orden, ubicacion_id')
+      .select('id, slug, label, description, icon, badge, category, active, orden, ubicacion_id')
       .eq('id', id)
       .single(),
     getUbicaciones(),

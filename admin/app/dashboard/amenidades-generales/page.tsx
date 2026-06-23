@@ -8,6 +8,7 @@ interface LocationAmenity {
   label: string
   description: string | null
   icon: string
+  badge: string | null
   category: string
   active: boolean
   orden: number
@@ -17,7 +18,7 @@ async function getAmenidades(): Promise<LocationAmenity[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('location_amenities')
-    .select('id, slug, label, description, icon, category, active, orden')
+    .select('id, slug, label, description, icon, badge, category, active, orden')
     .order('orden', { ascending: true })
 
   if (error || !data) return []

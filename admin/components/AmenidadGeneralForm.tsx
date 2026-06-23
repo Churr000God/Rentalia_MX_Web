@@ -18,6 +18,7 @@ interface AmenidadGeneralFormProps {
     label: string
     description: string | null
     icon: string
+    badge: string | null
     category: string
     active: boolean
     orden: number
@@ -49,6 +50,7 @@ export default function AmenidadGeneralForm({ mode, initialData, ubicaciones = [
     label:        initialData?.label        ?? '',
     description:  initialData?.description  ?? '',
     icon:         initialData?.icon         ?? 'home',
+    badge:        initialData?.badge        ?? '',
     category:     initialData?.category     ?? 'interior',
     active:       initialData?.active       ?? true,
     orden:        initialData?.orden        ?? 0,
@@ -79,6 +81,7 @@ export default function AmenidadGeneralForm({ mode, initialData, ubicaciones = [
       label:        form.label,
       description:  form.description || null,
       icon:         form.icon,
+      badge:        form.badge || null,
       category:     form.category,
       active:       form.active,
       orden:        Number(form.orden),
@@ -157,6 +160,27 @@ export default function AmenidadGeneralForm({ mode, initialData, ubicaciones = [
             value={form.description}
             onChange={e => set('description', e.target.value)}
           />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">
+            Badge{' '}
+            <span style={{ color: 'var(--gray-500)', fontWeight: 400, fontSize: '.8rem' }}>
+              (etiqueta chip, opcional)
+            </span>
+          </label>
+          <input
+            className="form-input"
+            type="text"
+            placeholder="Ej. Área común, Incluida, Seguridad"
+            maxLength={40}
+            value={form.badge}
+            onChange={e => set('badge', e.target.value)}
+          />
+          <p className="form-hint">
+            Aparece como chip de color junto al nombre en la página de Amenidades.
+            Déjalo vacío para no mostrar badge.
+          </p>
         </div>
       </div>
 
