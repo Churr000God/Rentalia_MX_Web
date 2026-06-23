@@ -1,171 +1,151 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Preguntas frecuentes sobre Rentalia - Encuentra respuestas a tus dudas">
-  <title>Preguntas Frecuentes | Rentalia</title>
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="../assets/css/main.css" />
-  <link rel="stylesheet" href="../assets/css/faq.css" />
-  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon" />
-  
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Scripts -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preguntas frecuentes · Rentalia Narvarte · Coliving CDMX</title>
+  <meta name="description" content="Todo lo que necesitas saber antes de mudarte a Rentalia Narvarte: renta, contrato, amenidades, convivencia y más. Sin aval, todo incluido, desde $10,000/mes.">
+  <meta name="theme-color" content="#143528">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/faq.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../assets/js/main.js?v=3" defer></script>
-  <script src="../assets/js/faq.js?v=5" defer></script>
 </head>
-
 <body>
-  <!-- Header dinámico -->
-  <div id="header-container"></div>
 
-  <main class="faq-main">
-    <section class="faq-hero">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fa-solid fa-circle-question"></i>
-                Centro de Ayuda
-            </div>
-            <h1 class="hero-title">¿Cómo podemos ayudarte?</h1>
-            <p class="hero-subtitle">
-                Encuentra respuestas rápidas a las preguntas más frecuentes sobre Rentalia
-            </p>
-        </div>
-    </section>
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
 
-    <section class="search-section">
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Buscar en preguntas frecuentes...">
-            <button class="search-btn" id="searchBtn">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                Buscar
-            </button>
-        </div>
-    </section>
+<!-- Header dinámico -->
+<div id="header-container"></div>
 
-    <section class="stats-section">
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-lightbulb"></i></div>
-            <div class="stat-value">45+</div>
-            <div class="stat-label">Preguntas Respondidas</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
-            <div class="stat-value">&lt;2min</div>
-            <div class="stat-label">Tiempo de Respuesta</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
-            <div class="stat-value">98%</div>
-            <div class="stat-label">Satisfacción</div>
-        </div>
-    </section>
+<main id="main">
 
-    <section class="categories-section">
-        <div class="categories-grid" id="categoriesGrid">
-            <div class="category-card active" data-category="todas">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fa-solid fa-grip"></i></div>
-                    <div class="category-name">Todas</div>
-                    <div class="category-count">12</div>
-                </div>
-            </div>
-            <div class="category-card" data-category="reservas">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                    <div class="category-name">Reservas</div>
-                    <div class="category-count">3</div>
-                </div>
-            </div>
-            <div class="category-card" data-category="pagos">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fa-solid fa-credit-card"></i></div>
-                    <div class="category-name">Pagos</div>
-                    <div class="category-count">3</div>
-                </div>
-            </div>
-            <div class="category-card" data-category="habitaciones">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fa-solid fa-bed"></i></div>
-                    <div class="category-name">Habitaciones</div>
-                    <div class="category-count">3</div>
-                </div>
-            </div>
-            <div class="category-card" data-category="servicios">
-                <div class="category-header">
-                    <div class="category-icon"><i class="fa-solid fa-concierge-bell"></i></div>
-                    <div class="category-name">Servicios</div>
-                    <div class="category-count">3</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="questions-section">
-        <div class="questions-header">
-            <h2 class="questions-title">Preguntas Frecuentes</h2>
-            <p class="questions-count" id="questionsCount">Cargando preguntas...</p>
-        </div>
-
-        <div class="faq-accordion" id="faqAccordion">
-            <!-- Questions loaded via JS -->
-        </div>
-
-        <div class="no-results" id="noResults">
-            <div class="no-results-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
-            <h3 class="no-results-title">No encontramos resultados</h3>
-            <p class="no-results-text">Intenta con otros términos de búsqueda o explora por categorías</p>
-        </div>
-    </section>
-
-    <section class="cta-section">
-        <div class="cta-card">
-            <div class="cta-content">
-                <div class="cta-icon"><i class="fa-solid fa-headset"></i></div>
-                <h2 class="cta-title">¿Aún tienes dudas?</h2>
-                <p class="cta-text">Nuestro equipo de soporte está disponible para ayudarte.</p>
-                <div class="cta-buttons">
-                    <button id="btnOpenContact" class="btn btn-primary" style="border:none; cursor:pointer; font-size:1rem;"><i class="fa-solid fa-envelope"></i> Enviar Mensaje</button>
-                    <a href="https://wa.me/525523215421?text=Hola%20me%20gustaria%20recibir%20ayuda" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                </div>
-            </div>
-        </div>
-    </section>
-  </main>
-
-  <!-- Modal de Contacto -->
-  <div id="contactModal" class="modal-overlay">
-    <div class="modal-container">
-        <button class="modal-close" id="btnCloseModal">&times;</button>
-        <div class="modal-header">
-            <h3>Envíanos tu pregunta</h3>
-            <p>Te responderemos lo antes posible a tu correo electrónico.</p>
-        </div>
-        <form id="contactForm" class="modal-form">
-            <div class="form-group">
-                <label for="userName">Nombre Completo</label>
-                <input type="text" id="userName" required placeholder="Tu nombre">
-            </div>
-            <div class="form-group">
-                <label for="userEmail">Correo Electrónico</label>
-                <input type="email" id="userEmail" required placeholder="tucorreo@ejemplo.com">
-            </div>
-            <div class="form-group">
-                <label for="userQuestion">Tu Pregunta</label>
-                <textarea id="userQuestion" required placeholder="¿En qué podemos ayudarte?" rows="4"></textarea>
-            </div>
-            <button type="submit" class="submit-btn">Enviar Pregunta</button>
-        </form>
+  <!-- ══ PAGE HEADER ═════════════════════════════════════════ -->
+  <section class="page-header" aria-labelledby="page-h1">
+    <div class="container page-header__inner">
+      <span class="eyebrow page-header__eyebrow">Resolvamos tus dudas</span>
+      <h1 class="page-header__h1" id="page-h1">Preguntas frecuentes</h1>
+      <p class="page-header__sub">
+        Queremos que te sientas como en casa desde el primer momento. ¿No encuentras lo que buscas?
+        <a href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+tengo+una+pregunta+sobre+Rentalia+Narvarte"
+           target="_blank" rel="noopener noreferrer">Escríbenos y platicamos.</a>
+      </p>
+      <span class="page-header__meta" id="faqMeta">
+        <svg viewBox="0 0 24 24" aria-hidden="true" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3M12 17h.01"/>
+        </svg>
+        <span id="faqMetaCount">0</span> respuestas · Casa Narvarte
+      </span>
     </div>
-  </div>
+  </section>
 
-  <!-- Footer dinámico -->
-  <div id="footer-container"></div>
+  <!-- ══ MOBILE FILTER (pills, < 900px) ══════════════════════ -->
+  <nav class="mobile-filter" aria-label="Filtrar por categoría" id="mobileFilterNav">
+    <div class="container mobile-filter__inner" role="list">
+      <!-- populated by JS -->
+    </div>
+  </nav>
+
+  <!-- ══ FAQ SECTION ═════════════════════════════════════════ -->
+  <section class="faq-section" aria-label="Preguntas frecuentes">
+    <div class="container">
+      <div class="content-layout">
+
+        <!-- SIDEBAR (desktop only) -->
+        <aside class="sidebar" aria-label="Categorías de preguntas">
+          <p class="sidebar__heading">Categorías</p>
+          <div class="sidebar-cat-list" id="sidebarCatList" role="list">
+            <!-- populated by JS -->
+          </div>
+          <div class="sidebar-contact">
+            <span class="sidebar-contact__label">¿Aún con dudas?</span>
+            <p class="sidebar-contact__title">Estamos a un mensaje de distancia.</p>
+            <p class="sidebar-contact__sub">Te respondemos por WhatsApp en minutos.</p>
+            <a class="sidebar-contact__link"
+               href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+tengo+una+pregunta+sobre+Rentalia"
+               target="_blank" rel="noopener noreferrer">
+              WhatsApp
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </aside>
+
+        <!-- MAIN FAQ LIST -->
+        <div class="faq-main-area" id="faqMain">
+          <!-- populated by JS -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT BLOCK — "¿No encontraste?" + formulario ══════ -->
+  <section class="contact-block" aria-labelledby="contact-h2">
+    <div class="container contact-block__inner">
+
+      <!-- Copy -->
+      <div class="contact-block__content">
+        <span class="eyebrow contact-block__eyebrow">¿Falta algo?</span>
+        <h2 class="contact-block__h2" id="contact-h2">¿No encontraste tu respuesta?</h2>
+        <p class="contact-block__p">
+          Envíanos tu pregunta y te respondemos directamente.<br>
+          O si lo prefieres, escríbenos por WhatsApp.
+        </p>
+        <a class="contact-block__wa"
+           href="https://wa.me/521XXXXXXXXXX?text=Hola%2C+tengo+una+pregunta+sobre+Rentalia+Narvarte"
+           target="_blank" rel="noopener noreferrer">
+          Ir a WhatsApp
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+
+      <!-- Formulario de envío de pregunta -->
+      <form class="faq-contact-form" id="preguntaForm" novalidate aria-label="Enviar pregunta">
+        <div class="faq-form-group">
+          <label for="fqNombre" class="faq-form-label">Tu nombre</label>
+          <input type="text" id="fqNombre" class="faq-form-input" placeholder="Ej. Andrea M." autocomplete="name" required>
+        </div>
+        <div class="faq-form-group">
+          <label for="fqEmail" class="faq-form-label">Tu correo</label>
+          <input type="email" id="fqEmail" class="faq-form-input" placeholder="tucorreo@ejemplo.com" autocomplete="email" required>
+        </div>
+        <div class="faq-form-group">
+          <label for="fqPregunta" class="faq-form-label">Tu pregunta</label>
+          <textarea id="fqPregunta" class="faq-form-input" rows="3" placeholder="¿En qué podemos ayudarte?" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-cta" id="fqSubmit" style="width:100%;justify-content:center">
+          Enviar pregunta
+        </button>
+        <p id="fqMsg" class="faq-form-msg" hidden></p>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ══ CTA BAND ══════════════════════════════════════════════ -->
+  <section class="cta-banda" aria-labelledby="cta-h2">
+    <div class="container cta-banda__inner">
+      <h2 class="cta-banda__h2" id="cta-h2">
+        ¿List@ para conocer tu <em>próxima casa?</em>
+      </h2>
+      <p class="cta-banda__sub">Ven a visitar nuestras habitaciones en Narvarte. Sin compromiso.</p>
+      <div class="cta-banda__actions">
+        <a href="/pages/alternativas.html" class="btn btn-ghost" style="font-size:1rem;padding:14px 28px;">Ver habitaciones</a>
+        <a href="/pages/agendar.html" class="btn btn-cta" style="font-size:1rem;padding:14px 28px;">Agendar visita</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer dinámico -->
+<footer id="footer-container"></footer>
+
+<script src="../assets/js/main.js?v=3" defer></script>
+<script src="../assets/js/faq.js" defer></script>
 </body>
 </html>

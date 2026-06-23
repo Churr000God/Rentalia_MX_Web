@@ -1,277 +1,345 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log('FAQ Script v5 iniciado');
-    
-    // 1. Configuración de Supabase
-    const SUPABASE_URL = 'https://snsyusgwbqwamkwoijeb.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_laiHFnnD5NDCrAWPweRsSw_F2ARqa_n'; 
-    
-    let supabase = null;
-    let allFaqs = []; 
+/* ════════════════════════════════════════════════════════════
+   faq.js
+   1. Carga FAQs desde faq_items (Supabase).
+   2. Render acordeón con filtrado por categoría (sidebar + pills).
+   3. Inyecta schema.org FAQPage para SEO.
+   4. Gestiona el formulario de envío de pregunta (faq_preguntas_usuario).
+════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
 
-    // Referencias al DOM
-    const accordion = document.getElementById('faqAccordion');
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.getElementById('searchBtn');
-    const categoryCards = document.querySelectorAll('.category-card');
-    const noResults = document.getElementById('noResults');
-    const questionsCount = document.getElementById('questionsCount');
+  var SUPABASE_URL = 'https://vefgwrxgfuzgfictdsyo.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_3Dew0GfB8vlUnItNfBm0Xw_5vMDArZM';
 
-    // Inicializar cliente
-    if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log('Cliente Supabase creado');
+  /* ── Categorías fijas (key coincide con columna `categoria` en DB) ── */
+  var cats = [
+    {
+      key: 'todas',
+      label: 'Todas',
+      iconPath: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>'
+    },
+    {
+      key: 'renta',
+      label: 'La renta',
+      iconPath: '<rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>'
+    },
+    {
+      key: 'contrato',
+      label: 'Contrato y pagos',
+      iconPath: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>'
+    },
+    {
+      key: 'convivencia',
+      label: 'Convivencia',
+      iconPath: '<circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/>'
+    },
+    {
+      key: 'casa',
+      label: 'La casa',
+      iconPath: '<path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'
+    }
+  ];
+
+  /* ── Estado ──────────────────────────────────────────────── */
+  var allFaqs   = [];   // filas de Supabase mapeadas al shape de render
+  var activeCat = 'todas';
+
+  /* ── Helpers ─────────────────────────────────────────────── */
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function countFor(key) {
+    return key === 'todas'
+      ? allFaqs.length
+      : allFaqs.filter(function (f) { return f.cat === key; }).length;
+  }
+
+  function makeCatIcon(path) {
+    return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"' +
+      ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      path + '</svg>';
+  }
+
+  /* ── Build accordion item HTML ───────────────────────────── */
+  function makeItem(f, idx) {
+    var bodyId = 'faq-body-' + idx;
+    var btnId  = 'faq-btn-'  + idx;
+    var confirmarHtml = f.confirmar
+      ? '<p class="faq-confirmar">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+            '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>' +
+          '</svg>' +
+          'Esta pol\xedtica est\xe1 siendo confirmada por el equipo. Esch\xedbenos si necesitas m\xe1s detalle.' +
+        '</p>'
+      : '';
+    return [
+      '<div class="faq-item">',
+        '<button class="faq-q" id="' + btnId + '" aria-expanded="false" aria-controls="' + bodyId + '">',
+          esc(f.q),
+          '<svg class="faq-chevron" viewBox="0 0 24 24" aria-hidden="true">',
+            '<path d="M6 9l6 6 6-6"/>',
+          '</svg>',
+        '</button>',
+        '<div class="faq-body" id="' + bodyId + '" role="region" aria-labelledby="' + btnId + '">',
+          '<div class="faq-body__inner">',
+            /* respuesta viene del admin: admite HTML basico (<strong>, <ul>) */
+            '<div class="faq-a"><p>' + f.a + '</p>' + confirmarHtml + '</div>',
+          '</div>',
+        '</div>',
+      '</div>'
+    ].join('');
+  }
+
+  /* ── Render sidebar (desktop) ─────────────────────────────── */
+  function renderSidebar() {
+    var list = document.getElementById('sidebarCatList');
+    if (!list) return;
+    list.innerHTML = cats.map(function (c) {
+      var isActive = c.key === activeCat;
+      return [
+        '<button class="sidebar-cat-btn' + (isActive ? ' is-active' : '') + '"',
+          ' data-cat="' + c.key + '"',
+          ' role="listitem"',
+          ' aria-pressed="' + isActive + '">',
+          '<span class="sidebar-cat-btn__icon">' + makeCatIcon(c.iconPath) + '</span>',
+          esc(c.label),
+          '<span class="sidebar-cat-btn__count">' + countFor(c.key) + '</span>',
+        '</button>'
+      ].join('');
+    }).join('');
+    bindCatBtns('.sidebar-cat-btn');
+  }
+
+  /* ── Render mobile pills ──────────────────────────────────── */
+  function renderMobilePills() {
+    var inner = document.querySelector('.mobile-filter__inner');
+    if (!inner) return;
+    inner.innerHTML = cats.map(function (c) {
+      return '<button class="cat-pill' + (c.key === activeCat ? ' is-active' : '') + '"' +
+        ' data-cat="' + c.key + '" role="listitem" aria-pressed="' + (c.key === activeCat) + '">' +
+        esc(c.label) + '</button>';
+    }).join('');
+    bindCatBtns('.cat-pill');
+  }
+
+  /* ── Bind category buttons ───────────────────────────────── */
+  function bindCatBtns(selector) {
+    document.querySelectorAll(selector).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        activeCat = btn.dataset.cat;
+        renderSidebar();
+        renderMobilePills();
+        renderFAQs();
+        updateMeta();
+      });
+    });
+  }
+
+  /* ── Update header counter ───────────────────────────────── */
+  function updateMeta() {
+    var n = activeCat === 'todas'
+      ? allFaqs.length
+      : allFaqs.filter(function (f) { return f.cat === activeCat; }).length;
+    var el = document.getElementById('faqMetaCount');
+    if (el) el.textContent = n;
+  }
+
+  /* ── Render FAQ main area ────────────────────────────────── */
+  function renderFAQs() {
+    var main = document.getElementById('faqMain');
+    if (!main) return;
+
+    if (!allFaqs.length) {
+      main.innerHTML = '<div class="faq-empty is-visible">' +
+        'Cargando preguntas… si esto tarda, ' +
+        '<a href="https://wa.me/521XXXXXXXXXX" target="_blank" rel="noopener noreferrer">esch\xedbenos</a>.' +
+        '</div>';
+      return;
+    }
+
+    var html;
+    if (activeCat === 'todas') {
+      /* Agrupado por categor\xeda */
+      html = cats.slice(1).map(function (c) {
+        var items = allFaqs.filter(function (f) { return f.cat === c.key; });
+        if (!items.length) return '';
+        return [
+          '<div class="faq-group">',
+            '<h2 class="faq-group__heading">',
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"',
+              ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',
+              c.iconPath,
+              '</svg>',
+              esc(c.label),
+            '</h2>',
+            '<div class="faq-list" role="list">',
+              items.map(function (f, i) {
+                return makeItem(f, c.key + '-' + i);
+              }).join(''),
+            '</div>',
+          '</div>'
+        ].join('');
+      }).join('');
     } else {
-        console.error('Librería Supabase no cargada.');
-        if(accordion) accordion.innerHTML = '<div style="color:red; text-align:center; padding:20px;">Error: Librería de conexión no cargada.</div>';
-        return;
+      /* Lista plana de la categor\xeda activa */
+      var meta  = cats.find(function (c) { return c.key === activeCat; });
+      var items = allFaqs.filter(function (f) { return f.cat === activeCat; });
+      if (items.length) {
+        html = [
+          '<div class="faq-cat-label">',
+            '<svg class="faq-cat-label__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"',
+            ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',
+            meta.iconPath,
+            '</svg>',
+            '<span class="faq-cat-label__text">' + esc(meta.label) + '</span>',
+            '<span class="faq-cat-label__count">' + items.length + '</span>',
+          '</div>',
+          '<div class="faq-list" role="list">',
+            items.map(function (f, i) { return makeItem(f, activeCat + '-' + i); }).join(''),
+          '</div>'
+        ].join('');
+      } else {
+        html = '<div class="faq-empty is-visible">No hay preguntas en esta categor\xeda por ahora. ' +
+          '<a href="https://wa.me/521XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Esch\xedbenos</a> ' +
+          'si tienes alguna duda.</div>';
+      }
     }
 
-    // 2. Obtener Datos de Supabase
-    async function fetchFAQs() {
-        if(questionsCount) questionsCount.innerText = 'Conectando con base de datos...';
-        
-        try {
-            console.log('Intentando obtener FAQs...');
-            // Consulta simple para debug
-            const { data, error } = await supabase
-                .from('faqs')
-                .select('*')
-                .eq('is_active', true)
-                .order('sort_order', { ascending: true });
+    main.innerHTML = html;
+    bindAccordion();
+  }
 
-            if (error) {
-                console.error('Error Supabase:', error);
-                throw error;
-            }
+  /* ── Accordion ───────────────────────────────────────────── */
+  function bindAccordion() {
+    var btns = Array.from(document.querySelectorAll('.faq-q'));
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        var body = document.getElementById(btn.getAttribute('aria-controls'));
+        if (!body) return;
+        btn.setAttribute('aria-expanded', String(!expanded));
+        body.classList.toggle('is-open', !expanded);
+      });
+      /* Navegaci\xf3n con teclado */
+      btn.addEventListener('keydown', function (e) {
+        var all = Array.from(document.querySelectorAll('.faq-q'));
+        var idx = all.indexOf(btn);
+        if (e.key === 'ArrowDown') { e.preventDefault(); if (all[idx + 1]) all[idx + 1].focus(); }
+        if (e.key === 'ArrowUp')   { e.preventDefault(); if (all[idx - 1]) all[idx - 1].focus(); }
+      });
+    });
+  }
 
-            console.log('Datos recibidos:', data);
-
-            if (!data || data.length === 0) {
-                console.warn('Conexión exitosa pero tabla vacía o bloqueada por RLS');
-                accordion.innerHTML = `
-                    <div style="text-align:center; padding:2rem; color:#666;">
-                        <i class="fa-solid fa-database" style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-primario);"></i>
-                        <p>Conexión establecida, pero no hay preguntas visibles.</p>
-                        <small>Si eres administrador: Verifica que insertaste datos en la tabla 'faqs' y que las políticas RLS permiten lectura pública.</small>
-                    </div>`;
-                if(questionsCount) questionsCount.innerText = '0 preguntas';
-                return;
-            }
-
-            allFaqs = data;
-            updateCategoryCounts();
-            renderFAQs(allFaqs);
-
-        } catch (err) {
-            console.error('Error general fetching FAQs:', err);
-            if(questionsCount) questionsCount.innerText = 'Error de conexión';
-            accordion.innerHTML = `
-                <div class="error-msg" style="text-align:center; padding:2rem; color:red;">
-                    <p>No se pudieron cargar las preguntas.</p>
-                    <small>${err.message || 'Error desconocido'}</small>
-                </div>`;
-        }
-    }
-
-    // 3. Función de Renderizado
-    function renderFAQs(data) {
-        accordion.innerHTML = '';
-        
-        const hasResults = data.length > 0;
-        if(noResults) noResults.style.display = hasResults ? 'none' : 'block';
-        accordion.style.display = hasResults ? 'block' : 'none';
-        
-        if(questionsCount) questionsCount.innerText = `Mostrando ${data.length} pregunta${data.length !== 1 ? 's' : ''}`;
-
-        data.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'faq-item';
-            
-            // Icono según categoría (opcional, mapeo simple)
-            let icon = 'fa-circle-question';
-            if(item.category === 'pagos') icon = 'fa-credit-card';
-            if(item.category === 'reservas') icon = 'fa-calendar-check';
-            if(item.category === 'habitaciones') icon = 'fa-bed';
-            
-            div.innerHTML = `
-                <div class="faq-question">
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <i class="fa-solid ${icon}" style="color:var(--color-primario); opacity:0.7;"></i>
-                        <span>${item.question}</span>
-                    </div>
-                    <i class="fa-solid fa-chevron-down" style="font-size:0.8em; color:#999;"></i>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p>${item.answer}</p>
-                    </div>
-                </div>
-            `;
-            
-            const questionHeader = div.querySelector('.faq-question');
-            questionHeader.addEventListener('click', () => {
-                const isActive = div.classList.contains('active');
-                
-                // Cerrar otros (opcional, comportamiento acordeón estricto)
-                // document.querySelectorAll('.faq-item').forEach(i => {
-                //     i.classList.remove('active');
-                //     i.querySelector('.faq-answer').style.maxHeight = null;
-                // });
-
-                if (!isActive) {
-                    div.classList.add('active');
-                    const answer = div.querySelector('.faq-answer');
-                    answer.style.maxHeight = answer.scrollHeight + "px";
-                    questionHeader.querySelector('.fa-chevron-down').style.transform = 'rotate(180deg)';
-                } else {
-                    div.classList.remove('active');
-                    const answer = div.querySelector('.faq-answer');
-                    answer.style.maxHeight = null;
-                    questionHeader.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
-                }
-            });
-            
-            accordion.appendChild(div);
-        });
-    }
-
-    // 4. Actualizar Contadores de Categoría
-    function updateCategoryCounts() {
-        const counts = { todas: allFaqs.length };
-        allFaqs.forEach(f => {
-            // Normalizar categoría (quitar espacios, minúsculas)
-            const cat = f.category ? f.category.toLowerCase().trim() : 'otras';
-            counts[cat] = (counts[cat] || 0) + 1;
-        });
-
-        categoryCards.forEach(card => {
-            const cat = card.dataset.category;
-            const badge = card.querySelector('.category-count');
-            if (badge) {
-                badge.innerText = counts[cat] !== undefined ? counts[cat] : 0;
-            }
-        });
-    }
-
-    // 5. Filtros
-    const handleSearch = () => {
-        const term = searchInput.value.toLowerCase().trim();
-        
-        const activeCategoryCard = document.querySelector('.category-card.active');
-        const activeCategory = activeCategoryCard ? activeCategoryCard.dataset.category : 'todas';
-
-        const filtered = allFaqs.filter(f => {
-            const textMatch = f.question.toLowerCase().includes(term) || f.answer.toLowerCase().includes(term);
-            const catMatch = activeCategory === 'todas' || (f.category && f.category.toLowerCase() === activeCategory);
-            return textMatch && catMatch;
-        });
-        
-        renderFAQs(filtered);
+  /* ── Schema.org FAQPage ──────────────────────────────────── */
+  function injectSchema() {
+    if (!allFaqs.length) return;
+    var schema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      'mainEntity': allFaqs.map(function (f) {
+        return {
+          '@type': 'Question',
+          'name': f.q,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': f.a.replace(/<[^>]+>/g, '')
+          }
+        };
+      })
     };
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(schema);
+    document.head.appendChild(s);
+  }
 
-    if(searchBtn) searchBtn.addEventListener('click', handleSearch);
-    if(searchInput) searchInput.addEventListener('input', handleSearch);
+  /* ── Formulario de env\xedo de pregunta ─────────────────────── */
+  function initForm(db) {
+    var form   = document.getElementById('preguntaForm');
+    var submit = document.getElementById('fqSubmit');
+    var msg    = document.getElementById('fqMsg');
+    if (!form || !db) return;
 
-    categoryCards.forEach(card => {
-        card.addEventListener('click', () => {
-            categoryCards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-            handleSearch();
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var nombre   = document.getElementById('fqNombre').value.trim();
+      var email    = document.getElementById('fqEmail').value.trim();
+      var pregunta = document.getElementById('fqPregunta').value.trim();
+
+      /* Validaci\xf3n b\xe1sica */
+      if (!nombre || !email || !pregunta) {
+        showMsg('Por favor completa todos los campos.', false);
+        return;
+      }
+      if (!EMAIL_RE.test(email)) {
+        showMsg('Ingresa un correo v\xe1lido.', false);
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Enviando…';
+      if (msg) msg.hidden = true;
+
+      db.from('faq_preguntas_usuario')
+        .insert([{ nombre: nombre, email: email, pregunta: pregunta }])
+        .then(function (res) {
+          submit.disabled = false;
+          submit.textContent = 'Enviar pregunta';
+          if (res.error) {
+            showMsg('Hubo un error al enviar. Int\xe9ntalo de nuevo o esc\xedbenos por WhatsApp.', false);
+          } else {
+            form.reset();
+            showMsg('\xa1Listo! Recibimos tu pregunta. Te responderemos pronto.', true);
+          }
         });
     });
 
-    // 6. Modal de Contacto y Envío de Preguntas
-    const modal = document.getElementById('contactModal');
-    const btnOpenContact = document.getElementById('btnOpenContact');
-    const btnCloseModal = document.getElementById('btnCloseModal');
-    const contactForm = document.getElementById('contactForm');
-
-    if(btnOpenContact && modal) {
-        btnOpenContact.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default if it's a link, though it's a button now
-            modal.classList.add('active');
-        });
+    function showMsg(text, ok) {
+      if (!msg) return;
+      msg.textContent = text;
+      msg.className = 'faq-form-msg ' + (ok ? 'faq-form-msg--ok' : 'faq-form-msg--err');
+      msg.hidden = false;
     }
+  }
 
-    if(btnCloseModal && modal) {
-        btnCloseModal.addEventListener('click', () => {
-            modal.classList.remove('active');
+  /* ── INIT ────────────────────────────────────────────────── */
+  if (typeof supabase === 'undefined') return;
+
+  var db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  /* Carga FAQs activas ordenadas */
+  db.from('faq_items')
+    .select('categoria,pregunta,respuesta,orden,por_confirmar')
+    .eq('activo', true)
+    .order('orden')
+    .then(function (res) {
+      if (res.data && res.data.length) {
+        allFaqs = res.data.map(function (row) {
+          return {
+            cat:       row.categoria,
+            q:         row.pregunta,
+            a:         row.respuesta,   /* puede contener HTML basico del admin */
+            confirmar: !!row.por_confirmar
+          };
         });
-    }
-    
-    // Close on click outside
-    if(modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
-            }
-        });
-    }
+      }
+      /* Render inicial */
+      renderSidebar();
+      renderMobilePills();
+      renderFAQs();
+      updateMeta();
+      injectSchema();
+    });
 
-    if(contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const submitBtn = contactForm.querySelector('.submit-btn');
-            const originalText = submitBtn.innerText;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'Enviando...';
+  /* Inicializa formulario de env\xedo */
+  initForm(db);
 
-            const name = document.getElementById('userName').value;
-            const email = document.getElementById('userEmail').value;
-            const question = document.getElementById('userQuestion').value;
-
-            try {
-                const { error } = await supabase
-                    .from('user_questions')
-                    .insert([{ name, email, question }]);
-
-                if (error) throw error;
-
-                // Success UI
-                const header = modal.querySelector('.modal-header');
-                const originalHeaderContent = header.innerHTML;
-                
-                header.innerHTML = `
-                    <i class="fa-solid fa-check-circle" style="font-size:3rem; color:#22c55e; margin-bottom:1rem;"></i>
-                    <h3>¡Pregunta Enviada!</h3>
-                    <p>Gracias por contactarnos. Te responderemos pronto a <strong>${email}</strong>.</p>
-                `;
-                contactForm.style.display = 'none';
-                
-                setTimeout(() => {
-                    modal.classList.remove('active');
-                    // Reset form after delay
-                    setTimeout(() => {
-                        contactForm.reset();
-                        contactForm.style.display = 'flex';
-                        header.innerHTML = `
-                            <h3>Envíanos tu pregunta</h3>
-                            <p>Te responderemos lo antes posible a tu correo electrónico.</p>
-                        `;
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = originalText;
-                    }, 500);
-                }, 3000);
-
-            } catch (err) {
-                console.error('Error enviando pregunta:', err);
-                
-                let userMsg = 'Hubo un error al enviar tu pregunta.';
-                if (err.message && err.message.includes('Could not find the table')) {
-                    userMsg = 'Error de configuración: La tabla de mensajes no existe en la base de datos.';
-                } else if (err.message && err.message.includes('row-level security')) {
-                    userMsg = 'Error de permisos: No tienes autorización para enviar mensajes.';
-                }
-
-                alert(userMsg + '\n\nDetalle técnico: ' + (err.message || 'Desconocido'));
-                
-                submitBtn.disabled = false;
-                submitBtn.innerText = originalText;
-            }
-        });
-    }
-
-    // Ejecutar
-    fetchFAQs();
-});
+}());
