@@ -110,9 +110,53 @@ document.addEventListener('DOMContentLoaded', () => {
      FOOTER
      ====================================================== */
 
-  function initFooter() {
+  async function initFooter() {
     const yearEl = qs('#year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* -- Datos de contacto desde site_config -- */
+    if (!window.supabase) return;
+    const SUPABASE_URL = 'https://vefgwrxgfuzgfictdsyo.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_3Dew0GfB8vlUnItNfBm0Xw_5vMDArZM';
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    try {
+      const FOOTER_KEYS = ['footer_whatsapp', 'footer_email', 'footer_instagram', 'footer_direccion'];
+      const { data } = await db
+        .from('site_config')
+        .select('key, value')
+        .in('key', FOOTER_KEYS);
+
+      if (!data?.length) return;
+
+      const cfg = {};
+      for (const row of data) cfg[row.key] = row.value;
+
+      const wa = qs('#footer-whatsapp');
+      if (wa && cfg.footer_whatsapp) {
+        wa.href = `https://wa.me/${cfg.footer_whatsapp}`;
+      }
+
+      const emailEl = qs('#footer-email');
+      if (emailEl && cfg.footer_email) {
+        emailEl.href = `mailto:${cfg.footer_email}`;
+        emailEl.textContent = cfg.footer_email;
+      }
+
+      const igEl = qs('#footer-instagram');
+      if (igEl && cfg.footer_instagram) {
+        igEl.href = `https://instagram.com/${cfg.footer_instagram}`;
+        igEl.textContent = `@${cfg.footer_instagram}`;
+      }
+
+      const dirEl = qs('#footer-direccion');
+      if (dirEl && cfg.footer_direccion) {
+        dirEl.href = `https://maps.google.com/?q=${encodeURIComponent(cfg.footer_direccion)}`;
+        dirEl.textContent = cfg.footer_direccion;
+      }
+    } catch (_) {
+      // Fallo silencioso: el footer mantiene los valores hardcodeados
+    }
   }
 
   /* ======================================================

@@ -38,6 +38,7 @@ export default function Sidebar({ userEmail }: SidebarProps) {
   const isNosotrosActive         = pathname === '/dashboard/nosotros'
   const isAvisoPrivacidadActive  = pathname === '/dashboard/aviso-privacidad'
   const isTerminosActive         = pathname === '/dashboard/terminos-condiciones'
+  const isFooterContactoActive   = pathname === '/dashboard/footer-contacto'
 
   async function handleLogout() {
     const supabase = createClient()
@@ -436,7 +437,10 @@ export default function Sidebar({ userEmail }: SidebarProps) {
             Términos y condiciones
           </Link>
 
-          <span className="sidebar__link sidebar__link--disabled">
+          <Link
+            href="/dashboard/footer-contacto"
+            className={`sidebar__link${isFooterContactoActive ? ' sidebar__link--active' : ''}`}
+          >
             <svg
               className="sidebar__link-icon"
               viewBox="0 0 24 24"
@@ -447,12 +451,10 @@ export default function Sidebar({ userEmail }: SidebarProps) {
               strokeLinejoin="round"
               aria-hidden="true"
             >
-              <circle cx="12" cy="12" r="3" />
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14" />
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.36 6.36l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
             </svg>
-            General
-            <span className="sidebar__link-badge">Próximo</span>
-          </span>
+            Footer · Contacto
+          </Link>
         </div>
       </nav>
 
