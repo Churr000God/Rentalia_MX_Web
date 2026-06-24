@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--
+  Rentalia · Términos y Condiciones
+  ───────────────────────────────────────────────────────────────
+  ALCANCE: estos Términos rigen (a) el uso del sitio rentalia.mx y
+  (b) el proceso de reserva/solicitud. NO son el contrato de la
+  estancia: la estancia se rige por un contrato firmado aparte.
+
+  Los campos marcados [confirmar] se editan desde el panel admin
+  (dashboard/terminos-condiciones) y se inyectan dinámicamente.
+
+  NOTA LEGAL: documento base, no asesoría jurídica.
+  Revisar con especialista antes de publicar.
+-->
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Términos y condiciones · Rentalia Narvarte · Coliving CDMX</title>
+  <meta name="description" content="Términos y condiciones de Rentalia: reglas para usar el sitio rentalia.mx y para reservar una habitación en nuestro coliving en Narvarte, CDMX.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#143528">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/terminos-condiciones.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<!-- Header dinámico -->
+<div id="header-container"></div>
+
+<main id="main">
+
+  <!-- ══ HERO ══════════════════════════════════════════════════ -->
+  <header class="tc-hero">
+    <svg class="tc-hero__arch" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165" fill="none" stroke="#F3EDE1" stroke-width="6" stroke-linecap="round"/>
+      <line x1="100" y1="165" x2="100" y2="96" stroke="#8DA68F" stroke-width="4" stroke-linecap="round"/>
+      <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+      <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+    </svg>
+    <div class="container tc-hero__inner">
+      <p class="eyebrow tc-hero__eyebrow">Las reglas de la casa, claras</p>
+      <h1 class="tc-hero__h1">Términos y condiciones</h1>
+      <p class="tc-hero__lede">Sin letras chiquitas escondidas. Aquí te contamos cómo usar este sitio y cómo funciona reservar tu lugar en Rentalia, para que todo sea claro antes de mudarte.</p>
+      <div class="tc-hero__foot">
+        <span class="tc-hero__meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Última actualización: <span id="tc-fecha">junio de 2026</span>
+        </span>
+        <button type="button" class="btn btn-outline tc-download-btn" id="downloadPdf" aria-label="Descargar términos en PDF">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ LO ESENCIAL ══════════════════════════════════════════ -->
+  <section class="tc-essence" aria-label="Resumen rápido">
+    <div class="container">
+      <div class="tc-essence__card">
+        <h2 class="tc-essence__title">Lo esencial, en 30 segundos</h2>
+        <p class="tc-essence__sub">Este resumen es solo una guía rápida. Los términos completos, con todo el detalle, están justo debajo.</p>
+        <div class="tc-essence__grid">
+          <div class="tc-ess">
+            <span class="tc-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <h3 class="tc-ess__title">Sitio y reserva</h3>
+              <p class="tc-ess__desc">Estos términos aplican a rentalia.mx y a tu reserva. Tu estancia se firma en un contrato aparte.</p>
+            </div>
+          </div>
+          <div class="tc-ess">
+            <span class="tc-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+            </span>
+            <div>
+              <h3 class="tc-ess__title">Precios informativos</h3>
+              <p class="tc-ess__desc">Lo que ves aquí puede cambiar hasta que confirmemos tu lugar por escrito.</p>
+            </div>
+          </div>
+          <div class="tc-ess">
+            <span class="tc-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            </span>
+            <div>
+              <h3 class="tc-ess__title">Sin aval</h3>
+              <p class="tc-ess__desc">El proceso es simple: eliges cuarto, agendas visita, aplicas con lo mínimo y firmas.</p>
+            </div>
+          </div>
+          <div class="tc-ess">
+            <span class="tc-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
+            </span>
+            <div>
+              <h3 class="tc-ess__title">A un mensaje</h3>
+              <p class="tc-ess__desc">¿Dudas antes de aceptar? Escríbenos por WhatsApp y te respondemos claro.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DOCUMENTO: índice + contenido ════════════════════════ -->
+  <div class="container tc-doc" id="contenido">
+
+    <!-- Índice -->
+    <nav class="tc-toc" aria-label="Índice de los términos">
+      <p class="tc-toc__label">En esta página</p>
+      <ol>
+        <li><a href="#aceptacion">Quiénes somos y aceptación</a></li>
+        <li><a href="#definiciones">Definiciones</a></li>
+        <li><a href="#alcance">Qué cubren estos términos</a></li>
+        <li><a href="#sitio">Uso del sitio web</a></li>
+        <li><a href="#precios">Habitaciones y precios</a></li>
+        <li><a href="#reserva">Reserva y solicitud</a></li>
+        <li><a href="#estancia">Estancia, plazos y renovación</a></li>
+        <li><a href="#pagos">Pagos, depósito y facturación</a></li>
+        <li><a href="#cancelaciones">Cancelaciones y reembolsos</a></li>
+        <li><a href="#convivencia">Convivencia y áreas comunes</a></li>
+        <li><a href="#obligaciones">Obligaciones del residente</a></li>
+        <li><a href="#compromisos">Lo que Rentalia te da</a></li>
+        <li><a href="#terminacion">Terminación</a></li>
+        <li><a href="#propiedad">Propiedad intelectual</a></li>
+        <li><a href="#datos">Datos y responsabilidad</a></li>
+        <li><a href="#ley">Ley aplicable y contacto</a></li>
+      </ol>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="tc-content">
+
+      <!-- 01 -->
+      <section id="aceptacion" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">01</span> Quiénes somos y aceptación</h2>
+        <p>El sitio <strong>rentalia.mx</strong> y los servicios de coliving que ofrece pertenecen a <strong>Rentalia</strong> (en adelante, "Rentalia", "nosotros"), con domicilio en Narvarte Poniente, Ciudad de México.</p>
+        <div class="tc-callout">
+          <p><strong>Datos del responsable</strong></p>
+          <p>Razón social: <em id="tc-razon-social">[pendiente de configurar]</em><br>
+          Domicilio: <em id="tc-domicilio">[pendiente de configurar]</em><br>
+          Contacto: <a class="tc-link" id="tc-email-link" href="mailto:hola@rentalia.mx"><span id="tc-email">hola@rentalia.mx</span></a></p>
+        </div>
+        <p>Al navegar el sitio, agendar una visita o iniciar una solicitud de reserva, aceptas estos Términos y Condiciones (los "Términos") y nuestro <a class="tc-link" href="aviso-privacidad.html">Aviso de Privacidad</a>. Si no estás de acuerdo, te pedimos no usar el sitio ni continuar con una reserva. Para reservar debes ser <strong>mayor de edad</strong> y tener capacidad legal para obligarte.</p>
+      </section>
+
+      <!-- 02 -->
+      <section id="definiciones" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">02</span> Definiciones</h2>
+        <p>Para que todos entendamos lo mismo, estos son los términos clave:</p>
+        <div class="tc-data-grid">
+          <div class="tc-data-card"><h3>Sitio</h3><p>El sitio web rentalia.mx y sus subdominios.</p></div>
+          <div class="tc-data-card"><h3>Usuario</h3><p>Cualquier persona que navega o usa el Sitio.</p></div>
+          <div class="tc-data-card"><h3>Habitación</h3><p>El cuarto privado dentro de una casa Rentalia.</p></div>
+          <div class="tc-data-card"><h3>Coliving</h3><p>Vivienda con habitación privada y áreas comunes (cocina, sala, terraza) de uso compartido.</p></div>
+          <div class="tc-data-card"><h3>Reserva / Solicitud</h3><p>La petición para apartar una Habitación; no la asegura hasta que la confirmamos.</p></div>
+          <div class="tc-data-card"><h3>Residente</h3><p>La persona que firma el Contrato de estancia y vive en la casa.</p></div>
+          <div class="tc-data-card tc-data-card--wide"><h3>Contrato de estancia</h3><p>El contrato firmado aparte que regula los derechos y obligaciones durante la estancia.</p></div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section id="alcance" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">03</span> Qué cubren (y qué no) estos términos</h2>
+        <p>Estos Términos regulan dos cosas:</p>
+        <ul class="tc-list">
+          <li>El <strong>uso del Sitio</strong> rentalia.mx.</li>
+          <li>El <strong>proceso de reserva y solicitud</strong> de una Habitación.</li>
+        </ul>
+        <div class="tc-callout">
+          <p><strong>Importante:</strong> estos Términos <strong>no son el contrato de tu estancia</strong>. La estancia (renta, servicios, depósito, plazo, reglas de la casa y terminación) se rige por un <strong>Contrato de estancia firmado por separado</strong>. Si algo de ese contrato difiere de lo aquí descrito, <strong>prevalece el contrato firmado</strong>.</p>
+        </div>
+      </section>
+
+      <!-- 04 -->
+      <section id="sitio" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">04</span> Uso del sitio web</h2>
+        <p>Puedes usar el Sitio para informarte, agendar visitas y solicitar reservas. Al usarlo, te comprometes a:</p>
+        <ul class="tc-list">
+          <li>Dar información <strong>verdadera y actualizada</strong> en los formularios.</li>
+          <li>No usar el Sitio con fines ilícitos ni para dañar, sobrecargar o vulnerar su seguridad.</li>
+          <li>No copiar ni reutilizar el contenido del Sitio sin nuestro permiso (ver punto 14).</li>
+        </ul>
+        <p>Podemos suspender o limitar el acceso al Sitio por mantenimiento, seguridad o uso indebido, sin que ello genere responsabilidad para Rentalia.</p>
+      </section>
+
+      <!-- 05 -->
+      <section id="precios" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">05</span> Habitaciones, disponibilidad y precios</h2>
+        <p>Hacemos nuestro mejor esfuerzo para que las fotos, descripciones, precios y la disponibilidad por cuarto sean exactos y estén al día. Aun así:</p>
+        <ul class="tc-list">
+          <li>Los <strong>precios</strong> mostrados (rango aproximado de <strong><span id="tc-precio-rango">$10,000 a $12,500 MXN al mes</span></strong>) son <strong>informativos</strong> y pueden variar según la Habitación, la temporada y la duración de la estancia.</li>
+          <li>La <strong>disponibilidad</strong> puede cambiar en cualquier momento; mostrar una Habitación no garantiza que siga libre al momento de tu solicitud.</li>
+          <li>El <strong>precio final</strong> y lo que incluye se confirman por escrito antes de firmar el Contrato de estancia.</li>
+        </ul>
+        <p>Si detectamos un error evidente en un precio o dato, te lo avisaremos antes de confirmar la reserva.</p>
+      </section>
+
+      <!-- 06 -->
+      <section id="reserva" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">06</span> Reserva y solicitud</h2>
+        <p>Reservar con nosotros es sencillo y <strong>sin aval</strong>. El proceso general es:</p>
+        <div class="tc-steps">
+          <div class="tc-step"><span class="tc-step__tag">1</span><h3>Eliges</h3><p>Escoges tu Habitación y nos contactas.</p></div>
+          <div class="tc-step"><span class="tc-step__tag">2</span><h3>Agendas</h3><p>Visitas la casa, presencial o virtual.</p></div>
+          <div class="tc-step"><span class="tc-step__tag">3</span><h3>Aplicas</h3><p>Con la información mínima que te pidamos.</p></div>
+          <div class="tc-step"><span class="tc-step__tag">4</span><h3>Firmas</h3><p>Confirmamos tu lugar y firmas el contrato.</p></div>
+        </div>
+        <p>Tu solicitud <strong>no aparta la Habitación de forma definitiva</strong> hasta que Rentalia la confirme y, en su caso, se realice el pago o anticipo que corresponda. Podemos no aprobar una solicitud cuando la información esté incompleta, no se cumplan los requisitos o la Habitación ya no esté disponible.</p>
+      </section>
+
+      <!-- 07 -->
+      <section id="estancia" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">07</span> Estancia, plazos y renovación</h2>
+        <p>Rentalia ofrece <strong>estancias flexibles</strong>, pensadas también para mediana duración. La <strong>estancia mínima es de <span id="tc-estancia-minima">1 mes</span></strong>, salvo que se acuerde otra cosa por escrito.</p>
+        <p>El plazo exacto, la fecha de entrada, la renovación y el aviso de salida se definen en el <strong>Contrato de estancia</strong>. Mientras no exista contrato firmado, no hay un plazo de estancia comprometido.</p>
+      </section>
+
+      <!-- 08 -->
+      <section id="pagos" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">08</span> Pagos, depósito y facturación</h2>
+        <p>Las condiciones económicas se detallan en tu Contrato de estancia. Como referencia general:</p>
+        <ul class="tc-list">
+          <li>La <strong>renta mensual</strong> se paga por adelantado, en las fechas y medios acordados.</li>
+          <li id="tc-deposito-li">Puede solicitarse un <strong>depósito en garantía</strong>, que se devuelve al terminar la estancia descontando, en su caso, adeudos o daños no atribuibles al uso normal. <span id="tc-deposito-detalle"></span></li>
+          <li id="tc-recargos-li">El pago tardío puede generar <strong>recargos</strong> conforme a tu contrato. <span id="tc-recargos-detalle"></span></li>
+          <li>Los pagos en línea se procesan con <strong id="tc-pasarela">un proveedor externo de pagos</strong>; Rentalia no almacena los datos completos de tu tarjeta.</li>
+          <li>Si requieres <strong>factura (CFDI)</strong>, solicítala con tus datos fiscales al momento de pagar.</li>
+        </ul>
+      </section>
+
+      <!-- 09 -->
+      <section id="cancelaciones" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">09</span> Cancelaciones y reembolsos</h2>
+        <p>Las condiciones de cancelación y, en su caso, de reembolso de anticipos o depósitos se establecen en el Contrato de estancia y al confirmar tu reserva.</p>
+        <div class="tc-callout" id="tc-cancelacion-callout">
+          <p id="tc-cancelacion-texto">Los plazos, penalizaciones y condiciones de reembolso se confirman con cada reserva.</p>
+        </div>
+      </section>
+
+      <!-- 10 -->
+      <section id="convivencia" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">10</span> Convivencia y áreas comunes</h2>
+        <p>Vivir en comunidad es parte de lo que hace especial a Rentalia. Por eso pedimos respetar reglas básicas:</p>
+        <ul class="tc-list">
+          <li>Cuidar las <strong>áreas comunes</strong> y dejarlas en buen estado para todos.</li>
+          <li>Respetar el <strong>descanso</strong> y los horarios razonables de ruido.</li>
+          <li>Tratar con respeto a roomies, vecinos y al equipo de Rentalia.</li>
+          <li id="tc-mascotas-li">Seguir las reglas de <strong>visitas y mascotas</strong>. <span id="tc-mascotas-detalle"></span></li>
+        </ul>
+        <p>El reglamento detallado de la casa forma parte del Contrato de estancia. Las faltas graves o reiteradas pueden ser causa de terminación (punto 13).</p>
+      </section>
+
+      <!-- 11 -->
+      <section id="obligaciones" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">11</span> Obligaciones del residente</h2>
+        <ul class="tc-list">
+          <li>Pagar puntualmente la renta y los conceptos acordados.</li>
+          <li>Usar la Habitación y las áreas comunes de forma <strong>responsable</strong> y para fines habitacionales.</li>
+          <li>Reportar a tiempo desperfectos o fallas.</li>
+          <li>No subarrendar ni ceder la Habitación a terceros sin autorización por escrito de Rentalia.</li>
+          <li>Respetar el reglamento de convivencia y la normativa aplicable.</li>
+        </ul>
+      </section>
+
+      <!-- 12 -->
+      <section id="compromisos" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">12</span> Lo que Rentalia te da</h2>
+        <ul class="tc-list">
+          <li>Entregar la Habitación en condiciones <strong>habitables y limpias</strong>.</li>
+          <li>Brindar los <strong>servicios incluidos</strong> que se hayan acordado (servicios, mobiliario, limpieza de áreas comunes).</li>
+          <li>Atender el <strong>mantenimiento</strong> que corresponda en un tiempo razonable.</li>
+          <li>Respetar tu privacidad dentro de tu Habitación, conforme al Contrato de estancia.</li>
+        </ul>
+      </section>
+
+      <!-- 13 -->
+      <section id="terminacion" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">13</span> Terminación</h2>
+        <p>La estancia puede terminar por vencimiento del plazo, por acuerdo de las partes o por incumplimiento. Son causas de <strong>terminación anticipada</strong>, entre otras:</p>
+        <ul class="tc-list">
+          <li>Falta de pago en los términos acordados.</li>
+          <li>Incumplimiento grave o reiterado del reglamento de convivencia.</li>
+          <li>Daños intencionales a la propiedad o conductas que pongan en riesgo a otras personas.</li>
+          <li>Dar información falsa relevante en la solicitud.</li>
+        </ul>
+        <p>Los efectos de la terminación (avisos, plazos de salida y devolución de depósito) se rigen por el Contrato de estancia.</p>
+      </section>
+
+      <!-- 14 -->
+      <section id="propiedad" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">14</span> Propiedad intelectual</h2>
+        <p>La marca <strong>Rentalia</strong>, el logotipo, los textos, fotografías, diseño y demás contenidos del Sitio son propiedad de Rentalia o se usan con autorización, y están protegidos por la legislación aplicable.</p>
+        <p>No puedes reproducir, distribuir ni usar comercialmente estos contenidos sin nuestro consentimiento previo por escrito. El uso del Sitio no te otorga ningún derecho sobre nuestra marca o contenidos.</p>
+      </section>
+
+      <!-- 15 -->
+      <section id="datos" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">15</span> Datos personales y responsabilidad</h2>
+        <h3 class="tc-section__h3">Protección de datos</h3>
+        <p>El tratamiento de tus datos personales se rige por nuestro <a class="tc-link" href="aviso-privacidad.html">Aviso de Privacidad</a>, que forma parte de estos Términos. Ahí explicamos qué datos recabamos, para qué y cómo ejercer tus derechos.</p>
+        <h3 class="tc-section__h3">Limitación de responsabilidad</h3>
+        <p>El Sitio se ofrece "tal cual". Hacemos nuestro mejor esfuerzo por mantener la información correcta y el Sitio disponible, pero no garantizamos que esté libre de errores o interrupciones. En la medida que permite la ley, Rentalia no será responsable por daños indirectos derivados del uso del Sitio o de la imposibilidad de usarlo. Nada en estos Términos limita los derechos que la ley reconoce a los consumidores.</p>
+        <h3 class="tc-section__h3">Cambios a estos términos</h3>
+        <p>Podemos actualizar estos Términos cuando sea necesario. La versión vigente es la publicada en esta página, con su fecha de última actualización. Si los cambios son relevantes, procuraremos avisarte por los medios de contacto que nos hayas dado.</p>
+      </section>
+
+      <!-- 16 -->
+      <section id="ley" class="tc-section">
+        <h2 class="tc-section__h2"><span class="tc-num">16</span> Ley aplicable, jurisdicción y contacto</h2>
+        <p>Estos Términos se rigen por las leyes aplicables en los <strong>Estados Unidos Mexicanos</strong> y, en lo conducente, por las de la <strong>Ciudad de México</strong>. Para cualquier controversia, las partes se someten a los tribunales competentes de la <strong>Ciudad de México</strong>, sin perjuicio de los derechos que como consumidor puedas hacer valer ante la <strong>PROFECO</strong>.</p>
+
+        <div class="tc-callout">
+          <p>Este documento es una base de trabajo para Rentalia; no constituye asesoría jurídica. Antes de publicarlo conviene que un especialista lo revise, en particular: (1) si Rentalia opera como persona física o moral, y (2) la naturaleza del Contrato de estancia (hospedaje vs. arrendamiento), porque cambia obligaciones y protecciones bajo el Código Civil de la CDMX.</p>
+        </div>
+
+        <div class="tc-contact-card">
+          <h3>¿Dudas sobre estos términos?</h3>
+          <p>Escríbenos y con gusto te ayudamos a entenderlos antes de que decidas.</p>
+          <p>Correo: <a id="tc-email-card-link" href="mailto:hola@rentalia.mx"><span id="tc-email-card">hola@rentalia.mx</span></a></p>
+          <p>WhatsApp: <a class="tc-wa" href="https://wa.me/5215523215421"><span id="tc-wa-text">+52 1 55 2321 5421</span></a></p>
+        </div>
+      </section>
+
+      <p class="tc-updated-foot">Última actualización: <span id="tc-fecha-pie">junio de 2026</span>. Estos términos forman un conjunto con el <a class="tc-link" href="aviso-privacidad.html">Aviso de Privacidad</a> y con el Contrato de estancia que firma cada residente. Te recomendamos revisarlos periódicamente.</p>
+
+      <!-- Pie solo visible en impresión -->
+      <div class="tc-print-foot" aria-hidden="true">
+        <span>Rentalia · Términos y condiciones</span>
+        <span>rentalia.mx</span>
+      </div>
+
+    </div><!-- /.tc-content -->
+  </div><!-- /.tc-doc -->
+
+</main>
+
+<!-- Footer dinámico -->
+<footer id="footer-container"></footer>
+
+<script src="../assets/js/main.js?v=3" defer></script>
+<script src="../assets/js/terminos-condiciones.js" defer></script>
+</body>
+</html>

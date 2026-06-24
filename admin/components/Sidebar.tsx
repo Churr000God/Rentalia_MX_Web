@@ -37,6 +37,7 @@ export default function Sidebar({ userEmail }: SidebarProps) {
   const isComunidadActive        = pathname === '/dashboard/comunidad'
   const isNosotrosActive         = pathname === '/dashboard/nosotros'
   const isAvisoPrivacidadActive  = pathname === '/dashboard/aviso-privacidad'
+  const isTerminosActive         = pathname === '/dashboard/terminos-condiciones'
 
   async function handleLogout() {
     const supabase = createClient()
@@ -413,6 +414,26 @@ export default function Sidebar({ userEmail }: SidebarProps) {
               <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
             </svg>
             Aviso de privacidad
+          </Link>
+
+          <Link
+            href="/dashboard/terminos-condiciones"
+            className={`sidebar__link${isTerminosActive ? ' sidebar__link--active' : ''}`}
+          >
+            <svg
+              className="sidebar__link-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <path d="M14 2v6h6M16 13H8M16 17H8"/>
+            </svg>
+            Términos y condiciones
           </Link>
 
           <span className="sidebar__link sidebar__link--disabled">
