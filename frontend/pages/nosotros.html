@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros · La Casa · Rentalia Narvarte · CDMX</title>
+  <meta name="description" content="Conoce a las personas detrás de Rentalia y la historia de la casa de Narvarte. Creemos que mudarte no debería sentirse como un trámite, sino como llegar a casa.">
+  <meta name="theme-color" content="#143528">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/nosotros.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<!-- Header dinámico -->
+<div id="header-container"></div>
+
+<main id="main">
+
+  <!-- ══ HERO ════════════════════════════════════════════════ -->
+  <section class="hero hero-pattern" aria-labelledby="nosotros-hero-h1">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="hero__pill" id="nosotrosHeroPill">Quiénes somos</span>
+        <h1 class="hero__h1" id="nosotros-hero-h1">Detrás de Rentalia</h1>
+        <p class="hero__sub" id="nosotrosHeroSub">Creemos que mudarte no debería sentirse como un trámite, sino como llegar a casa. Estamos aquí para rediseñar la experiencia de rentar en la ciudad.</p>
+        <div class="hero__ctas">
+          <a href="/pages/alternativas.html" class="btn btn-cta">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+            Ver las habitaciones
+          </a>
+          <a href="/pages/agendar_visita.html" class="btn btn-ghost">Agendar visita</a>
+        </div>
+      </div>
+      <!-- Foto hero con arco zaguan -->
+      <div class="hero__photo-wrap">
+        <div class="zaguan-frame hero__photo ph gp-a"
+             role="img"
+             aria-label="Interior cálido de la Casa Rentalia Narvarte"
+             id="heroFotoWrap">
+          <img class="ph__img" id="nosotrosHeroFoto"
+               src="" alt="Interior de la Casa Rentalia"
+               loading="eager" onerror="this.style.display='none'">
+          <span class="ph__shade" aria-hidden="true"></span>
+        </div>
+        <div class="hero-badge" aria-hidden="true">
+          <span class="hero-badge__pin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span>
+            <b id="nosotrosBadgeTitulo">Casa Narvarte</b>
+            <span id="nosotrosBadgeSub">Narvarte Poniente · CDMX</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HISTORIA ══════════════════════════════════════════ -->
+  <section class="historia hist-pattern fade-up" aria-labelledby="nosotros-hist-h2">
+    <div class="container historia__inner">
+
+      <!-- Texto de la historia -->
+      <div class="story-card">
+        <h2 class="story-card__label" id="nosotros-hist-h2" id="nosotrosHistTitulo">Nuestra Historia</h2>
+        <p id="nosotrosHistP1">Rentalia nació de una frustración que conocemos bien: buscar cuarto en CDMX es difícil, caro y frío. Fiadores imposibles, depósitos exagerados, cuartos sin alma que nadie querría llamar "casa".</p>
+        <p id="nosotrosHistP2">La pregunta fue sencilla: ¿cómo sería el lugar donde uno sí quiere vivir? Un lugar diseñado para vivir bien, con gente afín, en un barrio que valga la pena. La respuesta fue Narvarte.</p>
+        <p id="nosotrosHistP3">Rentalia es el resultado de buscar un hogar propio y no encontrarlo en el mercado tradicional. Así que decidimos construirlo nosotros mismos.</p>
+      </div>
+
+      <!-- Foto + frase circular -->
+      <div class="story-visual">
+        <div class="story-img ph gp-e"
+             role="img"
+             aria-label="Rincón de la Casa Narvarte"
+             id="histFotoWrap">
+          <img class="ph__img" id="nosotrosHistFoto"
+               src="" alt="Espacio de la Casa Narvarte"
+               loading="lazy" onerror="this.style.display='none'">
+          <span class="ph__shade" aria-hidden="true"></span>
+        </div>
+        <div class="quote-circle">
+          <p id="nosotrosHistQuote">"Dejamos de rentar m², empezamos a crear hogares."</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ PROMESA / FILOSOFÍA ══════════════════════════════ -->
+  <section class="promesa fade-up" aria-labelledby="nosotros-filo-h2">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;margin-inline:auto;margin-bottom:1.25rem"
+            id="nosotrosFiloEyebrow">Nuestra filosofía</span>
+      <h2 class="promesa__tagline" id="nosotros-filo-h2" id="nosotrosFiloTagline">
+        ¡El lugar donde <em>SÍ</em> quieres vivir!
+      </h2>
+      <!-- Los pilares se renderizan desde Supabase vía nosotros-page.js -->
+      <ul class="pilares" role="list" id="pilaresGrid"></ul>
+    </div>
+  </section>
+
+  <!-- ══ LA CASA DE NARVARTE ══════════════════════════════ -->
+  <section class="casa-section fade-up" aria-labelledby="nosotros-casa-h2">
+    <div class="container casa-layout">
+      <div class="casa-text">
+        <span class="eyebrow" id="nosotrosCasaEyebrow">La primera casa</span>
+        <h2 id="nosotros-casa-h2" id="nosotrosCasaTitulo">La Casa de Narvarte</h2>
+        <p class="italic-sub" id="nosotrosCasaSub">Donde todo comenzó.</p>
+        <p id="nosotrosCasaTexto">Elegimos Narvarte por su espíritu de barrio, sus camellones llenos de vida y esa arquitectura que tiene tanto carácter. Adaptamos la casa respetando sus arcos y sus mosaicos originales, pero pensándola para la vida de hoy.</p>
+        <!-- Stats con divisores -->
+        <div class="casa-stats" role="list" aria-label="Datos de la casa">
+          <div class="casa-stat" role="listitem">
+            <span class="casa-stat__num" id="nosotrosCasaStatUbicaciones">1</span>
+            <span class="casa-stat__label">Ubicación</span>
+          </div>
+          <div class="casa-stats__div" aria-hidden="true"></div>
+          <div class="casa-stat" role="listitem">
+            <span class="casa-stat__num" id="nosotrosCasaStatHabitaciones">11</span>
+            <span class="casa-stat__label">Habitaciones</span>
+          </div>
+          <div class="casa-stats__div" aria-hidden="true"></div>
+          <div class="casa-stat" role="listitem">
+            <span class="casa-stat__num" style="font-size:2rem">∞</span>
+            <span class="casa-stat__label">Historias</span>
+          </div>
+        </div>
+        <a href="/pages/alternativas.html" class="btn btn-cta" style="font-size:.95rem;">
+          Ver las habitaciones
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Grid de fotos — zaguan + stagger -->
+      <div class="casa-photos" role="group" aria-label="Fotos de la Casa Narvarte">
+        <div class="cp-item cp-item--arch">
+          <div class="cp-fill ph gp-a" role="img" id="casaFoto1Wrap" aria-label="Fachada de la Casa Rentalia Narvarte">
+            <img class="ph__img" id="nosotrosCasaFoto1" src="" alt="Fachada de la Casa Rentalia Narvarte" loading="lazy" onerror="this.style.display='none'">
+            <span class="ph__shade" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="cp-item">
+          <div class="cp-fill ph gp-c" role="img" id="casaFoto2Wrap" aria-label="Cocina equipada de la casa">
+            <img class="ph__img" id="nosotrosCasaFoto2" src="" alt="Cocina equipada de la casa" loading="lazy" onerror="this.style.display='none'">
+            <span class="ph__shade" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="cp-item">
+          <div class="cp-fill ph gp-d" role="img" id="casaFoto3Wrap" aria-label="Patio y áreas comunes de la casa">
+            <img class="ph__img" id="nosotrosCasaFoto3" src="" alt="Patio y áreas comunes de la casa" loading="lazy" onerror="this.style.display='none'">
+            <span class="ph__shade" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="cp-item cp-item--arch-inv">
+          <div class="cp-fill ph gp-b" role="img" id="casaFoto4Wrap" aria-label="Vida compartida en la casa">
+            <img class="ph__img" id="nosotrosCasaFoto4" src="" alt="Vida compartida en la casa" loading="lazy" onerror="this.style.display='none'">
+            <span class="ph__shade" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ VALORES ══════════════════════════════════════════ -->
+  <section class="valores-section fade-up" aria-labelledby="nosotros-valores-h2">
+    <div class="container">
+      <div class="valores-header">
+        <span class="eyebrow valores-header__eyebrow" id="nosotrosValoresEyebrow">Lo que nos mueve</span>
+        <h2 class="valores-header__h2" id="nosotros-valores-h2" id="nosotrosValoresTitulo">Nuestros valores</h2>
+        <div class="valores-bar" aria-hidden="true"></div>
+      </div>
+      <!-- Valores se renderizan desde Supabase vía nosotros-page.js -->
+      <div class="valores-grid" id="valoresGrid" role="list"></div>
+    </div>
+  </section>
+
+  <!-- ══ EQUIPO ════════════════════════════════════════════ -->
+  <section class="equipo-section fade-up" aria-labelledby="nosotros-equipo-h2">
+    <div class="container">
+      <div class="equipo-header">
+        <span class="equipo-header__eyebrow" id="nosotrosEquipoEyebrow">Las caras del proyecto</span>
+        <h2 class="equipo-header__h2" id="nosotros-equipo-h2" id="nosotrosEquipoTitulo">El equipo detrás</h2>
+        <p class="equipo-header__sub" id="nosotrosEquipoSub">Un equipo pequeño pero apasionado por el buen vivir.</p>
+      </div>
+      <!-- Equipo se renderiza desde Supabase vía nosotros-page.js -->
+      <div class="equipo-grid" id="equipoGrid" role="list"></div>
+    </div>
+  </section>
+
+  <!-- ══ PROYECTO CRECE ════════════════════════════════════ -->
+  <section class="crece-section fade-up" aria-labelledby="nosotros-crece-h2">
+    <div class="container crece-inner">
+      <div class="crece-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <span class="eyebrow" style="display:block;margin-inline:auto" id="nosotrosCreceEyebrow">El futuro</span>
+      <h2 class="crece-h2" id="nosotros-crece-h2">
+        Narvarte es el <em id="nosotrosCreceH2Em">primer paso</em>
+      </h2>
+      <p class="crece-p" id="nosotrosCreceTexto">Somos honestos: por ahora somos una sola casa, en Narvarte, y estamos aprendiendo con ella. Nuestra visión es llevar este modelo de "vida con alma" a otros barrios icónicos de la ciudad — pero solo cuando lo hayamos hecho muy bien aquí primero.</p>
+      <span class="crece-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="nosotrosCreceBadge">Casa activa: Narvarte Poniente · CDMX</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ══ BRIDGE CARD ═════════════════════════════════════ -->
+  <section class="bridge-section" aria-labelledby="nosotros-bridge-h2">
+    <div class="container">
+      <div class="bridge-card">
+        <div>
+          <span class="bridge-card__eyebrow">La vida adentro</span>
+          <h2 class="bridge-card__h2" id="nosotros-bridge-h2" id="nosotrosBridgeTitulo">¿Quieres ver la vida real aquí?</h2>
+          <p class="bridge-card__p" id="nosotrosBridgeTexto">Nuestra comunidad es más que fotos bonitas; son sobremesas, café los domingos y gente con quien da gusto convivir. Conoce a quienes ya son parte.</p>
+          <a href="/pages/comunidad.html" class="bridge-card__link">
+            Ir a Comunidad
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+        <div class="bridge-card__aside">
+          <a href="/pages/comunidad.html" class="btn btn-cta" style="font-size:1rem;padding:14px 28px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Ver la comunidad
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CTA BAND ════════════════════════════════════════ -->
+  <section class="cta-banda" aria-labelledby="nosotros-cta-h2">
+    <div class="container cta-banda__inner">
+      <h2 class="cta-banda__h2" id="nosotros-cta-h2" id="nosotrosCtaTitulo">
+        ¿Te late nuestra forma de ver el <em>hogar?</em>
+      </h2>
+      <p class="cta-banda__sub" id="nosotrosCtaSub">Ven a conocer la casa de Narvarte y las personas detrás de Rentalia.</p>
+      <div class="cta-banda__actions">
+        <a href="/pages/agendar_visita.html" class="btn btn-cta" style="font-size:1rem;padding:14px 28px;">Agendar visita</a>
+        <a href="/pages/alternativas.html" class="btn btn-ghost" style="font-size:1rem;padding:14px 28px;">Ver habitaciones</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Footer dinámico -->
+<footer id="footer-container"></footer>
+
+<script src="../assets/js/main.js?v=3" defer></script>
+<script src="../assets/js/nosotros-page.js" defer></script>
+</body>
+</html>
