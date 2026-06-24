@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<!--
+  Rentalia · Aviso de Privacidad
+  ─────────────────────────────────────────────────────────────
+  [Equipo: confirmar] antes de publicar:
+   · Razón social / nombre legal del responsable
+   · Domicilio legal/fiscal completo
+   · Correo de contacto: privacidad@rentalia.mx
+   · Número de WhatsApp (reemplazar 521XXXXXXXXXX)
+   · Herramientas que tratan datos (pasarela de pago, analítica, CRM)
+   · Si efectivamente hay transferencias y a quién
+   · Fecha de actualización
+
+  NOTA LEGAL: este documento es una base redactada conforme a la
+  LFPDPPP vigente desde el 21/mar/2025. NO es asesoría jurídica.
+  Revísalo con un especialista en protección de datos antes de publicar.
+-->
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso de privacidad · Rentalia Narvarte · Coliving CDMX</title>
+  <meta name="description" content="Aviso de privacidad de Rentalia. Cómo recabamos, usamos y protegemos tus datos personales, y cómo ejercer tus derechos ARCO conforme a la LFPDPPP.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#143528">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/aviso-privacidad.css">
+  <link rel="icon" href="../assets/images/img/favicon.ico" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido principal</a>
+
+<!-- Header dinámico -->
+<div id="header-container"></div>
+
+<main id="main">
+
+  <!-- ══ HERO ══════════════════════════════════════════════════ -->
+  <header class="ap-hero">
+    <svg class="ap-hero__arch" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M55 165 L55 92 A45 45 0 0 1 145 92 L145 165" fill="none" stroke="#F3EDE1" stroke-width="6" stroke-linecap="round"/>
+      <line x1="100" y1="165" x2="100" y2="96" stroke="#8DA68F" stroke-width="4" stroke-linecap="round"/>
+      <path d="M100 124 Q124 116 124 86 Q100 96 100 124 Z" fill="#E9A53A"/>
+      <path d="M100 138 Q74 128 74 100 Q100 110 100 138 Z" fill="#8DA68F"/>
+    </svg>
+    <div class="container ap-hero__inner">
+      <p class="eyebrow ap-hero__eyebrow">Tu confianza, en buenas manos</p>
+      <h1 class="ap-hero__h1">Aviso de privacidad</h1>
+      <p class="ap-hero__lede">Cuidamos tus datos con el mismo respeto con que cuidamos la casa. Aquí te contamos, sin letras chiquitas, qué información recabamos, para qué la usamos y cómo siempre puedes decidir sobre ella.</p>
+      <div class="ap-hero__foot">
+        <span class="ap-hero__meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Última actualización: <span id="aviso-fecha">junio de 2026</span>
+        </span>
+        <button type="button" class="btn btn-outline ap-download-btn" id="downloadPdf" aria-label="Descargar aviso de privacidad en PDF">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Descargar PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ LO ESENCIAL ══════════════════════════════════════════ -->
+  <section class="ap-essence" aria-label="Resumen rápido">
+    <div class="container">
+      <div class="ap-essence__card">
+        <h2 class="ap-essence__title">Lo esencial, en 30 segundos</h2>
+        <p class="ap-essence__sub">Este resumen es solo una guía rápida. El aviso completo, con todos los detalles legales, está justo debajo.</p>
+        <div class="ap-essence__grid">
+          <div class="ap-ess">
+            <span class="ap-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            <div>
+              <h3 class="ap-ess__title">Solo lo necesario</h3>
+              <p class="ap-ess__desc">Pedimos los datos justos para atenderte, rentarte un cuarto y administrar tu estancia.</p>
+            </div>
+          </div>
+          <div class="ap-ess">
+            <span class="ap-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+            </span>
+            <div>
+              <h3 class="ap-ess__title">Nunca los vendemos</h3>
+              <p class="ap-ess__desc">Tu información no está en venta. Solo la compartimos con quien hace falta para darte el servicio.</p>
+            </div>
+          </div>
+          <div class="ap-ess">
+            <span class="ap-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 4v5h5"/></svg>
+            </span>
+            <div>
+              <h3 class="ap-ess__title">Tú decides</h3>
+              <p class="ap-ess__desc">Puedes acceder, corregir, eliminar u oponerte al uso de tus datos cuando quieras.</p>
+            </div>
+          </div>
+          <div class="ap-ess">
+            <span class="ap-ess__ic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H7l-3 3V4Z"/></svg>
+            </span>
+            <div>
+              <h3 class="ap-ess__title">A un mensaje</h3>
+              <p class="ap-ess__desc">Para ejercer tus derechos o resolver dudas, escríbenos. Te respondemos pronto y claro.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DOCUMENTO: índice + contenido ════════════════════════ -->
+  <div class="container ap-doc">
+
+    <!-- Índice -->
+    <nav class="ap-toc" aria-label="Índice del aviso">
+      <p class="ap-toc__label">En esta página</p>
+      <ol>
+        <li><a href="#responsable">Quién es el responsable</a></li>
+        <li><a href="#datos">Qué datos recabamos</a></li>
+        <li><a href="#finalidades">Para qué los usamos</a></li>
+        <li><a href="#negativa">Decir "no" a usos opcionales</a></li>
+        <li><a href="#transferencias">Con quién los compartimos</a></li>
+        <li><a href="#derechos">Tus derechos ARCO</a></li>
+        <li><a href="#revocacion">Revocar tu consentimiento</a></li>
+        <li><a href="#limitacion">Limitar uso o divulgación</a></li>
+        <li><a href="#conservacion">Cuánto los conservamos</a></li>
+        <li><a href="#cookies">Cookies y rastreo</a></li>
+        <li><a href="#cambios">Cambios a este aviso</a></li>
+        <li><a href="#autoridad">Autoridad competente</a></li>
+        <li><a href="#aceptacion">Aceptación</a></li>
+      </ol>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="ap-content">
+
+      <!-- 01 -->
+      <section id="responsable" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">01</span> Quién es el responsable</h2>
+        <p><strong>Rentalia</strong> (en adelante, "Rentalia", "nosotros" o "nuestro") es responsable del tratamiento de tus datos personales, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP) vigente.</p>
+        <div class="ap-callout">
+          <p><strong>Datos del responsable</strong> <span class="ap-flag">confirmar</span></p>
+          <p>Razón social: <em id="aviso-razon-social">[pendiente de configurar]</em><br>
+          Domicilio: <em id="aviso-domicilio">[pendiente de configurar]</em><br>
+          Contacto para datos: <a class="ap-link" href="mailto:privacidad@rentalia.mx">privacidad@rentalia.mx</a></p>
+        </div>
+        <p>Como nuestra primera casa está en la colonia Narvarte Poniente (Ciudad de México), toda la operación se rige por la legislación mexicana aplicable.</p>
+      </section>
+
+      <!-- 02 -->
+      <section id="datos" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">02</span> Qué datos personales recabamos</h2>
+        <p>Recabamos únicamente los datos que necesitamos según el momento de tu relación con nosotros: cuando nos contactas, cuando solicitas rentar un cuarto y mientras vives en la casa.</p>
+        <div class="ap-data-grid">
+          <div class="ap-data-card">
+            <h3>De identificación</h3>
+            <p>Nombre, fecha de nacimiento y, al firmar contrato, copia de tu identificación oficial.</p>
+          </div>
+          <div class="ap-data-card">
+            <h3>De contacto</h3>
+            <p>Teléfono o WhatsApp, correo electrónico y, si aplica, redes sociales.</p>
+          </div>
+          <div class="ap-data-card">
+            <h3>Para tu solicitud</h3>
+            <p>Ocupación, comprobante de ingresos y referencias, para evaluar tu renta.</p>
+          </div>
+          <div class="ap-data-card">
+            <h3>De pago</h3>
+            <p>Datos para procesar rentas y depósitos. Si usas una pasarela<span id="aviso-pasarela-inline"></span>, ellos manejan los datos de tu tarjeta.</p>
+          </div>
+          <div class="ap-data-card ap-data-card--wide">
+            <h3>De navegación</h3>
+            <p>Datos técnicos del sitio (como tu IP y cookies) cuando visitas rentalia.mx.</p>
+          </div>
+        </div>
+        <div class="ap-callout">
+          <p><strong>No recabamos datos personales sensibles.</strong> No te pedimos información sobre tu salud, origen, creencias, preferencias ni nada de naturaleza sensible. Si algún proceso futuro lo requiriera, te lo informaríamos y pediríamos tu consentimiento expreso por separado.</p>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section id="finalidades" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">03</span> Para qué usamos tus datos</h2>
+        <h3 class="ap-section__h3">Finalidades que dan vida a nuestra relación</h3>
+        <p>Estas son necesarias para atenderte y para que puedas vivir en Rentalia. No requieren un consentimiento aparte:</p>
+        <ul class="ap-list">
+          <li>Atender tu solicitud de visita, cotización o información.</li>
+          <li>Evaluar tu solicitud de renta y verificar tus referencias.</li>
+          <li>Formalizar y administrar tu contrato de arrendamiento u hospedaje.</li>
+          <li>Gestionar pagos, depósitos, recibos y facturación.</li>
+          <li>Coordinar los servicios de la casa: limpieza, mantenimiento y la convivencia de la comunidad.</li>
+          <li>Cumplir con obligaciones legales, fiscales y de seguridad.</li>
+        </ul>
+        <h3 class="ap-section__h3">Finalidades opcionales</h3>
+        <p>Estas nos ayudan a darte una mejor experiencia, pero <strong>no son indispensables</strong>. Puedes negarte sin que eso afecte tu renta:</p>
+        <ul class="ap-list">
+          <li>Enviarte novedades, eventos de la comunidad y promociones.</li>
+          <li>Invitarte a encuestas para mejorar nuestros servicios.</li>
+          <li>Mostrarte habitaciones o casas nuevas que podrían interesarte.</li>
+        </ul>
+      </section>
+
+      <!-- 04 -->
+      <section id="negativa" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">04</span> Cómo decir "no" a los usos opcionales</h2>
+        <p>Si no quieres que usemos tus datos para las finalidades opcionales del apartado anterior, puedes decírnoslo en cualquier momento:</p>
+        <ul class="ap-list">
+          <li>Respondiendo a cualquiera de nuestros correos con la frase "No deseo finalidades opcionales".</li>
+          <li>Escribiéndonos a <a class="ap-link" href="mailto:privacidad@rentalia.mx">privacidad@rentalia.mx</a>.</li>
+          <li>Por WhatsApp al <a class="ap-link aviso-wa" id="aviso-wa-negativa" href="https://wa.me/5215523215421">+52 1 55 2321 5421</a>.</li>
+        </ul>
+        <p>Tu negativa no será motivo para negarte ningún servicio que hayas solicitado.</p>
+      </section>
+
+      <!-- 05 -->
+      <section id="transferencias" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">05</span> Con quién compartimos tus datos</h2>
+        <p>No vendemos ni rentamos tu información. Solo la compartimos cuando hace falta para darte el servicio, y siempre con quienes están obligados a protegerla:</p>
+        <ul class="ap-list">
+          <li><strong>Proveedores que nos dan servicio:</strong> pasarela de pago, hospedaje del sitio y herramientas de comunicación, que tratan los datos por nuestra cuenta.<span id="aviso-proveedores-inline"></span></li>
+          <li><strong>El propietario socio de la casa,</strong> cuando sea necesario para administrar tu estancia.</li>
+          <li><strong>Autoridades,</strong> cuando la ley lo exija o para defender nuestros derechos.</li>
+        </ul>
+        <div class="ap-callout">
+          <p>Salvo los casos previstos por la ley, no realizamos transferencias de tus datos que requieran tu consentimiento sin antes informártelo. Si en el futuro alguna transferencia lo requiriera, te lo haríamos saber para que decidas si la aceptas.</p>
+        </div>
+      </section>
+
+      <!-- 06 -->
+      <section id="derechos" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">06</span> Tus derechos ARCO</h2>
+        <p>La ley te reconoce cuatro derechos sobre tus datos. Son tuyos y puedes ejercerlos cuando quieras:</p>
+        <div class="ap-rights">
+          <div class="ap-right">
+            <span class="ap-right__tag">A</span>
+            <h3>Acceso</h3>
+            <p>Saber qué datos tuyos tenemos y cómo los usamos.</p>
+          </div>
+          <div class="ap-right">
+            <span class="ap-right__tag">R</span>
+            <h3>Rectificación</h3>
+            <p>Corregir datos inexactos, incompletos o desactualizados.</p>
+          </div>
+          <div class="ap-right">
+            <span class="ap-right__tag">C</span>
+            <h3>Cancelación</h3>
+            <p>Pedir que eliminemos tus datos cuando ya no sean necesarios.</p>
+          </div>
+          <div class="ap-right">
+            <span class="ap-right__tag">O</span>
+            <h3>Oposición</h3>
+            <p>Oponerte a que usemos tus datos para fines determinados.</p>
+          </div>
+        </div>
+        <h3 class="ap-section__h3">Cómo ejercerlos</h3>
+        <p>Envía tu solicitud a <a class="ap-link" href="mailto:privacidad@rentalia.mx">privacidad@rentalia.mx</a> e incluye:</p>
+        <ul class="ap-list">
+          <li>Tu nombre y un medio para responderte.</li>
+          <li>Copia de una identificación que acredite que eres tú (o tu representante).</li>
+          <li>La descripción clara de los datos y del derecho que quieres ejercer.</li>
+        </ul>
+        <p>Te responderemos en un plazo máximo de <strong>20 días hábiles</strong>. Ejercer estos derechos es gratuito; solo podrían aplicar costos de envío o reproducción que marca la ley.</p>
+      </section>
+
+      <!-- 07 -->
+      <section id="revocacion" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">07</span> Revocar tu consentimiento</h2>
+        <p>Puedes retirar el consentimiento que nos diste para tratar tus datos. En algunos casos, por motivos legales o por una relación vigente entre nosotros, quizá no podamos atender tu solicitud de inmediato, pero te explicaremos siempre el porqué.</p>
+        <p>Para revocarlo, usa el mismo canal de los derechos ARCO: <a class="ap-link" href="mailto:privacidad@rentalia.mx">privacidad@rentalia.mx</a>.</p>
+      </section>
+
+      <!-- 08 -->
+      <section id="limitacion" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">08</span> Limitar el uso o la divulgación</h2>
+        <p>Si prefieres limitar el uso o la divulgación de tus datos sin necesidad de cancelarlos, también puedes solicitarlo por el mismo medio. Atenderemos tu petición conforme a la ley y, cuando proceda, te incluiremos en nuestro listado de exclusión para que no te lleguen comunicaciones promocionales.</p>
+      </section>
+
+      <!-- 09 -->
+      <section id="conservacion" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">09</span> Cuánto tiempo conservamos tus datos</h2>
+        <p>Conservamos tus datos solo mientras dure nuestra relación y por los plazos adicionales que exijan las obligaciones legales y fiscales aplicables. Cumplido ese tiempo, los bloqueamos y los eliminamos de forma segura.</p>
+      </section>
+
+      <!-- 10 -->
+      <section id="cookies" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">10</span> Cookies y tecnologías de rastreo</h2>
+        <p>Nuestro sitio rentalia.mx usa cookies y tecnologías similares para que funcione correctamente, recordar tus preferencias y, en su caso, entender cómo se navega para mejorar la experiencia. <span class="ap-flag">confirmar si se usa analítica</span></p>
+        <p>Puedes desactivar o eliminar las cookies desde la configuración de tu navegador. Si lo haces, algunas partes del sitio podrían no funcionar como esperas.</p>
+      </section>
+
+      <!-- 11 -->
+      <section id="cambios" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">11</span> Cambios a este aviso</h2>
+        <p>Podemos actualizar este aviso para reflejar cambios en la ley o en cómo operamos. Cuando eso ocurra, publicaremos la versión vigente en esta misma página con su nueva fecha de actualización. Si el cambio es importante, te lo haremos saber por correo o desde el sitio.</p>
+      </section>
+
+      <!-- 12 -->
+      <section id="autoridad" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">12</span> Autoridad competente</h2>
+        <p>Si consideras que tu derecho a la protección de datos no fue respetado, puedes acudir ante la autoridad competente. Desde el 21 de marzo de 2025, esa autoridad es la <strong>Secretaría Anticorrupción y Buen Gobierno</strong>, que asumió las funciones del extinto INAI en materia de protección de datos personales.</p>
+      </section>
+
+      <!-- 13 -->
+      <section id="aceptacion" class="ap-section">
+        <h2 class="ap-section__h2"><span class="ap-num">13</span> Aceptación de este aviso</h2>
+        <p>Al proporcionarnos tus datos —ya sea por el sitio, por WhatsApp, en una visita o al firmar contrato— y al continuar usando rentalia.mx, entendemos que has leído y aceptado este aviso de privacidad.</p>
+
+        <div class="ap-contact-card">
+          <h3>¿Dudas sobre tus datos?</h3>
+          <p>Escríbenos y con gusto te ayudamos a entender o ejercer cualquier derecho.</p>
+          <p>Correo: <a href="mailto:privacidad@rentalia.mx">privacidad@rentalia.mx</a></p>
+          <p>WhatsApp: <a class="aviso-wa" id="aviso-wa-contacto" href="https://wa.me/5215523215421">+52 1 55 2321 5421</a></p>
+        </div>
+      </section>
+
+      <p class="ap-updated-foot">Última actualización: <span id="aviso-fecha-pie">junio de 2026</span>. Este aviso fue redactado conforme a la LFPDPPP vigente en México. Te recomendamos revisarlo periódicamente.</p>
+
+      <!-- Pie solo visible en impresión -->
+      <div class="ap-print-foot" aria-hidden="true">
+        <span>Rentalia · Aviso de privacidad</span>
+        <span>rentalia.mx</span>
+      </div>
+
+    </div><!-- /.ap-content -->
+  </div><!-- /.ap-doc -->
+
+</main>
+
+<!-- Footer dinámico -->
+<footer id="footer-container"></footer>
+
+<script src="../assets/js/main.js?v=3" defer></script>
+<script src="../assets/js/aviso-privacidad.js" defer></script>
+</body>
+</html>

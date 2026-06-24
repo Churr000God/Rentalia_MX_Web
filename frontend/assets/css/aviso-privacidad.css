@@ -1,0 +1,588 @@
+/* ═══════════════════════════════════════════════════════════════
+   aviso-privacidad.css — Página de aviso de privacidad
+   Depende de theme.css (cargado vía main.css).
+   Nomenclatura: prefijo "ap-" para evitar colisiones.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Variables locales ─────────────────────────────────────── */
+:root {
+  --ap-measure: 68ch;
+  --ap-nav-h: 66px;     /* altura del navbar del proyecto */
+}
+
+/* Fondo hueso explícito — igual que el resto del sitio */
+body {
+  background: var(--hueso);
+}
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.ap-hero {
+  background: var(--selva-deep);
+  color: var(--hueso);
+  padding: clamp(48px, 8vw, 86px) 0 clamp(40px, 6vw, 64px);
+  position: relative;
+  overflow: hidden;
+}
+.ap-hero__arch {
+  position: absolute;
+  right: clamp(-20px, -2vw, -40px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(320px, 42vw);
+  opacity: .15;
+  pointer-events: none;
+}
+.ap-hero__inner {
+  position: relative;
+}
+.ap-hero__eyebrow {
+  color: var(--cempa);
+  margin: 0 0 14px;
+}
+.ap-hero__h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin: 0;
+  max-width: 14ch;
+}
+.ap-hero__lede {
+  margin: 18px 0 0;
+  max-width: 54ch;
+  font-size: 1.06rem;
+  opacity: .9;
+  line-height: 1.65;
+}
+.ap-hero__foot {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.ap-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(243, 237, 225, .08);
+  border: 1px solid rgba(243, 237, 225, .16);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: .85rem;
+}
+.ap-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--hueso) !important;
+  border-color: rgba(243, 237, 225, .38) !important;
+}
+.ap-download-btn:hover {
+  background: rgba(243, 237, 225, .08) !important;
+  border-color: rgba(243, 237, 225, .65) !important;
+}
+
+/* ── Etiqueta "confirmar" ───────────────────────────────────── */
+.ap-flag {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--barro);
+  background: rgba(188, 107, 67, .12);
+  border: 1px dashed rgba(188, 107, 67, .5);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.ap-flag--light {
+  color: var(--hueso);
+  background: rgba(243, 237, 225, .12);
+  border-color: rgba(243, 237, 225, .4);
+}
+
+/* ── Resumen "Lo esencial" ──────────────────────────────────── */
+.ap-essence {
+  padding: clamp(36px, 6vw, 60px) 0 0;
+}
+.ap-essence__card {
+  background: var(--hueso-2);
+  border: 1px solid rgba(30, 77, 60, .14);
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 4vw, 34px);
+}
+.ap-essence__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+  margin: 0 0 6px;
+}
+.ap-essence__sub {
+  margin: 0 0 22px;
+  max-width: var(--ap-measure);
+  color: #4a4639;
+  font-size: .96rem;
+}
+.ap-essence__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+}
+.ap-ess {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.ap-ess__ic {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(30, 77, 60, .10);
+  display: grid;
+  place-items: center;
+  color: var(--selva);
+}
+.ap-ess__ic svg {
+  width: 18px;
+  height: 18px;
+}
+.ap-ess__title {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .98rem;
+  margin: 0 0 3px;
+  line-height: 1.25;
+}
+.ap-ess__desc {
+  margin: 0;
+  font-size: .9rem;
+  color: #56523f;
+  line-height: 1.5;
+}
+
+/* ── Layout: TOC lateral + contenido ───────────────────────── */
+.ap-doc {
+  padding-top: clamp(40px, 6vw, 64px);
+  padding-bottom: clamp(60px, 8vw, 90px);
+  display: grid;
+  grid-template-columns: 248px 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+
+/* ── TOC ────────────────────────────────────────────────────── */
+.ap-toc {
+  position: sticky;
+  top: calc(var(--ap-nav-h) + 20px);
+}
+.ap-toc__label {
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  font-weight: 600;
+  color: var(--barro);
+  margin: 0 0 12px;
+}
+.ap-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: toc;
+  border-left: 2px solid rgba(30, 77, 60, .14);
+}
+.ap-toc li {
+  counter-increment: toc;
+}
+.ap-toc a {
+  display: block;
+  text-decoration: none;
+  color: #5a564a;
+  font-size: .88rem;
+  padding: 7px 0 7px 16px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.ap-toc a::before {
+  content: counter(toc, decimal-leading-zero) "  ";
+  color: var(--hoja);
+  font-weight: 600;
+}
+.ap-toc a:hover {
+  color: var(--selva);
+}
+.ap-toc a.is-active {
+  color: var(--selva);
+  font-weight: 600;
+  border-left-color: var(--cempa);
+}
+
+/* ── Contenido ──────────────────────────────────────────────── */
+.ap-content {
+  min-width: 0;
+  max-width: var(--ap-measure);
+}
+
+/* ── Secciones ──────────────────────────────────────────────── */
+.ap-section {
+  scroll-margin-top: calc(var(--ap-nav-h) + 18px);
+  padding-top: 8px;
+}
+.ap-section + .ap-section {
+  margin-top: 42px;
+  padding-top: 34px;
+  border-top: 1px solid rgba(30, 77, 60, .12);
+}
+.ap-section__h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
+  line-height: 1.12;
+  margin: 0 0 14px;
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+.ap-num {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--barro);
+  background: rgba(188, 107, 67, .12);
+  border-radius: 7px;
+  padding: 4px 9px;
+  flex: none;
+  align-self: center;
+  letter-spacing: .04em;
+}
+.ap-section__h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.12rem;
+  color: var(--selva);
+  margin: 24px 0 8px;
+}
+.ap-content p {
+  margin: 14px 0;
+  color: #3c382d;
+  line-height: 1.65;
+}
+.ap-link {
+  color: var(--selva);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+/* ── Lista ──────────────────────────────────────────────────── */
+.ap-list {
+  margin: 14px 0;
+  padding: 0;
+  list-style: none;
+}
+.ap-list li {
+  position: relative;
+  padding-left: 26px;
+  margin: 9px 0;
+  color: #3c382d;
+  line-height: 1.6;
+}
+.ap-list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: .62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--hoja);
+  transform: rotate(45deg);
+}
+
+/* ── Callout ────────────────────────────────────────────────── */
+.ap-callout {
+  background: var(--hueso-2);
+  border: 1px solid rgba(30, 77, 60, .14);
+  border-left: 4px solid var(--cempa);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin: 22px 0;
+}
+.ap-callout p {
+  margin: 0;
+  font-size: .94rem;
+  line-height: 1.6;
+}
+.ap-callout p + p {
+  margin-top: 10px;
+}
+
+/* ── Grid de tipos de datos ─────────────────────────────────── */
+.ap-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+.ap-data-card {
+  background: var(--hueso);
+  border: 1px solid rgba(30, 77, 60, .18);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+.ap-data-card--wide {
+  grid-column: 1 / -1;
+}
+.ap-data-card h3 {
+  margin: 0 0 6px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: .98rem;
+  color: var(--tinta);
+}
+.ap-data-card p {
+  margin: 0 !important;
+  font-size: .88rem;
+  color: #56523f;
+}
+
+/* ── Derechos ARCO ──────────────────────────────────────────── */
+.ap-rights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+.ap-right {
+  border: 1px solid rgba(30, 77, 60, .18);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  background: var(--hueso);
+}
+.ap-right__tag {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--selva-deep);
+  background: var(--cempa);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+.ap-right h3 {
+  margin: 0 0 4px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--tinta);
+}
+.ap-right p {
+  margin: 0 !important;
+  font-size: .86rem;
+  color: #56523f;
+}
+
+/* ── Tarjeta de contacto ────────────────────────────────────── */
+.ap-contact-card {
+  margin-top: 22px;
+  background: var(--selva);
+  color: var(--hueso);
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 4vw, 30px);
+}
+.ap-contact-card h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--hueso);
+  font-size: 1.4rem;
+  margin: 0 0 8px;
+}
+.ap-contact-card p {
+  color: rgba(243, 237, 225, .86) !important;
+  margin: 6px 0 !important;
+  font-size: .96rem;
+}
+.ap-contact-card a {
+  color: var(--cempa);
+  font-weight: 600;
+  text-decoration: none;
+}
+.ap-contact-card a:hover {
+  text-decoration: underline;
+}
+
+/* ── Pie del documento ──────────────────────────────────────── */
+.ap-updated-foot {
+  max-width: var(--ap-measure);
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(30, 77, 60, .12);
+  font-size: .85rem;
+  color: #6c6754;
+  line-height: 1.55;
+}
+
+/* Pie solo visible en impresión — oculto en pantalla */
+.ap-print-foot {
+  display: none;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 880px) {
+  .ap-doc {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .ap-toc {
+    position: static;
+    background: var(--hueso-2);
+    border: 1px solid rgba(30, 77, 60, .14);
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    margin-bottom: 8px;
+  }
+  .ap-toc ol {
+    border-left: 0;
+  }
+  .ap-toc a {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .ap-toc a.is-active {
+    border-left: 0;
+    color: var(--selva);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   @media print — optimizado para "Guardar como PDF"
+   Se oculta: header, footer, TOC, botón descarga, decoraciones.
+   Se muestra: contenido a una columna, con colores de marca.
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  /* Configuración de página */
+  @page {
+    margin: 18mm 16mm;
+    size: A4;
+  }
+
+  /* Preservar colores de marca (fondo verde hero, cempa, etc.) */
+  body,
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ocultar chrome del sitio */
+  #header-container,
+  #footer-container,
+  .skip-link,
+  .ap-hero__arch,
+  .ap-toc,
+  #downloadPdf,
+  .ap-flag {
+    display: none !important;
+  }
+
+  /* Hero compacto */
+  .ap-hero {
+    padding: 28px 24px 24px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+  }
+  .ap-hero__h1 {
+    font-size: 2.2rem;
+  }
+  .ap-hero__lede {
+    font-size: .95rem;
+    opacity: .88;
+  }
+  .ap-hero__meta {
+    font-size: .78rem;
+  }
+  .ap-hero__foot {
+    margin-top: 14px;
+  }
+
+  /* Resumen esencial */
+  .ap-essence {
+    padding-top: 0;
+  }
+  .ap-essence__card {
+    break-inside: avoid;
+    margin-bottom: 14px;
+  }
+  .ap-essence__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Documento: una sola columna */
+  .ap-doc {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .ap-content {
+    max-width: 100%;
+  }
+
+  /* Paginación: evitar cortes */
+  .ap-section {
+    break-inside: avoid-page;
+  }
+  .ap-section__h2,
+  .ap-section__h3 {
+    break-after: avoid;
+  }
+  .ap-callout,
+  .ap-data-card,
+  .ap-right,
+  .ap-contact-card {
+    break-inside: avoid;
+  }
+
+  /* En impresión las tarjetas vuelven a blanco (fondo de página es blanco) */
+  .ap-data-card,
+  .ap-right {
+    background: #fff !important;
+  }
+
+  /* Grids en dos columnas para impresión */
+  .ap-data-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ap-rights {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Colores en pantalla blanca */
+  .ap-content p,
+  .ap-list li {
+    color: #1a1814;
+  }
+
+  /* Pie de impresión */
+  .ap-print-foot {
+    display: flex;
+    justify-content: space-between;
+    font-size: .75rem;
+    color: #6c6754;
+    border-top: 1px solid rgba(30, 77, 60, .18);
+    padding-top: 10px;
+    margin-top: 24px;
+  }
+
+  /* Pie del documento */
+  .ap-updated-foot {
+    font-size: .78rem;
+  }
+
+  /* Container sin padding lateral en print */
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+  }
+}
