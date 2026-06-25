@@ -41,6 +41,25 @@ services:
       retries: 5
       start_period: 15s
 
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+        - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    env_file: .env
+    expose:
+      - "4000"
+    environment:
+      - VIRTUAL_HOST=admin.rentalia.mx
+      - LETSENCRYPT_HOST=admin.rentalia.mx
+      - VIRTUAL_PORT=4000
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    networks: [proxy_net, site_net]
+    restart: always
+
   frontend:
     image: nginx:alpine
     volumes:
